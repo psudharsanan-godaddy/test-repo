@@ -55,6 +55,10 @@ spec:
           image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
           imagePullPolicy: Always
           volumeMounts:
+            {{- if .Values.configs.standard.app.enabled }}
+            - name: app-config-secret
+              mountPath: "{{ $mountPath }}/vertx"
+            {{- end }}
             {{- if .Values.configs.standard.auth.enabled }}
             - name: auth-config-secret
               mountPath: "{{ $mountPath }}/auth"
@@ -104,8 +108,6 @@ spec:
             - name: "{{ $storeKeysSecretName }}"
               mountPath: "{{ $mountPath }}/storekeys"
             {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "vertx" }}
-            - name: vertx-config-secret
-              mountPath: "{{ $mountPath }}/vertx"
             - name: vertx-options-secret
               mountPath: "{{ $mountPath }}/vertx-options"
             {{- end }}
@@ -170,9 +172,9 @@ spec:
             - name: VERTX_ENV
               value: "{{ required ".Values.vertxEnv required!" .Values.vertxEnv }}"
             - name: VERTX_CONF
-              value: "-conf {{ $mountPath }}/vertx/config.json"
+              value: "-conf {{ $mountPath }}/app/config.json"
             - name: CONFIG_PATH
-              value: "{{ $mountPath }}/vertx"
+              value: "{{ $mountPath }}/app"
             - name: METRICS_PORT
               value: "{{ required ".Values.deployment.prometheus.port required!" .Values.deployment.prometheus.port }}"
             - name: JAVA_OPTS
@@ -193,6 +195,11 @@ spec:
             {{- end }}
       terminationGracePeriodSeconds: 90
       volumes:
+        {{- if .Values.configs.standard.app.enabled }}
+        - name: app-config-secret
+          secret:
+            secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-app-config") .) }}
+        {{- end }}
         {{- if .Values.configs.standard.auth.enabled }}
         - name: auth-config-secret
           secret:
@@ -258,9 +265,6 @@ spec:
           secret:
             secretName: {{ $storeKeysSecretName }}
         {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "vertx" }}
-        - name: vertx-config-secret
-          secret:
-            secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-vertx-config") .) }}
         - name: vertx-options-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-vertx-options") .) }}

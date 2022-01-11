@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-app-config") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+data:
+  config.json: |-
+    {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "app" "originalConfigFileExtension" ".yaml") .) | fromYaml | toJson | b64enc | nindent 4 }}

@@ -29,6 +29,8 @@ serverCerts: {}
 
 configs:
   standard:
+    app:
+      enabled: true
     auth:
       enabled: true
       roles:
