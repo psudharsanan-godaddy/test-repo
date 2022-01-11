@@ -1,0 +1,35 @@
+app:
+  name: currency-exchange
+  apiVersion: v2
+  pathNoun: currency-exchange
+  resourceIdPathParamName: currencyExchangeId
+  type: service
+  frameworkType: vertx
+  size: SMALL
+  artifactId: currency-exchange-service
+
+deployment:
+  resources:
+    requests:
+      cpu: 15m
+  readinessProbe:
+    path: /v2/currency-exchange/ping
+
+hasPrivateApiGateway: true
+
+configs:
+  standard:
+    db:
+      name: currency_exchange_v2
+    auth:
+      roles:
+        write:
+          defaultRoutes:
+            enabled: false
+        journal:
+          defaultRoutes:
+            enabled: false
+      rights:
+        admin:
+          defaultRoles:
+            enabled: false

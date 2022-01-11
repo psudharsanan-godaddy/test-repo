@@ -1,0 +1,4 @@
+* @ecomm-continuous-delivery/ecomm-platinfra
+
+config-content/app-specific @ecomm-continuous-delivery/ecomm-developers
+values/app-specific @ecomm-continuous-delivery/ecomm-developers

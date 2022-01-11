@@ -1,0 +1,57 @@
+{{- if .Values.job.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-job") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+  {{- with .Values.job.annotations }}
+  annotations: {{ toYaml . | nindent 3 }}
+  {{- end }}
+spec:
+  activeDeadlineSeconds: 120
+  ttlSecondsAfterFinished: 120
+  template:
+    spec:
+      containers:
+      - name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-job") .) }}
+        image: "{{ required "image.repository required!" .Values.job.image.repository }}:{{ required "image.tag required!" .Values.job.image.tag }}"
+        {{- with .Values.job.volumeMounts }}
+        volumeMounts: {{ toYaml . | nindent 9 }}
+        {{- end }}
+        securityContext:
+          readOnlyRootFilesystem: {{ .Values.job.readOnlyRootFilesystem }}
+        resources:
+          requests:
+            cpu: {{ .Values.job.resources.requests.cpu | quote }}
+            memory: {{ .Values.job.resources.requests.memory | quote }}
+          limits:
+            cpu: {{ .Values.job.resources.limits.cpu | quote }}
+            memory: {{ .Values.job.resources.limits.memory | quote }}
+        env:
+          - name: JOB_NAME
+            value: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-job") .) }}
+          - name: IS_JOB
+            value: "true"
+          {{- with .Values.job.env }}
+          {{ toYaml . | nindent 8 }}
+          {{- end }}
+      restartPolicy: Never
+      volumes:
+       - name: client-cert-config
+          secret:
+            secretName: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-client-cert-config") .) }}"
+        - name: client-cert-context
+          secret:
+            secretName: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-client-cert-context") .) }}"
+        - name: sensitive-config
+          secret:
+            secretName: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-sensitive-config") .) }}"
+        - name: tls-config
+          secret:
+            secretName: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-tls-config") .) }}"
+      {{- with .Values.job.extraVolumes }}
+      {{ toYaml . | nindent 6 }}
+      {{- end }}
+{{- end }}
+

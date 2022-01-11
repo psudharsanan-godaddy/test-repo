@@ -1,0 +1,7 @@
+envType: icp
+configs:
+  standard:
+    db:
+      clusterId: ecomm-devpri-pci-us-east-1-aurora
+    queryDb:
+      clusterId: ecomm-devpri-pci-us-east-1-aurora

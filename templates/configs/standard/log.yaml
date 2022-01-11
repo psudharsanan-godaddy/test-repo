@@ -1,0 +1,11 @@
+{{- if .Values.configs.standard.log.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-log-config") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+data:
+  log4j2.xml: |-
+    {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "log" "originalConfigFileExtension" ".xml") .) | nindent 4 }}
+{{- end }}

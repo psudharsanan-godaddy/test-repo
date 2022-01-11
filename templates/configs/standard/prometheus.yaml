@@ -1,0 +1,11 @@
+{{- if .Values.configs.standard.prometheus.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-prometheus-config") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+data:
+  prometheus_agent.yaml: |-
+    {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "prometheus" "originalConfigFileExtension" ".yaml") .) | b64enc | nindent 4 }}
+{{- end }}

@@ -1,0 +1,10 @@
+*.swp
+.venv
+.DS_Store
+.venv
+*.swp
+.idea
+.vscode
+*.iml
+temp/
+.output
