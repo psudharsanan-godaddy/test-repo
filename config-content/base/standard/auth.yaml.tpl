@@ -84,10 +84,10 @@ roles:
   {{- ternary "" ($additionalRoles | nindent 2) (empty $additionalRoles) }}
 
 rights:
-  {{- $additionalAllRightsRoles := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-all-right-roles") .) }}
-  {{- $includeAllRightsRoles := required ".Values.configs.standard.auth.rights.all.defaultRoles.enabled required!" .Values.configs.standard.auth.rights.all.defaultRoles.enabled }}
-  {{- $includeAllRights := or $includeAllRightsRoles (not (empty $additionalAllRightsRoles)) }}
-  {{- if $includeAllRights }}
+  {{- $additionalAllRightRoles := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-all-right-roles") .) }}
+  {{- $includeAllRightRoles := required ".Values.configs.standard.auth.rights.all.defaultRoles.enabled required!" .Values.configs.standard.auth.rights.all.defaultRoles.enabled }}
+  {{- $includeAllRight := or $includeAllRightRoles (not (empty $additionalAllRightRoles)) }}
+  {{- if $includeAllRight }}
   all:
     {{- if $includeSuperRole }}
     - super
@@ -103,29 +103,29 @@ rights:
     {{- end }}
     - healthCheck
     - utility
-    {{- ternary "" ($additionalAllRightsRoles | nindent 4) (empty $additionalAllRightsRoles) }}
+    {{- ternary "" ($additionalAllRightRoles | nindent 4) (empty $additionalAllRightRoles) }}
   {{- end }}
 
-  {{- $additionalAdminRightsRoles := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-admin-right-roles") .) }}
-  {{- $includeAdminRightsDefaultRoles := required ".Values.configs.standard.auth.rights.admin.defaultRoles.enabled required!" .Values.configs.standard.auth.rights.admin.defaultRoles.enabled }}
-  {{- $includeAdminRights := or $includeAdminRightsDefaultRoles (not (empty $additionalAdminRightsRoles)) }}
-  {{- if $includeAdminRights }}
+  {{- $additionalAdminRightRoles := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-admin-right-roles") .) }}
+  {{- $includeAdminRightDefaultRoles := required ".Values.configs.standard.auth.rights.admin.defaultRoles.enabled required!" .Values.configs.standard.auth.rights.admin.defaultRoles.enabled }}
+  {{- $includeAdminRight := or $includeAdminRightDefaultRoles (not (empty $additionalAdminRightRoles)) }}
+  {{- if $includeAdminRight }}
   admin:
-    {{- if $includeAdminRightsDefaultRoles }}
+    {{- if $includeAdminRightDefaultRoles }}
     {{- if $includeJournalRole }}
     - journal
     {{- end }}
     - healthCheck
     {{- end }}
-    {{- ternary "" ($additionalAdminRightsRoles | nindent 4) (empty $additionalAdminRightsRoles) }}
+    {{- ternary "" ($additionalAdminRightRoles | nindent 4) (empty $additionalAdminRightRoles) }}
   {{- end }}
 
-  {{- $additionalReadOnlyRightsRoles := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-readonly-right-roles") .) }}
-  {{- $includeReadOnlyRightsDefaultRoles := required ".Values.configs.standard.auth.rights.readOnly.defaultRoles.enabled required!" .Values.configs.standard.auth.rights.readOnly.defaultRoles.enabled }}
-  {{- $includeReadOnlyRights := or $includeReadOnlyRightsDefaultRoles (not (empty $additionalReadOnlyRightsRoles)) }}
-  {{- if $includeReadOnlyRights }}
+  {{- $additionalReadOnlyRightRoles := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-readonly-right-roles") .) }}
+  {{- $includeReadOnlyRightDefaultRoles := required ".Values.configs.standard.auth.rights.readOnly.defaultRoles.enabled required!" .Values.configs.standard.auth.rights.readOnly.defaultRoles.enabled }}
+  {{- $includeReadOnlyRight := or $includeReadOnlyRightDefaultRoles (not (empty $additionalReadOnlyRightRoles)) }}
+  {{- if $includeReadOnlyRight }}
   readOnly:
-    {{- if $includeReadOnlyRightsDefaultRoles }}
+    {{- if $includeReadOnlyRightDefaultRoles }}
     {{- if $includeReadRole }}
     - read
     {{- end }}
@@ -133,18 +133,18 @@ rights:
     - journal
     {{- end }}
     {{- end }}
-    {{- ternary "" ($additionalReadOnlyRightsRoles | nindent 4) (empty $additionalReadOnlyRightsRoles) }}
+    {{- ternary "" ($additionalReadOnlyRightRoles | nindent 4) (empty $additionalReadOnlyRightRoles) }}
   {{- end }}
 
-  {{- $additionalUtilityOnlyRightsRoles := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-utilityonly-right-roles") .) }}
-  {{- $includeUtilityOnlyRightsDefaultRoles := required ".Values.configs.standard.auth.rights.utilityOnly.defaultRoles.enabled required!" .Values.configs.standard.auth.rights.utilityOnly.defaultRoles.enabled }}
-  {{- $includeUtilityOnlyRights := or $includeUtilityOnlyRightsDefaultRoles (not (empty $additionalUtilityOnlyRightsRoles)) }}
-  {{- if $includeUtilityOnlyRights }}
+  {{- $additionalUtilityOnlyRightRoles := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-utilityonly-right-roles") .) }}
+  {{- $includeUtilityOnlyRightDefaultRoles := required ".Values.configs.standard.auth.rights.utilityOnly.defaultRoles.enabled required!" .Values.configs.standard.auth.rights.utilityOnly.defaultRoles.enabled }}
+  {{- $includeUtilityOnlyRight := or $includeUtilityOnlyRightDefaultRoles (not (empty $additionalUtilityOnlyRightRoles)) }}
+  {{- if $includeUtilityOnlyRight }}
   utilityOnly:
-    {{- if $includeUtilityOnlyRightsDefaultRoles }}
+    {{- if $includeUtilityOnlyRightDefaultRoles }}
     - utility
     {{- end }}
-    {{- ternary "" ($additionalUtilityOnlyRightsRoles | nindent 4) (empty $additionalUtilityOnlyRightsRoles) }}
+    {{- ternary "" ($additionalUtilityOnlyRightRoles | nindent 4) (empty $additionalUtilityOnlyRightRoles) }}
   {{- end }}
 
   {{- $additionalRights := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "additional-rights") .) }}

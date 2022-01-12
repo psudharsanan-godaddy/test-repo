@@ -11,7 +11,7 @@ For storing application-framework-type-specific config **base templates**. They 
 The currently supported application framework types are:
 
 - nodejs
-- springboot
+- spring-boot
 - standard
 - vertx
 

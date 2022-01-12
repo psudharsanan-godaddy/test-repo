@@ -57,7 +57,7 @@ spec:
           volumeMounts:
             {{- if .Values.configs.standard.app.enabled }}
             - name: app-config-secret
-              mountPath: "{{ $mountPath }}/vertx"
+              mountPath: "{{ $mountPath }}/app"
             {{- end }}
             {{- if .Values.configs.standard.auth.enabled }}
             - name: auth-config-secret
@@ -156,6 +156,9 @@ spec:
               value: {{ .Values.deployment.image.tag | quote }}
             - name: AWS_REGION
               value: {{ required ".Values.awsRegion required!" .Values.awsRegion | quote }}
+            # ref: https://confluence.godaddy.com/display/VM/CRITICAL+-+log4j+2.x+RCE#CRITICALlog4j2.xRCE-RemediationSteps
+            - name: LOG4J_FORMAT_MSG_NO_LOOKUPS
+              value: "true"
             {{- if .Values.deployment.enableApm }}
             - name: ELASTIC_APM_SECRET_TOKEN
               valueFrom:
@@ -269,7 +272,7 @@ spec:
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-vertx-options") .) }}
         {{- end }}
-        {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "sprintboot" }}
+        {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "spring-boot" }}
         - name: wildcard-cert
           secret:
             secretName: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-wildcard-cert") .) }}"

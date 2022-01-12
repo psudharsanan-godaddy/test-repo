@@ -35,27 +35,25 @@ Create chart name and version as used by the chart label.
 Create resource name given the resource name infix and the branch name.
 
 The generated resource name will be:
-- "currency-exchange-auth-config" if .Values.cdJobsBranchName is `master`;
-- "currency-exchange-auth-config-ep_12345" if .Values.cdJobsBranchName is non-master, e.g. EP-12345
-- "currency-exchange-auth-config" if .Values.cdJobsBranchName is non-master, e.g. EP-12345 but .useBranchAgnosticName is true
+- "currency-exchange-auth-config" if .Values.deploymentSuffix is ``
+- "currency-exchange-auth-config--a13b852" if .Values.deploymentSuffix is `--a13b852`
+- "currency-exchange-cacert" if .Values.deploymentSuffix is `--a13b852` but .useBranchAgnosticName is true
 
 Params:
 - .Values.app.name required e.g. `currency-exchange`
 - .resourceNameInfix required e.g. `auth-config`
-- .Values.cdJobsBranchName optional e.g. `EP-12345`, defaults to `master`
+- .Values.deploymentSuffix required e.g. `--a13b852`
 - .useBranchAgnosticName optional e.g. true, defaults to false
 */}}
 {{- define "commerce-app-v2.resourceName" -}}
 {{- $appName := required ".Values.app.name required!" .Values.app.name }}
 {{- $resourceNameInfix := required ".resourceNameInfix required!" .resourceNameInfix }}
-{{- $branchNameSuffix := "" }}
 {{- $useBranchAgnosticName := default false .useBranchAgnosticName }}
-{{- $cdJobsBranchName := default "master" .Values.cdJobsBranchName }}
-{{- if and (ne $cdJobsBranchName "master") (not $useBranchAgnosticName) }}
-{{- $normalizedCdJobsBranchName := $cdJobsBranchName | lower | replace "_" "-" }}
-{{- $branchNameSuffix = printf "-%s" $normalizedCdJobsBranchName }}
+{{- $deploymentSuffix := required ".Values.deploymentSuffix required!" .Values.deploymentSuffix }}
+{{- if $useBranchAgnosticName }}
+{{- $deploymentSuffix = "" }}
 {{- end }}
-{{- printf "%s%s%s" $appName $resourceNameInfix $branchNameSuffix | replace "+" "_"  | trunc 63 | trimSuffix "-" }}
+{{- printf "%s%s%s" $appName $resourceNameInfix $deploymentSuffix | replace "+" "_"  | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -72,22 +70,17 @@ Create the container image repository for a commerce app
 Create branch-specific app name.
 
 The generated resource name will be:
-- "currency-exchange" if .Values.cdJobsBranchName is `master`;
-- "currency-exchange-ep_12345" if .Values.cdJobsBranchName is non-master, e.g. EP-12345
+- "currency-exchange" if .Values.deploymentSuffix is ``
+- "currency-exchange--a13b852" if .Values.deploymentSuffix is `--a13b852`
 
 Params:
 - .Values.app.name required e.g. `currency-exchange`
-- .Values.cdJobsBranchName optional e.g. `EP-12345`, defaults to `master`
+- .Values.deploymentSuffix required e.g. `--a13b852` or ``
 */}}
 {{- define "commerce-app-v2.branchSpecificAppName" -}}
 {{- $appName := required ".Values.app.name required!" .Values.app.name }}
-{{- $branchNameSuffix := "" }}
-{{- $cdJobsBranchName := default "master" .Values.cdJobsBranchName }}
-{{- if ne $cdJobsBranchName "master" }}
-{{- $normalizedCdJobsBranchName := $cdJobsBranchName | lower | replace "_" "-" }}
-{{- $branchNameSuffix = printf "-%s" $normalizedCdJobsBranchName }}
-{{- end }}
-{{- printf "%s%s" $appName $branchNameSuffix | replace "+" "_"  | trunc 63 | trimSuffix "-" }}
+{{- $deploymentSuffix := required ".Values.deploymentSuffix required!" .Values.deploymentSuffix }}
+{{- printf "%s%s" $appName $deploymentSuffix | replace "+" "_"  | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -100,7 +93,9 @@ helm.sh/chart: {{ include "commerce-app-v2.chart" . | quote }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
-ecomm/cd-jobs-branch: {{ default "master" .Values.cdJobsBranchName | quote }}
+ecomm/app-branch: {{ default "master" .Values.appBranch | quote }}
+ecomm/helm-chart-branch: {{ default "master" .Values.helmChartBranch | quote }}
+ecomm/cd-jobs-branch: {{ default "master" .Values.cdJobsBranch | quote }}
 {{- end }}
 
 {{/*
@@ -172,7 +167,7 @@ Params:
 {{/*
 Create the number of replica of a deployment
 
-For readers, only return 1 if the region is the current primary region and the cd-jobs branch name is master
+For readers, only return 1 if the region is the current primary region and the .Values.deploymentSuffix is an empty string
 otherwise return 0
 
 For services, use the value provided at .Values.deployment.numberOfReplicas
@@ -182,7 +177,8 @@ For services, use the value provided at .Values.deployment.numberOfReplicas
 {{- $currentPrimaryRegion := required ".Values.currentPrimaryRegion required!" .Values.currentPrimaryRegion }}
 {{- $appType := required ".Values.app.type required!" .Values.app.type }}
 {{- if eq $appType "reader" }}
-{{- ternary 1 0 (and (eq $awsRegion $currentPrimaryRegion) (eq .Values.cdJobsBranchName "master")) }}
+{{- $deploymentSuffix := required ".Values.deploymentSuffix required!" .Values.deploymentSuffix }}
+{{- ternary 1 0 (and (eq $awsRegion $currentPrimaryRegion) (eq $deploymentSuffix "")) }}
 {{- else }}
 {{- required ".Values.deployment.numberOfReplicas required!" .Values.deployment.numberOfReplicas }}
 {{- end }}

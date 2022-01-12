@@ -33,6 +33,9 @@ spec:
             value: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-job") .) }}
           - name: IS_JOB
             value: "true"
+          # ref: https://confluence.godaddy.com/display/VM/CRITICAL+-+log4j+2.x+RCE#CRITICALlog4j2.xRCE-RemediationSteps
+          - name: LOG4J_FORMAT_MSG_NO_LOOKUPS
+            value: "true"
           {{- with .Values.job.env }}
           {{ toYaml . | nindent 8 }}
           {{- end }}
