@@ -1,3 +1,5 @@
+{{- $enabled := include "commerce-app-v2.configs.standard.app.enabled" . | include "strToBool" }}
+{{- if $enabled }}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -7,3 +9,4 @@ metadata:
 data:
   config.json: |-
     {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "app" "originalConfigFileExtension" ".yaml") .) | fromYaml | toJson | b64enc | nindent 4 }}
+{{- end }}

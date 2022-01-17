@@ -230,3 +230,12 @@ Create JAVA_OPTS value based on .Values.app.size
 {{- end -}}
 {{- printf "-Xms%s -Xmx%s" $javaHeapSize $javaHeapSize }}
 {{- end }}
+
+
+{{- define "strToBool" -}}
+    {{- $output := "" -}}
+    {{- if or (eq . "true") (eq . "yes") (eq . "on") -}}
+        {{- $output = "1" -}}
+    {{- end -}}
+    {{ $output }}
+{{- end -}}

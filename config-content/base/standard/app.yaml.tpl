@@ -1,4 +1,4 @@
-{{- $mountPath := required ".Values.vertx.mountPath required!" .Values.vertx.mountPath }}
+{{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
 APP_NOUN: '{{ .Values.app.name }}'
 AUTH_CONFIG_PATH: '{{ $mountPath }}/auth/auth-config.json'
 CLASSIC_DB_CONFIG_PATH: '{{ $mountPath }}/classic-db/classic_db_config.json'

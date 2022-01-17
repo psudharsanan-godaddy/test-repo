@@ -1,4 +1,5 @@
-{{- if and (.Values.configs.standard.auth.enabled) (or (eq .Values.app.type "service") (eq .Values.app.type "reader")) }}
+{{- $enabled := include "commerce-app-v2.configs.standard.auth.enabled" . | include "strToBool" }}
+{{- if $enabled }}
 apiVersion: v1
 kind: Secret
 metadata:

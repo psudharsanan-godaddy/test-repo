@@ -28,7 +28,9 @@ clientCerts: {}
 serverCerts: {}
 
 configs:
+  mountPath: /tmp
   standard:
+    enabled: true
     app:
       enabled: true
     auth:
@@ -116,13 +118,11 @@ configs:
     tls:
       enabled: true
   vertx:
-    config:
-      enabled: true
+    enabled: true
     options:
       enabled: true
 
 vertx:
-  mountPath: /tmp
   cryptoMode: LOCAL
   enableAuth: true
   enableTls: true

@@ -1,0 +1,72 @@
+app:
+  name: shopper-migration
+  apiVersion: v1
+  pathNoun: shopper-migration
+  type: service
+  frameworkType: spring-boot
+  size: MEDIUM
+  artifactId: shopper-migration-service
+
+deployment:
+  enabled: true
+  resources:
+    # memory fields here will not be used if defined as they will be determined by the .Value.app.size
+    requests:
+      cpu: 80m
+    limits:
+      cpu: 2000m
+  readinessProbe:
+    path: /v2/shopper-migration/ping
+  enableLivenessProbe: true
+  livenessProbe:
+    path: /v2/shopper-migration/healthcheck
+  readOnlyRootFilesystem: false
+  enableApm: false
+  extraVolumes: { }
+
+hasPrivateApiGateway: true
+
+
+configs:
+  standard:
+    enabled: true
+    app:
+      enabled: true
+    classicDb:
+      enabled: true
+    clientCert:
+      enabled: true
+    pki:
+      enabled: true
+    hosts:
+      enabled: true
+    prometheus:
+      enabled: true
+    sensitive:
+      enabled: true
+    tls:
+      enabled: true
+    auth:
+      enabled: false
+    crypto:
+      enabled: false
+    db:
+      enabled: false
+    log:
+      enabled: false
+  springBoot:
+    enabled: true
+    application:
+      enabled: true
+      logging:
+        type: CONSOLE_JSON
+        loogbook:
+          obfuscate:
+            headers:
+              - myHeader
+              - secondHeader
+            parameters:
+              - myHeader
+              - secondHeader
+
+

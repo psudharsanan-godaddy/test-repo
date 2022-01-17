@@ -1,4 +1,5 @@
-{{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "vertx" }}
+{{- $enabled := include "commerce-app-v2.configs.vertx.options.enabled" . | include "strToBool" }}
+{{- if $enabled }}
 apiVersion: v1
 kind: Secret
 metadata:

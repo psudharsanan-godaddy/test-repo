@@ -1,4 +1,5 @@
-{{- if .Values.configs.standard.log.enabled }}
+{{- $enabled := include "commerce-app-v2.configs.standard.log.enabled" . | include "strToBool" }}
+{{- if $enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
