@@ -185,7 +185,7 @@ spec:
                   key: apm_server_url
             {{- end }}
             - name: MOUNT_PATH
-              value: "{{ .Values.configs.mountPath }}"
+              value: "{{ $mountPath }}"
             {{- if $appConfigEnabled }}
             - name: CONFIG_PATH
               value: "{{ $mountPath }}/app"

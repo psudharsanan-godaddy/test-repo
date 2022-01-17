@@ -40,7 +40,9 @@ Check if spring logbook logging config is enabled.
   {{- $loggingEnabled := include "commerce-app-v2.configs.spring-boot.application.logging.enabled" . | include "strToBool" -}}
   {{- if $loggingEnabled -}}
     {{- if .Values.configs.springBoot.application.logging.loogbook -}}
-      {{- $r = true -}}
+      {{- if .Values.configs.springBoot.application.logging.loogbook.enabled -}}
+        {{- $r = true -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
   {{- $r -}}

@@ -61,12 +61,6 @@ configs:
       logging:
         type: CONSOLE_JSON
         loogbook:
-          obfuscate:
-            headers:
-              - myHeader
-              - secondHeader
-            parameters:
-              - myHeader
-              - secondHeader
+          enabled: true
 
 

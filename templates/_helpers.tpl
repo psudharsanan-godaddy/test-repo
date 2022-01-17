@@ -228,7 +228,13 @@ Create JAVA_OPTS value based on .Values.app.size
 {{- else }}
 {{- fail ".Values.app.size needs to be one of: SMALL, MEDIUM, and LARGE!" }}
 {{- end -}}
-{{- printf "-Xms%s -Xmx%s" $javaHeapSize $javaHeapSize }}
+{{- $javaOptions := printf "-Xms%s -Xmx%s" $javaHeapSize $javaHeapSize }}
+{{- if .Values.app.java -}}
+{{- if .Values.app.java.options -}}
+{{- $javaOptions = printf "-Xms%s -Xmx%s %s" $javaHeapSize $javaHeapSize .Values.app.java.options }}
+{{- end -}}
+{{- end -}}
+{{- $javaOptions -}}
 {{- end }}
 
 
