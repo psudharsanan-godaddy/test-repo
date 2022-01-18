@@ -94,3 +94,16 @@ Check if standard tls config enabled
 {{- $r := and .Values.configs.standard.enabled .Values.configs.standard.tls.enabled }}
 {{- $r }}
 {{- end }}
+
+{{/*
+Check if livenessProbe path is presented
+*/}}
+{{- define "commerce-app-v2.deployment.livenessProbe.path.exists" }}
+  {{- $r := false -}}
+  {{- if .Values.deployment.livenessProbe -}}
+    {{- if .Values.deployment.livenessProbe.path -}}
+      {{- $r = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $r -}}
+{{- end }}

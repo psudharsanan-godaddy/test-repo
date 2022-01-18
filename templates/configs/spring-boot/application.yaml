@@ -8,5 +8,5 @@ metadata:
     {{- include "commerce-app-v2.labels" . | nindent 4 }}
 data:
   application.yaml: |-
-    {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "application" "appFrameworkType" "spring-boot" "originalConfigFileExtension" ".yaml") .) | nindent 4 }}
+    {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "application" "appFrameworkType" "spring-boot" "originalConfigFileExtension" ".yaml") .) | b64enc | nindent 4 }}
 {{- end }}

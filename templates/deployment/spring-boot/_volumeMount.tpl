@@ -7,7 +7,7 @@
   mountPath: "{{ $mountPath }}/spring-boot-application-config"
 {{- end }}
 {{- if $loggingConfigEnabled }}
-- name: spring-boot-logging-config-secret
+- name: spring-boot-logging-config-configMap
   mountPath: "{{ $mountPath }}/spring-boot-logging-config"
 {{- end }}
 {{- end }}

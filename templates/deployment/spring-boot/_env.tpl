@@ -9,11 +9,13 @@
 - name: ENABLE_JMX
   value: "{{ required ".Values.jmx.enabled required!" .Values.jmx.enabled }}"
 {{- if $springConfigEnabled }}
-- name: SPRING_CONFIG_PATH
+  #Do not change env name this is specific at least for spring-boot 2.5.*
+- name: SPRING_CONFIG_ADDITIONAL_LOCATION
   value: "{{ $mountPath }}/spring-boot-application-config/"
 {{- end }}
 {{- if  $loggingConfigEnabled }}
-- name: SPRING_LOGGING_CONFIG_FILE
+  #Do not change env name this is specific at least for spring-boot 2.5.*
+- name: LOGGING_CONFIG
   value: "{{ $mountPath }}/spring-boot-logging-config/logback-spring.xml"
 {{- end }}
 {{- end }}

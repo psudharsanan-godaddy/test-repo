@@ -1,7 +1,7 @@
 {{- $enabled := include "commerce-app-v2.configs.spring-boot.application.logging.enabled" . | include "strToBool" }}
 {{- if $enabled }}
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
   name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-spring-boot-logging-config") .) }}
   labels:

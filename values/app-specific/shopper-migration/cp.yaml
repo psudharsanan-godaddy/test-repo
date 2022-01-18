@@ -9,17 +9,13 @@ app:
 
 deployment:
   enabled: true
-  resources:
-    # memory fields here will not be used if defined as they will be determined by the .Value.app.size
-    requests:
-      cpu: 80m
-    limits:
-      cpu: 2000m
   readinessProbe:
     path: /v2/shopper-migration/ping
+    initialDelaySeconds: 30
   enableLivenessProbe: true
   livenessProbe:
     path: /v2/shopper-migration/healthcheck
+    initialDelaySeconds: 45
   readOnlyRootFilesystem: false
   enableApm: false
   extraVolumes: { }
