@@ -7,7 +7,7 @@
     secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-spring-boot-application-config") .) }}
 {{- end }}
 {{- if $loggingConfigEnabled }}
-- name: spring-boot-logging-config-configMap
+- name: spring-boot-logging-config-configmap
   configMap:
     name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-spring-boot-logging-config") .) }}
 {{- end }}
