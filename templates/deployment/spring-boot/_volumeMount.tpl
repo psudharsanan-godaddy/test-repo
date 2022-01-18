@@ -3,7 +3,7 @@
 {{- $applicationEnabled := include "commerce-app-v2.configs.spring-boot.application.enabled" . | include "strToBool" }}
 {{- $loggingConfigEnabled := include "commerce-app-v2.configs.spring-boot.application.logging.enabled" . | include "strToBool" }}
 {{- if $applicationEnabled }}
-- name: spring-boot-application-secret
+- name: spring-boot-application-config-secret
   mountPath: "{{ $mountPath }}/spring-boot-application-config"
 {{- end }}
 {{- if $loggingConfigEnabled }}
