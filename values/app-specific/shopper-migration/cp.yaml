@@ -56,7 +56,7 @@ configs:
       enabled: true
       logging:
         type: CONSOLE_JSON
-        loogbook:
+        logbook:
           enabled: true
 
 

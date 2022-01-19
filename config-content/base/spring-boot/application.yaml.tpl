@@ -45,15 +45,15 @@ logging:
 logbook:
   filter:
     enabled: true
-  exclude: "{{ .loogbook.exclude | default  "/swagger-ui/**,/v3/api-docs/**,**/ping,**/healthcheck,**/actuator/**,/" }}"
+  exclude: "{{ .logbook.exclude | default  "/swagger-ui/**,/v3/api-docs/**,**/ping,**/healthcheck,**/actuator/**,/" }}"
   strategy: default
   obfuscate:
     headers:
       - Authorization
       - X-Secret
-      {{- if .loogbook.obfuscate }}
-      {{- if .loogbook.obfuscate.headers }}
-      {{- range $headerName := .loogbook.obfuscate.headers }}
+      {{- if .logbook.obfuscate }}
+      {{- if .logbook.obfuscate.headers }}
+      {{- range $headerName := .logbook.obfuscate.headers }}
       - {{ $headerName }}
       {{- end }}
       {{- end }}
@@ -61,9 +61,9 @@ logbook:
     parameters:
       - access_token
       - password
-      {{- if .loogbook.obfuscate }}
-      {{- if .loogbook.obfuscate.parameters }}
-      {{- range $parameterName := .loogbook.obfuscate.parameters }}
+      {{- if .logbook.obfuscate }}
+      {{- if .logbook.obfuscate.parameters }}
+      {{- range $parameterName := .logbook.obfuscate.parameters }}
       - {{ $parameterName }}
       {{- end }}
       {{- end }}
