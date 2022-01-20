@@ -1,9 +1,9 @@
 package com.godaddy.commerce.helm;
 
-import com.godaddy.commerce.helm.resource.DeploymentResource;
-import com.godaddy.commerce.helm.resource.SecretResource;
+import com.godaddy.commerce.helm.resource.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -29,32 +29,19 @@ public final class YamlUtil {
         new Resolver());
   }
 
-  public static Map<String, SecretResource> readSecretResources(
+  public static <T extends Resource> Map<String, T> readResources(
       Yaml yamlLoader,
-      String[] resources) {
-
-    Map<String, SecretResource> secrets = new HashMap<>();
+      String[] resources, Class<T> targetResource) {
+    Predicate<String> matchCondition = Resource.getMatchCondition(targetResource);
+    Map<String, T> matchedResources = new HashMap<>();
     for (String resource : resources) {
-      if (resource.contains("kind: Secret")) {
-        SecretResource secret = yamlLoader.loadAs(resource, SecretResource.class);
-        secrets.put(secret.getMetadata().getName(), secret);
+      if (matchCondition.test(resource)) {
+        T matchedResource = yamlLoader.loadAs(resource, targetResource);
+        matchedResources.put(matchedResource.getMetadata().getName(), matchedResource);
       }
     }
-    return secrets;
+    return matchedResources;
   }
 
-
-  public static Map<String, DeploymentResource> readDeploymentResources(
-      Yaml yamlLoader,
-      String[] resources) {
-    Map<String, DeploymentResource> deployments = new HashMap<>();
-    for (String resource : resources) {
-      if (resource.contains("kind: Deployment")) {
-        DeploymentResource secret = yamlLoader.loadAs(resource, DeploymentResource.class);
-        deployments.put(secret.getMetadata().getName(), secret);
-      }
-    }
-    return deployments;
-  }
 
 }

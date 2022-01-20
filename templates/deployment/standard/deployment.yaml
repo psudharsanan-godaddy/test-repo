@@ -195,8 +195,12 @@ spec:
             - name: CONFIG_PATH
               value: "{{ $mountPath }}/app"
             {{- end }}
+            - name: CACERTS
+              value: "{{ $cacertsSecretName }}"
+            - name: STOREKEYS
+              value: "{{ $storeKeysSecretName }}"
             #END: standard specific envs
-            {{- include "commerce-app-v2.deployment.framework.env" (merge (dict "cacertsSecretName" $cacertsSecretName "storeKeysSecretName" $storeKeysSecretName) .) | nindent 12 }}
+            {{- include "commerce-app-v2.deployment.framework.env" . | nindent 12 }}
             {{- with .Values.deployment.env }}
             {{ toYaml . | nindent 12 }}
             {{- end }}

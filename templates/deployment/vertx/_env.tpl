@@ -1,8 +1,6 @@
 {{- define "commerce-app-v2.deployment.vertx.env" -}}
 {{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
 {{- $standardAppConfig := include "commerce-app-v2.configs.standard.app.enabled" . | include "strToBool" }}
-{{- $cacertsSecretName := required ".cacertsSecretName required!" .cacertsSecretName }}
-{{- $storeKeysSecretName := required ".storeKeysSecretName required!" .storeKeysSecretName }}
 - name: VERTX_ENV
   value: "{{ required ".Values.vertxEnv required!" .Values.vertxEnv }}"
 - name: METRICS_PORT
@@ -11,10 +9,6 @@
   value: "{{ include "commerce-app-v2.javaOpts" . }}"
 - name: ENV_SPECIFIC_IMAGE
   value: "NO"
-- name: CACERTS
-  value: "{{ $cacertsSecretName }}"
-- name: STOREKEYS
-  value: "{{ $storeKeysSecretName }}"
 - name: ENABLE_JMX
   value: "{{ required ".Values.jmx.enabled required!" .Values.jmx.enabled }}"
 {{- if $standardAppConfig }}

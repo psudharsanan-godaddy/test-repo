@@ -3,12 +3,6 @@ package com.godaddy.commerce.helm;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.LoaderOptions;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.representer.Representer;
-import org.yaml.snakeyaml.resolver.Resolver;
 
 public final class HelmUtil {
 
@@ -16,7 +10,7 @@ public final class HelmUtil {
     throw new UnsupportedOperationException("Forbidden");
   }
 
-  private static String[] buildCommandArgs(String app, String env) {
+  private static String[] buildCommandArgs(String app, String env, String appValuesFolder) {
     return new String[]{"helm",
         "template",
         ".",
@@ -26,9 +20,9 @@ public final class HelmUtil {
         "-f", String.format("./values/base/cp.%s.gen.us-east-1.yaml", env),
         "-f", String.format("./values/base/cp.%s.gen.us-east-1.shared.yaml", env),
         "-f", String.format("./values/base/cp.%s.gen.us-east-1.shared.a.yaml", env),
-        "-f", String.format("./values/app-specific/%s/cp.yaml", app),
-        "-f", String.format("./values/app-specific/%s/cp.%s.yaml", app, env),
-        "-f", String.format("./values/app-specific/%s/cp.%s.us-east-1.yaml", app, env),
+        "-f", String.format(".%s/%s/cp.yaml", appValuesFolder, app),
+        "-f", String.format(".%s/%s/cp.%s.yaml",appValuesFolder, app, env),
+        "-f", String.format(".%s/%s/cp.%s.us-east-1.yaml",appValuesFolder,  app, env),
         "--set", "deployment.image.tag=1.1.1",
         "--set", "deploymentSuffix=-test",
         "--set", "currentPrimaryRegion=us-east-1"};
@@ -36,7 +30,13 @@ public final class HelmUtil {
 
   public static ProcessBuilder helmProcessBuilder(String app, String env) {
     ProcessBuilder processBuilder = new ProcessBuilder();
-    return processBuilder.command(buildCommandArgs(app, env)).directory(new File("../"));
+    return processBuilder.command(buildCommandArgs(app, env, "/values/app-specific")).directory(new File("../"));
+  }
+
+  public static ProcessBuilder helmProcessBuilder(String app, String env, String appValuesFolder) {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    return processBuilder.command(buildCommandArgs(app, env, appValuesFolder))
+        .directory(new File("../"));
   }
 
   public static String readSuccessOutput(Process helmProcess) {
