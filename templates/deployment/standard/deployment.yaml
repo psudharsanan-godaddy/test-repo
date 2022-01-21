@@ -24,10 +24,12 @@ spec:
         service: {{ $branchSpecificAppName | quote }}
       annotations:
         ecomm/deploymentTime: "{{ now | unixEpoch }}"
+        {{- if .Values.configs.standard.prometheus.enabled }}
         prometheus.io/scrape: "{{ .Values.deployment.prometheus.scrape }}"
         prometheus.io/port: "{{ .Values.deployment.prometheus.port }}"
         prometheus.io/scheme: "{{ .Values.deployment.prometheus.scheme }}"
         prometheus.io/path: "{{ .Values.deployment.prometheus.path }}"
+        {{- end }}
         {{- if .Values.configs.standard.db.enabled }}
         secret.reloader.stakater.com/reload: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-db-config") .) }}"
         {{- end }}

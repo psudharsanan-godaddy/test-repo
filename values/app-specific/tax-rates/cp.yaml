@@ -1,38 +1,64 @@
 app:
-  name: tax-rates
   apiVersion: v2
+  artifactId: tax-rates-service
+  frameworkType: vertx
+  name: tax-rates
   pathNoun: tax-rates
   resourceIdPathParamName: taxRateId
-  type: service
-  frameworkType: vertx
   size: SMALL
-  artifactId: tax-rates-service
-
-deployment:
-  resources:
-    requests:
-      cpu: 15m
-  readinessProbe:
-    path: /v2/tax-rates/ping
-
-hasPrivateApiGateway: true
-
+  type: service
 configs:
   standard:
-    db:
-      name: tax_rates_v2
     auth:
-      roles:
-        super:
-          defaultRoutes:
+      profiles:
+        adminClientCert:
+          enabled: true
+        legacyGenClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert2:
+          enabled: false
+          right: all
+      rights:
+        admin:
+          defaultRoles:
             enabled: false
+        all:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: true
+        utilityOnly:
+          defaultRoles:
+            enabled: true
+      roles:
         admin:
           defaultRoutes:
             enabled: false
         journal:
           defaultRoutes:
             enabled: false
-      rights:
-        admin:
-          defaultRoles:
+        read:
+          defaultRoutes:
+            enabled: true
+        super:
+          defaultRoutes:
             enabled: false
+        utility:
+          defaultRoutes:
+            enabled: true
+        write:
+          defaultRoutes:
+            enabled: false
+    db:
+      name: tax_rates_v2
+deployment:
+  readinessProbe:
+    path: /v2/tax-rates/ping
+  resources:
+    requests:
+      cpu: 25m

@@ -1,35 +1,65 @@
 app:
-  name: currency-exchange
   apiVersion: v2
+  artifactId: currency-exchange-service
+  frameworkType: vertx
+  name: currency-exchange
   pathNoun: currency-exchange
   resourceIdPathParamName: currencyExchangeId
-  type: service
-  frameworkType: vertx
   size: SMALL
-  artifactId: currency-exchange-service
-
-deployment:
-  resources:
-    requests:
-      cpu: 15m
-  readinessProbe:
-    path: /v2/currency-exchange/ping
-
-hasPrivateApiGateway: true
-
+  type: service
 configs:
   standard:
-    db:
-      name: currency_exchange_v2
     auth:
+      profiles:
+        adminClientCert:
+          enabled: true
+        legacyGenClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert2:
+          enabled: false
+          right: all
+      rights:
+        admin:
+          defaultRoles:
+            enabled: false
+        all:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: true
+        utilityOnly:
+          defaultRoles:
+            enabled: true
       roles:
-        write:
+        admin:
           defaultRoutes:
             enabled: false
         journal:
           defaultRoutes:
             enabled: false
-      rights:
-        admin:
-          defaultRoles:
+        read:
+          defaultRoutes:
+            enabled: true
+        super:
+          defaultRoutes:
             enabled: false
+        utility:
+          defaultRoutes:
+            enabled: true
+        write:
+          defaultRoutes:
+            enabled: false
+    db:
+      name: currency_exchange_v2
+deployment:
+  readinessProbe:
+    path: /v2/currency-exchange/ping
+  resources:
+    requests:
+      cpu: 15m
+hasPrivateApiGateway: true
