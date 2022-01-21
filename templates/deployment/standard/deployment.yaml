@@ -257,7 +257,7 @@ spec:
         - name: sensitive-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-sensitive-config") .) }}
-            defaultMode: 256
+            defaultMode: {{ .Values.configs.standard.sensitive.defaultMode | default "256" }}
         {{- end }}
         {{- if $tlsConfigEnabled }}
         - name: tls-config-secret
