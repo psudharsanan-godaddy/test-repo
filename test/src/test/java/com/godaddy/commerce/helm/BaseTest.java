@@ -1,6 +1,7 @@
 package com.godaddy.commerce.helm;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.godaddy.commerce.helm.resource.configmap.ConfigMapResource;
 import com.godaddy.commerce.helm.resource.deployment.DeploymentResource;
@@ -66,6 +67,31 @@ public abstract class BaseTest {
         assertType.executeAssertion(this, secrets, externalSecrets, configMaps, deployment);
       } catch (AssertionError e) {
         throw new AssertionError("Failure during assertion of " + assertType, e);
+      }
+    }
+  }
+
+  protected void assertContainsNoneOf(String[] generatedResources, AssertType... assertTypes) {
+    Map<String, SecretResource> secrets = getSecrets(generatedResources);
+    Map<String, ExternalSecretResource> externalSecrets = getExternalSecrets(generatedResources);
+    Map<String, ConfigMapResource> configMaps = getConfigMaps(generatedResources);
+    Map<String, DeploymentResource> deployments = getDeployments(generatedResources);
+    assertThat(deployments).containsKey(withAppPrefix("deployment-test"));
+    DeploymentResource deployment = deployments.get(withAppPrefix("deployment-test"));
+    for (AssertType assertType : assertTypes) {
+      try {
+        assertThatThrownBy(() ->
+            assertType.executeAssertion(
+                this,
+                secrets,
+                externalSecrets,
+                configMaps,
+                deployment))
+            .isInstanceOf(AssertionError.class);
+
+      } catch (AssertionError e) {
+        throw new AssertionError(
+            String.format("Expected to not contain %s but it contains", assertType), e);
       }
     }
   }
