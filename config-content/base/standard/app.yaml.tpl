@@ -1,4 +1,4 @@
-{{- $mountPath := required ".Values.vertx.mountPath required!" .Values.vertx.mountPath }}
+{{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
 APP_NOUN: '{{ .Values.app.name }}'
 AUTH_CONFIG_PATH: '{{ $mountPath }}/auth/auth-config.json'
 CLASSIC_DB_CONFIG_PATH: '{{ $mountPath }}/classic-db/classic_db_config.json'
@@ -26,3 +26,6 @@ SELLER_CONFIG_URI: 'http://seller-configs-service:8080'
 SSL_CONTEXT_CONFIG_PATH: '{{ $mountPath }}/pki-context/context-config.json'
 TLS_KEYSTORE_PASS: '{{ $mountPath }}/tls/tls_certs_keystore_pass.txt'
 TLS_KEYSTORE_PATH: '{{ $mountPath }}/tls/tls_certs_keystore.pkcs12'
+#BEGIN: additional-app config
+{{ include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "app" "blockName" "additional-app") .) | indent 0}}
+#END: additional-app config

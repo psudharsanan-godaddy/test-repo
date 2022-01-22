@@ -1,0 +1,12 @@
+{{- $enabled := include "commerce-app-v2.configs.spring-boot.application.logging.enabled" . | include "strToBool" }}
+{{- if $enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-spring-boot-logging-config") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+data:
+  logback-spring.xml: |-
+    {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "logback-spring" "appFrameworkType" "spring-boot" "originalConfigFileExtension" ".xml") .) | nindent 4 }}
+{{- end }}

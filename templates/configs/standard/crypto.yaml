@@ -1,4 +1,5 @@
-{{- if .Values.configs.standard.crypto.enabled }}
+{{- $enabled := include "commerce-app-v2.configs.standard.crypto.enabled" . | include "strToBool" }}
+{{- if $enabled }}
 {{ $awsRegion := required ".Values.awsRegion required!" .Values.awsRegion }}
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret

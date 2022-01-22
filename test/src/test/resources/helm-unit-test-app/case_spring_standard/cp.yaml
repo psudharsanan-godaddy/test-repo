@@ -1,0 +1,63 @@
+app:
+  name: helm-unit-test-app
+  apiVersion: v1
+  pathNoun: helm-unit-test-app
+  type: service
+  frameworkType: spring-boot
+  size: MEDIUM
+  artifactId: helm-unit-test-app-service
+
+deployment:
+  enabled: true
+  readinessProbe:
+    path: /v2/helm-unit-test-app/ping
+    initialDelaySeconds: 30
+  enableLivenessProbe: true
+  livenessProbe:
+    path: /v2/helm-unit-test-app/healthcheck
+    initialDelaySeconds: 45
+  readOnlyRootFilesystem: false
+  enableApm: false
+  extraVolumes: { }
+
+hasPrivateApiGateway: true
+
+
+configs:
+  standard:
+    enabled: true
+    app:
+      enabled: true
+    classicDb:
+      enabled: true
+    clientCert:
+      enabled: true
+    pki:
+      enabled: true
+    hosts:
+      enabled: true
+    prometheus:
+      enabled: true
+    sensitive:
+      enabled: true
+    tls:
+      enabled: true
+    auth:
+      enabled: true
+    crypto:
+      enabled: true
+    db:
+      enabled: true
+      name: testDbName
+    log:
+      enabled: true
+  springBoot:
+    enabled: true
+    application:
+      enabled: true
+      logging:
+        type: CONSOLE_JSON
+        logbook:
+          enabled: true
+
+

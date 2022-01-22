@@ -1,4 +1,5 @@
-{{- if .Values.configs.standard.db.enabled }}
+{{- $enabled := include "commerce-app-v2.configs.standard.db.enabled" . | include "strToBool" }}
+{{- if $enabled }}
 {{ $appName := required ".Values.app.name required!" .Values.app.name }}
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret

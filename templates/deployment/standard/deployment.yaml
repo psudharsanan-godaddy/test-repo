@@ -1,10 +1,23 @@
+{{- if .Values.deployment }}
 {{- if .Values.deployment.enabled }}
 {{ $branchSpecificAppName := include "commerce-app-v2.branchSpecificAppName" . }}
 {{ $appName := required ".Values.app.name required!" .Values.app.name }}
 {{ $cacertNamePrefix := printf "%s-%s-%s-" $appName (required ".Values.envMisnomer required!" .Values.envMisnomer) (required ".Values.envType required!" .Values.envType) }}
 {{ $cacertsSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-cacerts") .) }}
 {{ $storeKeysSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-storekeys") .) }}
-{{ $mountPath := required ".Values.vertx.mountPath required!" .Values.vertx.mountPath }}
+{{ $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
+{{- $appConfigEnabled := include "commerce-app-v2.configs.standard.app.enabled" . | include "strToBool" }}
+{{- $authConfigEnabled := include "commerce-app-v2.configs.standard.auth.enabled" . | include "strToBool" }}
+{{- $cryptoConfigEnabled := include "commerce-app-v2.configs.standard.crypto.enabled" . | include "strToBool" }}
+{{- $dbConfigEnabled := include "commerce-app-v2.configs.standard.db.enabled" . | include "strToBool" }}
+{{- $logConfigEnabled := include "commerce-app-v2.configs.standard.log.enabled" . | include "strToBool" }}
+{{- $prometheusConfigEnabled := include "commerce-app-v2.configs.standard.prometheus.enabled" . | include "strToBool" }}
+{{- $classicDbConfigEnabled := include "commerce-app-v2.configs.standard.classicDb.enabled" . | include "strToBool" }}
+{{- $clientCertConfigEnabled := include "commerce-app-v2.configs.standard.clientCert.enabled" . | include "strToBool" }}
+{{- $hostsConfigEnabled := include "commerce-app-v2.configs.standard.hosts.enabled" . | include "strToBool" }}
+{{- $pkiConfigEnabled := include "commerce-app-v2.configs.standard.pki.enabled" . | include "strToBool" }}
+{{- $sensitiveConfigEnabled := include "commerce-app-v2.configs.standard.sensitive.enabled" . | include "strToBool" }}
+{{- $tlsConfigEnabled := include "commerce-app-v2.configs.standard.tls.enabled" . | include "strToBool" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,7 +43,7 @@ spec:
         prometheus.io/scheme: "{{ .Values.deployment.prometheus.scheme }}"
         prometheus.io/path: "{{ .Values.deployment.prometheus.path }}"
         {{- end }}
-        {{- if .Values.configs.standard.db.enabled }}
+        {{- if $dbConfigEnabled }}
         secret.reloader.stakater.com/reload: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-db-config") .) }}"
         {{- end }}
     spec:
@@ -57,51 +70,52 @@ spec:
           image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
           imagePullPolicy: Always
           volumeMounts:
-            {{- if .Values.configs.standard.app.enabled }}
+            #BEGIN: standard specific volume mounts
+            {{- if $appConfigEnabled }}
             - name: app-config-secret
               mountPath: "{{ $mountPath }}/app"
             {{- end }}
-            {{- if .Values.configs.standard.auth.enabled }}
+            {{- if $authConfigEnabled }}
             - name: auth-config-secret
               mountPath: "{{ $mountPath }}/auth"
             {{- end }}
-            {{- if .Values.configs.standard.clientCert.enabled }}
+            {{- if $clientCertConfigEnabled }}
             - name: client-cert-config-secret
               mountPath: "{{ $mountPath }}/pki"
             {{- end }}
-            {{- if .Values.configs.standard.crypto.enabled }}
+            {{- if $cryptoConfigEnabled }}
             - name: crypto-config-secret
               mountPath: "{{ $mountPath }}/crypto"
             {{- end }}
-            {{- if .Values.configs.standard.db.enabled }}
+            {{- if $dbConfigEnabled }}
             - name: db-config-secret
               mountPath: "{{ $mountPath }}/db"
             {{- end }}
-            {{- if .Values.configs.standard.hosts.enabled }}
+            {{- if $hostsConfigEnabled }}
             - name: hosts-config-secret
               mountPath: "{{ $mountPath }}/hosts"
             {{- end }}
-            {{- if .Values.configs.standard.log.enabled }}
+            {{- if $logConfigEnabled }}
             - name: log-config-configmap
               mountPath: "{{ $mountPath }}/logconfig"
             {{- end }}
-            {{- if .Values.configs.standard.pki.enabled }}
+            {{- if $pkiConfigEnabled }}
             - name: client-cert-context-secret
               mountPath: "{{ $mountPath }}/pki-context"
             {{- end }}
-            {{- if .Values.configs.standard.prometheus.enabled }}
+            {{- if $prometheusConfigEnabled }}
             - name: prometheus-config-secret
               mountPath: "{{ $mountPath }}/prometheus"
             {{- end }}
-            {{- if .Values.configs.standard.sensitive.enabled }}
+            {{- if $sensitiveConfigEnabled }}
             - name: sensitive-config-secret
               mountPath: "{{ $mountPath }}/sensitive"
             {{- end }}
-            {{- if .Values.configs.standard.tls.enabled }}
+            {{- if $tlsConfigEnabled }}
             - name: tls-config-secret
               mountPath: "{{ $mountPath }}/tls"
             {{- end }}
-            {{- if .Values.configs.standard.classicDb.enabled }}
+            {{- if $classicDbConfigEnabled }}
             - name: classic-db-config
               mountPath: "{{ $mountPath }}/classic-db"
             {{- end }}
@@ -109,10 +123,8 @@ spec:
               mountPath: "{{ $mountPath }}/cacerts"
             - name: "{{ $storeKeysSecretName }}"
               mountPath: "{{ $mountPath }}/storekeys"
-            {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "vertx" }}
-            - name: vertx-options-secret
-              mountPath: "{{ $mountPath }}/vertx-options"
-            {{- end }}
+            #END: standard specific volume mounts
+            {{- include "commerce-app-v2.deployment.framework.volumeMount"  . | nindent 12 }}
             {{- with .Values.deployment.extraVolumeMounts }}
             {{ toYaml . | nindent 12 }}
             {{- end }}
@@ -124,15 +136,20 @@ spec:
           {{- if .Values.deployment.enableLivenessProbe }}
           livenessProbe:
             httpGet:
+              {{- $livenessProbePathExists := include "commerce-app-v2.deployment.livenessProbe.path.exists" . | include "strToBool"}}
+              {{- if $livenessProbePathExists }}
+              path: "/{{ .Values.deployment.livenessProbe.path }}"
+              {{- else }}
               path: "/{{ .Values.app.apiVersion }}/{{ .Values.app.pathNoun }}/ping"
+              {{- end }}
               port: 8443
               scheme: HTTPS
               httpHeaders:
                 - name: X-Request-Id
                   value: "54732a76-9566-47b7-8248-5aebd637a5c6"
-            initialDelaySeconds: 15
-            periodSeconds: 15
-            timeoutSeconds: 5
+            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds | default "15" }}
+            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds | default "15" }}
+            timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds | default "5" }}
             successThreshold: 1
             failureThreshold: 2
           {{- end }}
@@ -144,14 +161,15 @@ spec:
               httpHeaders:
                 - name: X-Request-Id
                   value: "54732a76-9566-47b7-8248-5aebd637a5c6"
-            initialDelaySeconds: 15
-            periodSeconds: 15
-            timeoutSeconds: 5
+            initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds | default "15" }}
+            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds | default "15" }}
+            timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds | default "5" }}
             successThreshold: 1
             failureThreshold: 2
           resources:
             {{- include "commerce-app-v2.deploymentResources" . | nindent 12 }}
           env:
+            #BEGIN: standard specific envs
             - name: APP_NAME
               value: {{ $appName | quote }}
             - name: APP_VERSION
@@ -173,91 +191,82 @@ spec:
                   name: essp-apm-credentials
                   key: apm_server_url
             {{- end }}
-            {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "vertx" }}
-            - name: VERTX_ENV
-              value: "{{ required ".Values.vertxEnv required!" .Values.vertxEnv }}"
-            - name: VERTX_CONF
-              value: "-conf {{ $mountPath }}/app/config.json"
-            - name: CONFIG_PATH
-              value: "{{ $mountPath }}/app"
-            - name: METRICS_PORT
-              value: "{{ required ".Values.deployment.prometheus.port required!" .Values.deployment.prometheus.port }}"
-            - name: JAVA_OPTS
-              value: "{{ include "commerce-app-v2.javaOpts" . }}"
             - name: MOUNT_PATH
               value: "{{ $mountPath }}"
-            - name: ENV_SPECIFIC_IMAGE
-              value: "NO"
+            {{- if $appConfigEnabled }}
+            - name: CONFIG_PATH
+              value: "{{ $mountPath }}/app"
+            {{- end }}
             - name: CACERTS
               value: "{{ $cacertsSecretName }}"
             - name: STOREKEYS
               value: "{{ $storeKeysSecretName }}"
-            - name: ENABLE_JMX
-              value: "{{ required ".Values.jmx.enabled required!" .Values.jmx.enabled }}"
-            {{- end }}
+            #END: standard specific envs
+            {{- include "commerce-app-v2.deployment.framework.env" . | nindent 12 }}
             {{- with .Values.deployment.env }}
             {{ toYaml . | nindent 12 }}
             {{- end }}
       terminationGracePeriodSeconds: 90
       volumes:
-        {{- if .Values.configs.standard.app.enabled }}
+        #BEGIN: standard specific volumes
+        {{- if $appConfigEnabled }}
         - name: app-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-app-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.auth.enabled }}
+        {{- if $authConfigEnabled }}
         - name: auth-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-auth-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.clientCert.enabled }}
+        {{- if $clientCertConfigEnabled }}
         - name: client-cert-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-client-cert-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.crypto.enabled }}
+        {{- if $cryptoConfigEnabled }}
         - name: crypto-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-crypto-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.db.enabled }}
+        {{- if $dbConfigEnabled }}
         - name: db-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-db-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.hosts.enabled }}
+        {{- if $hostsConfigEnabled }}
         - name: hosts-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-hosts-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.log.enabled }}
+        {{- if $logConfigEnabled }}
         - name: log-config-configmap
           configMap:
             name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-log-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.pki.enabled }}
+        {{- if $pkiConfigEnabled }}
         - name: client-cert-context-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-client-cert-context") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.prometheus.enabled }}
+        {{- if $prometheusConfigEnabled }}
         - name: prometheus-config-secret
           secret:
             optional: true
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-prometheus-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.sensitive.enabled }}
+        {{- if $sensitiveConfigEnabled }}
         - name: sensitive-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-sensitive-config") .) }}
-            defaultMode: 256
+            defaultMode: {{ .Values.configs.standard.sensitive.defaultMode | default "256" }}
         {{- end }}
-        {{- if .Values.configs.standard.tls.enabled }}
+        {{- if $tlsConfigEnabled }}
         - name: tls-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-tls-config") .) }}
         {{- end }}
-        {{- if .Values.configs.standard.classicDb.enabled }}
+        {{- if $classicDbConfigEnabled }}
         - name: classic-db-config
           secret:
             optional: true
@@ -269,17 +278,15 @@ spec:
         - name: {{ $storeKeysSecretName }}
           secret:
             secretName: {{ $storeKeysSecretName }}
-        {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "vertx" }}
-        - name: vertx-options-secret
-          secret:
-            secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-vertx-options") .) }}
-        {{- end }}
         {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "spring-boot" }}
         - name: wildcard-cert
           secret:
             secretName: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-wildcard-cert") .) }}"
         {{- end }}
+        #END: standard specific volumes
+        {{- include "commerce-app-v2.deployment.framework.volume" . | nindent 8 }}
         {{- with .Values.deployment.extraVolumes }}
         {{ toYaml . | nindent 10 }}
         {{- end }}
+{{- end }}
 {{- end }}
