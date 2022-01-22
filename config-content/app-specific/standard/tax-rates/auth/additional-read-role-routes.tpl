@@ -1,9 +1,9 @@
-- route: 'POST:/v2/customers/:customerId/tax-rates/find'
-- route: 'GET:/v2/tax-rates/journal'
-  queryString:
+- route: POST:/v2/customers/:customerId/tax-rates/find
+- queryString:
     clock:
-    - '*'
-    limit:
-    - '*'
+      - "*"
     journalId:
-    - '*'
+      - "*"
+    limit:
+      - "*"
+  route: GET:/v2/tax-rates/journal

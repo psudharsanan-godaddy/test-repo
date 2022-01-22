@@ -1,0 +1,3 @@
+- route: POST:/v2/customers/:customerId/tax-rates
+- route: PUT:/v2/customers/:customerId/tax-rates/:taxRateId
+- route: DELETE:/v2/customers/:customerId/tax-rates/:taxRateId

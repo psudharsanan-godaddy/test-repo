@@ -1,8 +1,8 @@
-- jwtAuth: basic
+- certificateSubjectName: CN=instore-credit-gateway-icp.client.cp.api.{{ required ".Values.gdDomainEnvPrefix required!" .Values.gdDomainEnvPrefix }}godaddy.com, OU=, O=
+  jwtAuth: basic
   jwtType: cert
-  certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.qaToolClientCert2.jwtSubjectName required!" .Values.configs.standard.auth.profiles.instoreCreditGatewayClientCert.jwtSubjectName }}'
   right: readOnly
-- jwtAuth: basic
+- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.pricingAppClientCert.jwtSubjectName }}'
+  jwtAuth: basic
   jwtType: cert
-  certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.qaToolClientCert2.jwtSubjectName required!" .Values.configs.standard.auth.profiles.pricingAppClient.jwtSubjectName }}'
   right: all

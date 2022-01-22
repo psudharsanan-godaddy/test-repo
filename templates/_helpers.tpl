@@ -175,10 +175,12 @@ For services, use the value provided at .Values.deployment.numberOfReplicas
 {{- define "commerce-app-v2.deploymentNumberOfReplicas" -}}
 {{- $awsRegion := required ".Values.awsRegion required!" .Values.awsRegion }}
 {{- $currentPrimaryRegion := required ".Values.currentPrimaryRegion required!" .Values.currentPrimaryRegion }}
+{{- $clusterSide := required ".Values.clusterSide required!" .Values.clusterSide }}
+{{- $liveClusterSide := required ".Values.liveClusterSide required!" .Values.liveClusterSide }}
 {{- $appType := required ".Values.app.type required!" .Values.app.type }}
 {{- if eq $appType "reader" }}
 {{- $deploymentSuffix := required ".Values.deploymentSuffix required!" .Values.deploymentSuffix }}
-{{- ternary 1 0 (and (eq $awsRegion $currentPrimaryRegion) (eq $deploymentSuffix "")) }}
+{{- ternary 1 0 (and (eq $awsRegion $currentPrimaryRegion) (eq $clusterSide $liveClusterSide) (eq $deploymentSuffix "")) }}
 {{- else }}
 {{- required ".Values.deployment.numberOfReplicas required!" .Values.deployment.numberOfReplicas }}
 {{- end }}
