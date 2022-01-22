@@ -1,0 +1,148 @@
+env: test
+envMisnomer: test
+vertxEnv: test
+gdDomainEnvPrefix: test-
+
+configs:
+  standard:
+    auth:
+      profiles:
+        adminClientCert: {} # only set in ote and prod
+        ecommClientCert:
+          mtlsSubjectName: 'CN=ecomm-shared.client.cp.api.test-godaddy.com'
+          jwtSubjectName: 'CN=ecomm-shared.client.cp.api.test-godaddy.com, OU=, O='
+        ecommOrchClientCert:
+          jwtSubjectName: 'CN=ecomm-orch.client.cp.api.test-godaddy.com, OU=, O='
+        legacyGenClientCert:
+          mtlsSubjectName: 'CN=eCommClient.test.intranet.gdg, OU=Domain Control Validated, O=eCommClient.test.intranet.gdg'
+          jwtSubjectName: 'CN=eCommClient.test.intranet.gdg, OU=Domain Control Validated, O=eCommClient.test.intranet.gdg'
+        legacyPciClientCert:
+          mtlsSubjectName: 'CN=eCommClient.test.intranet.gdg, OU=Domain Control Validated, O=eCommClient.test.intranet.gdg'
+          jwtSubjectName: 'CN=eCommClient.test.intranet.gdg, OU=Domain Control Validated, O=eCommClient.test.intranet.gdg'
+        qaClientCert:
+          mtlsSubjectName: 'CN=qa.test-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC., L=Scottsdale, ST=AZ, C=US'
+          jwtSubjectName: 'CN=qa.test-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC.'
+        qaToolClientCert:
+          mtlsSubjectName: 'CN=ecommqa.test-godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=ecommqa.test-godaddy.com, OU=Domain Control Validated, O='
+        qaToolClientCert2:
+          mtlsSubjectName: 'CN=ecommqa.test-godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=ecommqa.test-godaddy.com, OU=Domain Control Validated, O='
+        pricingAppClient:
+          jwtSubjectName: 'CN=pricing.client.cp.api.int.test-godaddy.com, OU=Domain Control Validated, O='
+        # partners' client certs
+        ckpClientCert:
+          mtlsSubjectName: 'CN=c360-journal-reader.authclient.test-godaddy.com'
+          jwtSubjectName: 'CN=c360-journal-reader.authclient.test-godaddy.com, OU=, O='
+        crmClientCert:
+          mtlsSubjectName: 'CN=crm.test.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=crm.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+        cpanelClientCert:
+          mtlsSubjectName: 'CN=diablo.test.authclient.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=diablo.test.authclient.int.godaddy.com, OU=Domain Control Validated, O='
+        hfsClientCert:
+          mtlsSubjectName: 'CN=hfs.ecomm.test.authclient.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=hfs.ecomm.test.authclient.int.godaddy.com, OU=Domain Control Validated, O='
+          right: all
+        graphApiClientCert:
+          jwtSubjectName: 'CN=c360-graph-api.authclient.test-godaddy.com, OU=Domain Control Validated, O='
+        globalClientCert:
+          mtlsSubjectName: 'CN=global-provisioning.client.int.test-godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=global-provisioning.client.int.test-godaddy.com, OU=Domain Control Validated, O='
+        legalClientCert:
+          mtlsSubjectName: 'CN=legalinvestigations.test.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=legalinvestigations.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+        martechClientCert:
+          mtlsSubjectName: 'CN=deltaemail.test.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=deltaemail.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+        domainsClientCert:
+          mtlsSubjectName: 'CN=domclientauth.int.test-godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=domclientauth.int.test-godaddy.com, OU=Domain Control Validated, O='
+        domainsRegistrarClientCert:
+          mtlsSubjectName: 'CN=registrar.test.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=registrar.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+        domainsRegistrarClientCert2: {} # only set in prod
+        fraudAppsClientCert:
+          mtlsSubjectName: 'CN=fraudapps.test.client.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=fraudapps.test.client.godaddy.com, OU=Domain Control Validated, O='
+        ipeClientCert:
+          mtlsSubjectName: 'CN=client.partners.test-godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=client.partners.test-godaddy.com, OU=Domain Control Validated, O='
+        paidItClientCert:
+          mtlsSubjectName: 'CN=paid-it.test.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=paid-it.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+        paidItClientCert2: {} # only set in test and prod
+        appSvcQuickStartClientCert: {} # only set in dp
+        fosClientCert:
+          mtlsSubjectName: 'CN=corp.web.sales.test.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=corp.web.sales.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+        wssClientCert:
+          mtlsSubjectName: 'CN=wss-nesi.client.int.test-godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=wss-nesi.client.int.test-godaddy.com, OU=Domain Control Validated, O='
+        woprClientCert: {} # only set in test and prod
+        dudaClientCert:
+          jwtSubjectName: 'CN=client.duda.partners.test-godaddy.com, OU=, O='
+        pricingAppClientCert:
+          jwtSubjectName: 'CN=pricing.client.cp.api.int.test-godaddy.com, OU=Domain Control Validated, O='
+        migrationIntegrationClientCert:
+          jwtSubjectName: 'CN=mtf.migration-integration.test-godaddy.com, OU=Domain Control Validated, O='
+        sitelockClientCert:
+          jwtSubjectName: 'CN=sitelock.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+        proHubClientCert:
+          jwtSubjectName: 'CN=entitlement.px.client.test-godaddy.com, OU=Domain Control Validated, O='
+        projectNucleusClientCert:
+          jwtSubjectName: 'CN=pg.api.int.test-godaddy.com, OU=Domain Control Validated, O='
+        projectNucleusClientClientCert:
+          jwtSubjectName: 'CN=pg.api.int.test-godaddy.com, OU=Domain Control Validated, O='
+        sslManagementClientCert:
+          jwtSubjectName: 'CN=bot.managedssl.client.int.test-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC.'
+        websiteAccountsClientCert:
+          jwtSubjectName: 'CN=websites.accounts.entitlements.client.int.test-godaddy.com, OU=Domain Control Validated, O='
+        websiteAccountsSubscriptionsClientCert:
+          jwtSubjectName: 'CN=websites.accounts.subscription.client.int.test-godaddy.com, OU=Domain Control Validated, O='
+        ventureDashboardClientCert:
+          jwtSubjectName: 'CN=websites.accounts.subscription.client.int.test-godaddy.com, OU=Domain Control Validated, O='
+        vnextTestingClientCert:
+          jwtSubjectName: 'CN=vnext-testing.authclient.int.test-godaddy.com, OU=Domain Control Validated, O='
+        paymentClientCert:
+          jwtSubjectName: 'CN=*.payments.test-godaddy.com, OU=Domain Control Validated, O='
+        paymentStatsClientCert:
+          jwtSubjectName: 'CN=*.stats.poynt.test-godaddy.com, OU=Domain Control Validated, O='
+        confabulatorClientCert:
+          jwtSubjectName: 'CN=confabulator.int.test-godaddy.com, OU=Domain Control Validated, O='
+        pleskClientCert:
+          jwtSubjectName: 'CN=resourcegen.plesk.test-godaddy.com, OU=, O='
+        overClientCert:
+          jwtSubjectName: 'CN=over.apiproxy.client.int.test-godaddy.com, OU=Domain Control Validated, O='
+        spaqPollingClientCert: {} # only set in prod
+        pkiClientCert:
+          jwtSubjectName: 'CN=pki.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+          right: productTeamsTesting # productTeamsTesting for dev and test; generalProvisioning for prod
+        mwpClientCert:
+          jwtSubjectName: 'CN=mwp-provisioning.client.test-godaddy.com, OU=Domain Control Validated, O='
+          right: productTeamsTesting # productTeamsTesting for dev and test; generalProvisioning for prod
+        epiClientCert:
+          jwtSubjectName: 'CN=epi.authclient.int.test-godaddy.com, OU=Domain Control Validated, O='
+          right: productTeamsTesting # productTeamsTesting for dev and test; generalProvisioning for prod
+        secUiClientCert:
+          jwtSubjectName: 'CN=secui.entitlements.client.int.test-godaddy.com, OU=Domain Control Validated, O='
+          right: productTeamsTesting # productTeamsTesting for dev and test; generalProvisioning for prod
+        c3Qa:
+          jwtGroups:
+            tier0: 'C3-Tier0-QA'
+            tier1: 'C3-Tier1-QA'
+            tier2: 'C3-Tier2-QA'
+            tier3: 'C3-Tier3-QA'
+        thirdParty:
+          shopperIds:
+            123Reg: '3954492' # only set in test, ote and prod
+            tsoHost: '3445036'
+            mt: null # only set in prod, media temple?
+            heartInternet: '976411'
+            heartInternet2: '3662834' # only set in test
+            heg: '3929733' # only set in test and prod
+            migrationIntegration: '3240742'
+            domainFactory: '4815702' # only set in test, ote and prod
+
+deployment:
+  numberOfReplicas: 2

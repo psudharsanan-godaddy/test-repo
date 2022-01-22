@@ -1,0 +1,11 @@
+{{- if and (.Values.configs.standard.auth.enabled) (or (eq .Values.app.type "service") (eq .Values.app.type "reader")) }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-auth-config") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+data:
+  auth-config.json: |-
+    {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "auth" "originalConfigFileExtension" ".yaml") .) | fromYaml | toJson | b64enc | nindent 4 }}
+{{- end }}

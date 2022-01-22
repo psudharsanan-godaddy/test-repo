@@ -1,0 +1,2 @@
+- route: POST:/v2/customers/:customerId/currency-exchange
+- route: PUT:/v2/customers/:customerId/currency-exchange/:currencyExchangeId

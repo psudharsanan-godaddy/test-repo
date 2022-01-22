@@ -1,0 +1,13 @@
+{{- if .Values.configs.standard.classicDb.enabled }}
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-classic-db-configexternal") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+spec:
+  backendType: secretsManager
+  data:
+    - key: /ecomm/classic-db/master
+      name: classic_db_config.json
+{{- end }}

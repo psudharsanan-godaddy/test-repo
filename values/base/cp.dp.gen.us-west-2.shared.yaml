@@ -1,0 +1,7 @@
+envType: shared
+configs:
+  standard:
+    db:
+      clusterId: ecomm-devpri-gen-us-west-2-aurora
+    queryDb:
+      clusterId: ecomm-devpri-gen-us-west-2-aurora

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: commerce-app
+description: A Helm chart for Commerce Apps
+type: application
+version: 2.0.0
+appVersion: 1.0.0

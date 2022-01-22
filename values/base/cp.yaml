@@ -1,0 +1,132 @@
+deployment:
+  enabled: true
+  enableLivenessProbe: false
+  readOnlyRootFilesystem: true
+  prometheus:
+    scrape: 'true'
+    port: '8081'
+    scheme: 'https'
+    path: '/metrics'
+  resources:
+    # memory fields here will not be used if defined as they will be determined by the .Value.app.size
+    requests:
+      cpu: 80m
+    limits:
+      cpu: 2000m
+  enableApm: false
+  extraVolumes: {}
+
+job:
+  enabled: false
+  annotations: {}
+  enableApm: false
+  extraVolumes: {}
+
+hasPrivateApiGateway: false
+
+clientCerts: {}
+serverCerts: {}
+
+configs:
+  standard:
+    app:
+      enabled: true
+    auth:
+      enabled: true
+      roles:
+        super:
+          defaultRoutes:
+            enabled: true
+        write:
+          defaultRoutes:
+            enabled: true
+        read:
+          defaultRoutes:
+            enabled: true
+        journal:
+          defaultRoutes:
+            enabled: true
+        utility:
+          defaultRoutes:
+            enabled: true
+      rights:
+        all:
+          defaultRoles:
+            enabled: true
+        admin:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: true
+        utilityOnly:
+          defaultRoles:
+            enabled: true
+      profiles:
+        ecommClientCert:
+          enabled: true
+          right: all
+        ecommOrchClientCert:
+          right: all
+        legacyGenClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert2:
+          enabled: false
+          right: all
+        adminClientCert:
+          enabled: false
+          right: all
+        qaClientCert:
+          enabled: true
+          right: all
+        qaToolClientCert:
+          enabled: true
+          right: all
+        qaToolClientCert2:
+          enabled: true
+          right: all
+        noneCert:
+          enabled: true
+          right: utilityOnly
+    classicDb:
+      enabled: false
+    clientCert:
+      enabled: true
+    crypto:
+      enabled: false
+    db:
+      enabled: true
+      connectionTtlEnabled: false
+    queryDb:
+      enabled: false
+    hosts:
+      enabled: true
+    log:
+      enabled: true
+    pki:
+      enabled: true
+    prometheus:
+      enabled: true
+    sensitive:
+      enabled: true
+    tls:
+      enabled: true
+  vertx:
+    config:
+      enabled: true
+    options:
+      enabled: true
+
+vertx:
+  mountPath: /tmp
+  cryptoMode: LOCAL
+  enableAuth: true
+  enableTls: true
+  enableJwt: false
+  enableSecurityLogging: true
+jmx:
+  enabled: false

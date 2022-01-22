@@ -1,0 +1,43 @@
+{{- if .Values.configs.standard.db.enabled }}
+{{ $appName := required ".Values.app.name required!" .Values.app.name }}
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-db-config") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+spec:
+  backendType: systemManager
+  region: {{ required ".Values.awsRegion required!" .Values.awsRegion }}
+  data:
+    {{- $dbClusterId := required ".Values.configs.standard.db.clusterId required!" .Values.configs.standard.db.clusterId }}
+    - name: DbUsername
+      key: /RDS/{{ $appName }}/Username
+    - name: DbActiveEndpoint
+      key: /Team/Aurora/{{ $dbClusterId }}/ActiveEndpoint
+    - name: DbReaderEndpoint
+      key: /Team/Aurora/{{ $dbClusterId }}/ReaderEndpoint
+    - name: DbWriterEndpoint
+      key: /Team/Aurora/{{ $dbClusterId }}/WriterEndpoint
+    - name: DbPort
+      key: /Team/Aurora/{{ $dbClusterId }}/Port
+    {{- if .Values.configs.standard.queryDb.enabled }}
+    {{- $queryDbClusterId := required ".Values.configs.standard.queryDb.clusterId required!" .Values.configs.standard.queryDb.clusterId }}
+    - name: QueryDbUsername
+      key: /RDS/{{ $appName }}/Username
+    - name: QueryDbActiveEndpoint
+      key: /Team/Aurora/{{ $queryDbClusterId }}/ActiveEndpoint
+    - name: QueryDbReaderEndpoint
+      key: /Team/Aurora/{{ $queryDbClusterId }}/ReaderEndpoint
+    - name: QueryDbWriterEndpoint
+      key: /Team/Aurora/{{ $queryDbClusterId }}/WriterEndpoint
+    - name: QueryDbPort
+      key: /Team/Aurora/{{ $queryDbClusterId }}/Port
+    {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "commerce-app-v2.labels" . | nindent 8 }}
+    stringData:
+      {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "db" "originalConfigFileExtension" ".yaml") .) | nindent 6 }}
+{{- end }}
