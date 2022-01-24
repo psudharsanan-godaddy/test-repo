@@ -138,7 +138,7 @@ spec:
             httpGet:
               {{- $livenessProbePathExists := include "commerce-app-v2.deployment.livenessProbe.path.exists" . | include "strToBool"}}
               {{- if $livenessProbePathExists }}
-              path: "/{{ .Values.deployment.livenessProbe.path }}"
+              path: "{{ .Values.deployment.livenessProbe.path }}"
               {{- else }}
               path: "/{{ .Values.app.apiVersion }}/{{ .Values.app.pathNoun }}/ping"
               {{- end }}
