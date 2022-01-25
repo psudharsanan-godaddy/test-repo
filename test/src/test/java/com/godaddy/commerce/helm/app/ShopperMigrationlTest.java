@@ -29,7 +29,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
 
-public class ShopperMigrationlTest extends BaseTest {
+public class ShopperMigrationTest extends BaseTest {
 
   private static final Yaml yamlLoader = YamlUtil.buildYamlLoader();
   private static final String APP_NAME = "shopper-migration";
