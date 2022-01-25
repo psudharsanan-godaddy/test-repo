@@ -25,6 +25,7 @@ public final class HelmUtil {
         "-f", String.format(".%s/%s/cp.%s.us-east-1.yaml",appValuesFolder,  app, env),
         "--set", "deployment.image.tag=1.1.1",
         "--set", "deploymentSuffix=-test",
+        "--set", "liveClusterSide=a",
         "--set", "currentPrimaryRegion=us-east-1"};
   }
 

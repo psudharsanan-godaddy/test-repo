@@ -82,6 +82,7 @@ public class GenericYamlTest extends BaseTest {
         SPRING_BOOT_APPLICATION,
         SPRING_BOOT_LOG);
 
+    assertContainsNoneOf(generatedResources, VERTX_OPTIONS);
   }
 
 
@@ -123,6 +124,10 @@ public class GenericYamlTest extends BaseTest {
         STANDARD_STORE_KEYS,
         STANDARD_WILDCARD);
 
+    assertContainsNoneOf(generatedResources,
+        VERTX_OPTIONS,
+        SPRING_BOOT_APPLICATION,
+        SPRING_BOOT_LOG);
   }
 
 
@@ -165,6 +170,9 @@ public class GenericYamlTest extends BaseTest {
 //        STANDARD_WILDCARD, //TODO temporarily disabled because unknown
         VERTX_OPTIONS);
 
+    assertContainsNoneOf(generatedResources,
+        SPRING_BOOT_APPLICATION,
+        SPRING_BOOT_LOG);
   }
 
 }
