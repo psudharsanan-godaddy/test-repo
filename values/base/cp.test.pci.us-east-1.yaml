@@ -1,0 +1,7 @@
+awsRegion: us-east-1
+configs:
+  standard:
+    db:
+      clusterId: ecomm-test-pci-us-east-1-aurora
+    queryDb:
+      clusterId: ecomm-test-pci-us-east-1-aurora

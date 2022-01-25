@@ -1,0 +1,7 @@
+awsRegion: us-west-2
+configs:
+  standard:
+    db:
+      clusterId: ecomm-test-icp-us-west-2-aurora
+    queryDb:
+      clusterId: ecomm-test-icp-us-west-2-aurora
