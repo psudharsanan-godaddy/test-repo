@@ -1,11 +1,10 @@
 {{- if .Values.deployment }}
 {{- if .Values.deployment.enabled }}
-{{ $branchSpecificAppName := include "commerce-app-v2.branchSpecificAppName" . }}
-{{ $appName := required ".Values.app.name required!" .Values.app.name }}
-{{ $cacertNamePrefix := printf "%s-%s-%s-" $appName (required ".Values.envMisnomer required!" .Values.envMisnomer) (required ".Values.envType required!" .Values.envType) }}
-{{ $cacertsSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-cacerts") .) }}
-{{ $storeKeysSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-storekeys") .) }}
-{{ $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
+{{- $branchSpecificAppName := include "commerce-app-v2.branchSpecificAppName" . }}
+{{- $appName := required ".Values.app.name required!" .Values.app.name }}
+{{- $cacertsSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-cacerts") .) }}
+{{- $storeKeysSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-storekeys") .) }}
+{{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
 {{- $appConfigEnabled := include "commerce-app-v2.configs.standard.app.enabled" . | include "strToBool" }}
 {{- $authConfigEnabled := include "commerce-app-v2.configs.standard.auth.enabled" . | include "strToBool" }}
 {{- $cryptoConfigEnabled := include "commerce-app-v2.configs.standard.crypto.enabled" . | include "strToBool" }}
