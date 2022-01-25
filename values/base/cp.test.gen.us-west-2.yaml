@@ -2,6 +2,6 @@ awsRegion: us-west-2
 configs:
   standard:
     db:
-      clusterId: ecomm-test-gen-us-west-2-aurora
+      clusterId: sc-769545345614-pp-hn7q457dbnicw-databasecluster-1aj4s2odxg1yj
     queryDb:
-      clusterId: ecomm-test-gen-us-west-2-aurora
+      clusterId: sc-769545345614-pp-hn7q457dbnicw-databasecluster-1aj4s2odxg1yj
