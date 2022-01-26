@@ -43,7 +43,7 @@ Check if standard db config enabled
 Check if standard log config enabled
 */}}
 {{- define "commerce-app-v2.configs.standard.log.enabled" }}
-{{- $r := and .Values.configs.standard.enabled .Values.configs.standard.log.enabled }}
+{{- $r := and .Values.configs.standard.enabled .Values.configs.standard.log.enabled (ne (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "nodejs")}}
 {{- $r }}
 {{- end }}
 

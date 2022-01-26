@@ -14,8 +14,6 @@ configs:
       enabled: false
     prometheus:
       enabled: false
-    log:
-      enabled: false
 deployment:
   readinessProbe:
     path: /v2/fulfillment-ui/ping
