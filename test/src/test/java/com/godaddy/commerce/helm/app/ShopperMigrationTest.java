@@ -84,5 +84,4 @@ public class ShopperMigrationTest extends BaseTest {
         STANDARD_AUTH,
         VERTX_OPTIONS);
   }
-
 }
