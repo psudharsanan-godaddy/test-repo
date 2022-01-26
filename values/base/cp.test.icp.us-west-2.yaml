@@ -1,0 +1,7 @@
+awsRegion: us-west-2
+configs:
+  standard:
+    db:
+      clusterId: sc-283087090193-pp-zuuauygho6cvi-databasecluster-19al90tfj2s2w
+    queryDb:
+      clusterId: sc-283087090193-pp-zuuauygho6cvi-databasecluster-19al90tfj2s2w
