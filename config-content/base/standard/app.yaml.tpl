@@ -10,7 +10,7 @@ ENABLE_AUTH: {{ required ".Values.vertx.enableAuth required!" .Values.vertx.enab
 ENABLE_JWT: {{ required ".Values.vertx.enableJwt required!" .Values.vertx.enableJwt }}
 ENABLE_SECURITY_LOGGING: {{ required ".Values.vertx.enableSecurityLogging required!" .Values.vertx.enableSecurityLogging }}
 ENABLE_TLS: {{ required ".Values.vertx.enableTls required!" .Values.vertx.enableTls }}
-ENV_TYPE: '{{ required ".Values.clusterType required!" .Values.clusterType }}'
+ENV_TYPE: '{{ required ".Values.envType required!" .Values.envType }}'
 HOSTS_CONFIG_PATH: '{{ $mountPath }}/hosts/config.json'
 http.port: 8443
 MAX_EVENT_LOOP_EXECUTE_TIME: 10000000000
