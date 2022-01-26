@@ -2,7 +2,6 @@
 {{- $appApiVersion := required ".Values.app.apiVersion required!" .Values.app.apiVersion }}
 {{- $resourceIdPathParamName := required ".Values.app.resourceIdPathParamName required!" (printf ":%s" .Values.app.resourceIdPathParamName) }}
 {{- $customerIdParamPath := ternary ":ownerId" "customers/:customerId" (eq $appApiVersion "v1") }}
-{{- $envType := required ".Values.envType required!" .Values.envType }}
 {{- $env := required ".Values.env required!" .Values.env }}
 {{- $gdDomainEnvPrefix := required ".Values.gdDomainEnvPrefix required!" .Values.gdDomainEnvPrefix -}}
 

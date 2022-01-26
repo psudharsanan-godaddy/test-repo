@@ -1,1 +1,7 @@
 awsRegion: us-east-1
+configs:
+  standard:
+    db:
+      clusterId: ecomm-devpri-gen-us-east-1-aurora
+    queryDb:
+      clusterId: ecomm-devpri-gen-us-east-1-aurora
