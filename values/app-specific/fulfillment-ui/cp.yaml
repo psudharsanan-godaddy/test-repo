@@ -1,0 +1,24 @@
+app:
+  apiVersion: v2
+  artifactId: fulfillment-ui-service
+  frameworkType: nodejs
+  name: fulfillment-ui
+  pathNoun: fulfillment-ui
+  size: SMALL
+  type: service
+configs:
+  standard:
+    auth:
+      enabled: false
+    db:
+      enabled: false
+    prometheus:
+      enabled: false
+    log:
+      enabled: false
+deployment:
+  readinessProbe:
+    path: /v2/fulfillment-ui/ping
+  resources:
+    requests:
+      cpu: 25m
