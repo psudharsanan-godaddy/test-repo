@@ -16,7 +16,6 @@ import static com.godaddy.commerce.helm.AssertType.STANDARD_PROMETHEUS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
-import static com.godaddy.commerce.helm.AssertType.STANDARD_WILDCARD;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -73,7 +72,6 @@ public class ShopperMigrationTest extends BaseTest {
         STANDARD_TLS,
         STANDARD_CA_CERTS,
         STANDARD_STORE_KEYS,
-        STANDARD_WILDCARD,
         SPRING_BOOT_APPLICATION,
         SPRING_BOOT_LOG);
 

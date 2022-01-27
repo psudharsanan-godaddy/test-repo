@@ -175,18 +175,16 @@ spec:
               value: {{ .Values.deployment.image.tag | quote }}
             - name: AWS_REGION
               value: {{ required ".Values.awsRegion required!" .Values.awsRegion | quote }}
-            {{- if ne (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "nodejs" }}
             # ref: https://confluence.godaddy.com/display/VM/CRITICAL+-+log4j+2.x+RCE#CRITICALlog4j2.xRCE-RemediationSteps
             - name: LOG4J_FORMAT_MSG_NO_LOOKUPS
               value: "true"
-            {{- end }}
             {{- if .Values.deployment.enableApm }}
             - name: ELASTIC_APM_SECRET_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: essp-apm-credentials
                   key: apm_secret_token
-            - name: ELASTIC_APM_SERVER_URLS
+            - name: ELASTIC_APM_SERVER_URLSspring
               valueFrom:
                 secretKeyRef:
                   name: essp-apm-credentials
@@ -279,11 +277,6 @@ spec:
         - name: {{ $storeKeysSecretName }}
           secret:
             secretName: {{ $storeKeysSecretName }}
-        {{- if eq (required ".Values.app.frameworkType required!" .Values.app.frameworkType) "spring-boot" }}
-        - name: wildcard-cert
-          secret:
-            secretName: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-wildcard-cert") .) }}"
-        {{- end }}
         #END: standard specific volumes
         {{- include "commerce-app-v2.deployment.framework.volume" . | nindent 8 }}
         {{- with .Values.deployment.extraVolumes }}

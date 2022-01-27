@@ -16,12 +16,12 @@ import static com.godaddy.commerce.helm.AssertType.STANDARD_PROMETHEUS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
-import static com.godaddy.commerce.helm.AssertType.STANDARD_WILDCARD;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.godaddy.commerce.helm.resource.deployment.Env;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
@@ -78,11 +78,17 @@ public class GenericYamlTest extends BaseTest {
         STANDARD_TLS,
         STANDARD_CA_CERTS,
         STANDARD_STORE_KEYS,
-        STANDARD_WILDCARD,
         SPRING_BOOT_APPLICATION,
         SPRING_BOOT_LOG);
 
     assertContainsNoneOf(generatedResources, VERTX_OPTIONS);
+    assertContainsAllEnvsOf(generatedResources,
+        Env.of("LOG4J_FORMAT_MSG_NO_LOOKUPS", "true"),
+        Env.of("AWS_REGION", "us-east-1"),
+        Env.of("APP_VERSION", "1.1.1"),
+        Env.of("APP_NAME", TEST_APP_NAME),
+        Env.of("MOUNT_PATH", "/tmp")
+    );
   }
 
 
@@ -121,13 +127,19 @@ public class GenericYamlTest extends BaseTest {
         STANDARD_SENSITIVE,
         STANDARD_TLS,
         STANDARD_CA_CERTS,
-        STANDARD_STORE_KEYS,
-        STANDARD_WILDCARD);
+        STANDARD_STORE_KEYS);
 
     assertContainsNoneOf(generatedResources,
         VERTX_OPTIONS,
         SPRING_BOOT_APPLICATION,
         SPRING_BOOT_LOG);
+    assertContainsAllEnvsOf(generatedResources,
+        Env.of("LOG4J_FORMAT_MSG_NO_LOOKUPS", "true"),
+        Env.of("AWS_REGION", "us-east-1"),
+        Env.of("APP_VERSION", "1.1.1"),
+        Env.of("APP_NAME", TEST_APP_NAME),
+        Env.of("MOUNT_PATH", "/tmp")
+    );
   }
 
 
@@ -167,12 +179,18 @@ public class GenericYamlTest extends BaseTest {
         STANDARD_TLS,
         STANDARD_CA_CERTS,
         STANDARD_STORE_KEYS,
-//        STANDARD_WILDCARD, //TODO temporarily disabled because unknown
         VERTX_OPTIONS);
 
     assertContainsNoneOf(generatedResources,
         SPRING_BOOT_APPLICATION,
         SPRING_BOOT_LOG);
+    assertContainsAllEnvsOf(generatedResources,
+        Env.of("LOG4J_FORMAT_MSG_NO_LOOKUPS", "true"),
+        Env.of("AWS_REGION", "us-east-1"),
+        Env.of("APP_VERSION", "1.1.1"),
+        Env.of("APP_NAME", TEST_APP_NAME),
+        Env.of("MOUNT_PATH", "/tmp")
+    );
   }
 
 }
