@@ -48,7 +48,8 @@ configs:
     crypto:
       enabled: false
     db:
-      enabled: false
+      enabled: true
+      name: "shopper_migration"
     log:
       enabled: false
   springBoot:
