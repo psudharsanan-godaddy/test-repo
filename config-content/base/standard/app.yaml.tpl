@@ -28,7 +28,7 @@ SSL_CONTEXT_CONFIG_PATH: '{{ $mountPath }}/pki-context/context-config.json'
 TLS_KEYSTORE_PASS: '{{ $mountPath }}/tls/tls_certs_keystore_pass.txt'
 TLS_KEYSTORE_PATH: '{{ $mountPath }}/tls/tls_certs_keystore.pkcs12'
 {{- if $sensitiveConfigEnabled }}
-SENSITIVE_CONFIG_PATH: '{{- $mountPath }}/sensitive/sensitive-config.json'
+SENSITIVE_CONFIG_PATH: '{{ $mountPath }}/sensitive/sensitive-config.json'
 {{- end }}
 #BEGIN: additional-app config
 {{ include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "app" "blockName" "additional-app") .) | indent 0}}
