@@ -42,14 +42,14 @@ The generated resource name will be:
 Params:
 - .Values.app.name required e.g. `currency-exchange`
 - .resourceNameInfix required e.g. `auth-config`
-- .Values.deploymentSuffix required e.g. `--a13b852`
+- .Values.deploymentSuffix optional e.g. `--a13b852`
 - .useBranchAgnosticName optional e.g. true, defaults to false
 */}}
 {{- define "commerce-app-v2.resourceName" -}}
 {{- $appName := required ".Values.app.name required!" .Values.app.name }}
 {{- $resourceNameInfix := required ".resourceNameInfix required!" .resourceNameInfix }}
 {{- $useBranchAgnosticName := default false .useBranchAgnosticName }}
-{{- $deploymentSuffix := required ".Values.deploymentSuffix required!" .Values.deploymentSuffix }}
+{{- $deploymentSuffix := default "" .Values.deploymentSuffix }}
 {{- if $useBranchAgnosticName }}
 {{- $deploymentSuffix = "" }}
 {{- end }}
@@ -75,11 +75,11 @@ The generated resource name will be:
 
 Params:
 - .Values.app.name required e.g. `currency-exchange`
-- .Values.deploymentSuffix required e.g. `--a13b852` or ``
+- .Values.deploymentSuffix optional e.g. `--a13b852` or ``
 */}}
 {{- define "commerce-app-v2.branchSpecificAppName" -}}
 {{- $appName := required ".Values.app.name required!" .Values.app.name }}
-{{- $deploymentSuffix := required ".Values.deploymentSuffix required!" .Values.deploymentSuffix }}
+{{- $deploymentSuffix := default "" .Values.deploymentSuffix }}
 {{- printf "%s%s" $appName $deploymentSuffix | replace "+" "_"  | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -179,7 +179,7 @@ For services, use the value provided at .Values.deployment.numberOfReplicas
 {{- $liveClusterSide := required ".Values.liveClusterSide required!" .Values.liveClusterSide }}
 {{- $appType := required ".Values.app.type required!" .Values.app.type }}
 {{- if eq $appType "reader" }}
-{{- $deploymentSuffix := required ".Values.deploymentSuffix required!" .Values.deploymentSuffix }}
+{{- $deploymentSuffix := default "" .Values.deploymentSuffix }}
 {{- ternary 1 0 (and (eq $awsRegion $currentPrimaryRegion) (eq $clusterSide $liveClusterSide) (eq $deploymentSuffix "")) }}
 {{- else }}
 {{- required ".Values.deployment.numberOfReplicas required!" .Values.deployment.numberOfReplicas }}
