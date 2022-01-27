@@ -31,7 +31,7 @@ pipeline {
 
 
 def notifyFinalResult() {
-  if((env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'release')) {
+  if((env.BRANCH_NAME == 'master')) {
     def notificationStatusColor = 'danger';
     if(currentBuild.currentResult == 'SUCCESS'){
       notificationStatusColor = 'good'
