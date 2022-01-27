@@ -184,7 +184,7 @@ spec:
                 secretKeyRef:
                   name: essp-apm-credentials
                   key: apm_secret_token
-            - name: ELASTIC_APM_SERVER_URLSspring
+            - name: ELASTIC_APM_SERVER_URLS
               valueFrom:
                 secretKeyRef:
                   name: essp-apm-credentials
