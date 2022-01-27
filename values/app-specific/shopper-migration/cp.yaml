@@ -49,7 +49,7 @@ configs:
       enabled: false
     db:
       enabled: true
-      name: "shopper_migration"
+      name: shopper_migration
     log:
       enabled: false
   springBoot:
