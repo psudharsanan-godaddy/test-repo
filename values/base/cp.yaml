@@ -96,6 +96,10 @@ configs:
           right: utilityOnly
     classicDb:
       enabled: false
+    bonsaiDb:
+      enabled: false
+    orionDb:
+      enabled: false
     clientCert:
       enabled: true
     crypto:

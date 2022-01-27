@@ -24,6 +24,22 @@ Check if standard classicDb config enabled
 {{- end }}
 
 {{/*
+Check if standard bonsaiDb config enabled
+*/}}
+{{- define "commerce-app-v2.configs.standard.bonsaiDb.enabled" }}
+{{- $r := and .Values.configs.standard.enabled .Values.configs.standard.bonsaiDb.enabled }}
+{{- $r }}
+{{- end }}
+
+{{/*
+Check if standard orionDb config enabled
+*/}}
+{{- define "commerce-app-v2.configs.standard.orionDb.enabled" }}
+{{- $r := and .Values.configs.standard.enabled .Values.configs.standard.orionDb.enabled }}
+{{- $r }}
+{{- end }}
+
+{{/*
 Check if standard crypto config enabled
 */}}
 {{- define "commerce-app-v2.configs.standard.crypto.enabled" }}

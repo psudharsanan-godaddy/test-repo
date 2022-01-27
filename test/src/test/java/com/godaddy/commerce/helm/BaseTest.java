@@ -167,6 +167,30 @@ public abstract class BaseTest {
         VolumeMount.of("classic-db-config", getBaseMountPath() + "/classic-db"));
   }
 
+  protected void assertStandardBonsaiDbConfig(Map<String, ExternalSecretResource> externalSecrets,
+      DeploymentResource deployment) {
+
+    assertThat(externalSecrets).containsKey(withAppPrefix("bonsai-db-configexternal-test"));
+
+    assertThat(deployment.getVolumes()).contains(Volume.secretVolume("bonsai-db-config",
+        withAppPrefix("bonsai-db-configexternal-test")));
+
+    assertThat(deployment.getVolumeMounts()).contains(
+        VolumeMount.of("bonsai-db-config", getBaseMountPath() + "/bonsai-db"));
+  }
+
+  protected void assertStandardOrionDbConfig(Map<String, ExternalSecretResource> externalSecrets,
+      DeploymentResource deployment) {
+
+    assertThat(externalSecrets).containsKey(withAppPrefix("orion-db-configexternal-test"));
+
+    assertThat(deployment.getVolumes()).contains(Volume.secretVolume("orion-db-config",
+        withAppPrefix("orion-db-configexternal-test")));
+
+    assertThat(deployment.getVolumeMounts()).contains(
+        VolumeMount.of("orion-db-config", getBaseMountPath() + "/orion-db"));
+  }
+
   protected void assertStandardCryptoConfig(Map<String, ExternalSecretResource> externalSecrets,
       DeploymentResource deployment) {
 

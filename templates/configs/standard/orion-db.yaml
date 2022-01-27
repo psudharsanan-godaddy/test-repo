@@ -1,0 +1,14 @@
+{{- $enabled := include "commerce-app-v2.configs.standard.orionDb.enabled" . | include "strToBool" }}
+{{- if $enabled }}
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-orion-db-configexternal") .) }}
+  labels:
+    {{- include "commerce-app-v2.labels" . | nindent 4 }}
+spec:
+  backendType: secretsManager
+  data:
+    - key: /ecomm/orion-db/master
+      name: orion_db_config.json
+{{- end }}
