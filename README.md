@@ -10,7 +10,6 @@ helm template . \
  -f ./values/base/cp.dp.gen.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.shared.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.shared.a.yaml \
  -f ./values/app-specific/$APP/cp.yaml \
  -f ./values/app-specific/$APP/cp.dp.yaml \
  -f ./values/app-specific/$APP/cp.dp.us-east-1.yaml \
@@ -29,7 +28,6 @@ helm upgrade --install currency-exchange-ep-43093 . \
  -f ./values/base/cp.dp.gen.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.shared.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.shared.a.yaml \
  -f ./values/app-specific/currency-exchange/cp.yaml \
  -f ./values/app-specific/currency-exchange/cp.dp.yaml \
  -f ./values/app-specific/currency-exchange/cp.dp.us-east-1.yaml \
@@ -49,7 +47,6 @@ helm upgrade --install tax-rates-service-ep-43093 . \
  -f ./values/base/cp.dp.gen.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.shared.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.shared.a.yaml \
  -f ./values/app-specific/tax-rates/cp.yaml \
  -f ./values/app-specific/tax-rates/cp.dp.yaml \
  -f ./values/app-specific/tax-rates/cp.dp.us-east-1.yaml \
@@ -97,7 +94,6 @@ helm upgrade --install tax-rates-service . \
  -f ./values/base/cp.dp.gen.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.shared.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.shared.a.yaml \
  -f ./values/app-specific/tax-rates/cp.yaml \
  -f ./values/app-specific/tax-rates/cp.dp.yaml \
  -f ./values/app-specific/tax-rates/cp.dp.us-east-1.yaml \
@@ -116,7 +112,6 @@ helm template . \
  -f ./values/base/cp.dp.gen.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.yaml \
  -f ./values/base/cp.dp.gen.us-east-1.shared.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.shared.a.yaml \
  -f ./values/app-specific/tax-rates/cp.yaml \
  -f ./values/app-specific/tax-rates/cp.dp.yaml \
  -f ./values/app-specific/tax-rates/cp.dp.us-east-1.yaml \
