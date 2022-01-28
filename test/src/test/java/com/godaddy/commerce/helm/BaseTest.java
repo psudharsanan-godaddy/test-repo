@@ -10,6 +10,7 @@ import com.godaddy.commerce.helm.resource.deployment.Volume;
 import com.godaddy.commerce.helm.resource.deployment.VolumeMount;
 import com.godaddy.commerce.helm.resource.externalsecret.ExternalSecretResource;
 import com.godaddy.commerce.helm.resource.secret.SecretResource;
+import java.util.List;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
@@ -69,6 +70,14 @@ public abstract class BaseTest {
         throw new AssertionError("Failure during assertion of " + assertType, e);
       }
     }
+  }
+
+  protected void assertContainsAllEnvsOf(String[] generatedResources, Env... expectedEnvs) {
+    Map<String, DeploymentResource> deployments = getDeployments(generatedResources);
+    assertThat(deployments).containsKey(withAppPrefix("deployment-test"));
+    DeploymentResource deployment = deployments.get(withAppPrefix("deployment-test"));
+    List<Env> actualEnvs = deployment.getEnvs();
+    assertThat(actualEnvs).contains(expectedEnvs);
   }
 
   protected void assertContainsNoneOf(String[] generatedResources, AssertType... assertTypes) {
@@ -267,12 +276,6 @@ public abstract class BaseTest {
     assertThat(deployment.getVolumeMounts()).contains(
         VolumeMount.of(withAppPrefix("storekeys-test"), getBaseMountPath() + "/storekeys"));
     assertThat(deployment.getEnvs()).contains(Env.of("STOREKEYS", withAppPrefix("storekeys-test")));
-  }
-
-  protected void assertStandardWildcardConfig(Map<String, ExternalSecretResource> externalSecrets,
-      DeploymentResource deployment) {
-    assertThat(deployment.getVolumes()).contains(Volume.secretVolume("wildcard-cert",
-        withAppPrefix("wildcard-cert-test")));
   }
 
   protected void assertSpringBootLogConfig(Map<String, ConfigMapResource> configMaps,

@@ -1,6 +1,9 @@
 {{- define "commerce-app-v2.deployment.vertx.env" -}}
 {{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
 {{- $standardAppConfig := include "commerce-app-v2.configs.standard.app.enabled" . | include "strToBool" }}
+# ref: https://confluence.godaddy.com/display/VM/CRITICAL+-+log4j+2.x+RCE#CRITICALlog4j2.xRCE-RemediationSteps
+- name: LOG4J_FORMAT_MSG_NO_LOOKUPS
+  value: "true"
 - name: VERTX_ENV
   value: "{{ required ".Values.vertxEnv required!" .Values.vertxEnv }}"
 - name: METRICS_PORT

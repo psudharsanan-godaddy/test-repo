@@ -134,15 +134,6 @@ public enum AssertType implements ResourceAssertion {
     }
   },
 
-  STANDARD_WILDCARD {
-    @Override
-    public void executeAssertion(BaseTest baseTestInstance, Map<String, SecretResource> secrets,
-        Map<String, ExternalSecretResource> externalSecrets,
-        Map<String, ConfigMapResource> configMaps, DeploymentResource deployment) {
-      baseTestInstance.assertStandardWildcardConfig(externalSecrets, deployment);
-    }
-  },
-
   SPRING_BOOT_LOG {
     @Override
     public void executeAssertion(BaseTest baseTestInstance, Map<String, SecretResource> secrets,
