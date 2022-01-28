@@ -12,6 +12,8 @@ configs:
       enabled: false
     db:
       enabled: false
+    log:
+      enabled: false
     prometheus:
       enabled: false
 deployment:
