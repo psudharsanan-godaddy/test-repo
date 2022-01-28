@@ -63,6 +63,7 @@ public class ShopperMigrationTest extends BaseTest {
 
     assertContainsAllOf(generatedResources,
         STANDARD_APP,
+        STANDARD_DB,
         STANDARD_CLASSIC_DB,
         STANDARD_PROMETHEUS,
         STANDARD_CLIENT_CERT,
@@ -76,7 +77,6 @@ public class ShopperMigrationTest extends BaseTest {
         SPRING_BOOT_LOG);
 
     assertContainsNoneOf(generatedResources,
-        STANDARD_DB,
         STANDARD_CRYPTO,
         STANDARD_LOG,
         STANDARD_AUTH,
