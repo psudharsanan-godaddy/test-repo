@@ -2,6 +2,9 @@
 {{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
 {{- $springConfigEnabled := include "commerce-app-v2.configs.spring-boot.application.enabled" . | include "strToBool" }}
 {{- $loggingConfigEnabled := include "commerce-app-v2.configs.spring-boot.application.logging.enabled" . | include "strToBool" }}
+# ref: https://confluence.godaddy.com/display/VM/CRITICAL+-+log4j+2.x+RCE#CRITICALlog4j2.xRCE-RemediationSteps
+- name: LOG4J_FORMAT_MSG_NO_LOOKUPS
+  value: "true"
 - name: METRICS_PORT
   value: "{{ required ".Values.deployment.prometheus.port required!" .Values.deployment.prometheus.port }}"
 - name: JAVA_OPTS
