@@ -7,6 +7,6 @@ metadata:
   labels:
     {{- include "commerce-app-v2.labels" . | nindent 4 }}
 data:
-  config.json: |-
+  vertx-options.json: |-
     {{- include "commerce-app-v2.configFileContent" (merge (dict "configType" "vertx-options" "appFrameworkType" "vertx" "originalConfigFileExtension" ".yaml") .) | fromYaml | toJson | b64enc | nindent 4 }}
 {{- end }}

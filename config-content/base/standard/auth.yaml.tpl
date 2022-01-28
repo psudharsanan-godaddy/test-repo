@@ -163,6 +163,10 @@ profiles:
   # the orchestration client cert is required to be allowed
   - jwtAuth: basic
     jwtType: cert
+    certificateSubjectName: '{{ .Values.configs.standard.auth.profiles.ecommOrchOldClientCert.jwtSubjectName }}'
+    right: '{{ required ".Values.configs.standard.auth.profiles.ecommOrchClientCert.right required!" .Values.configs.standard.auth.profiles.ecommOrchClientCert.right }}'
+  - jwtAuth: basic
+    jwtType: cert
     certificateSubjectName: '{{ .Values.configs.standard.auth.profiles.ecommOrchClientCert.jwtSubjectName }}'
     right: '{{ required ".Values.configs.standard.auth.profiles.ecommOrchClientCert.right required!" .Values.configs.standard.auth.profiles.ecommOrchClientCert.right }}'
 

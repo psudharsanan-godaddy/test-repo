@@ -11,6 +11,8 @@ configs:
         ecommClientCert:
           mtlsSubjectName: 'CN=ecomm-shared.client.cp.api.dev-godaddy.com'
           jwtSubjectName: 'CN=ecomm-shared.client.cp.api.dev-godaddy.com, OU=, O='
+        ecommOrchOldClientCert:
+          jwtSubjectName: 'CN=ecomm-orch.client.cp.api.dev-godaddy.com, OU=Domain Control Validated, O='
         ecommOrchClientCert:
           jwtSubjectName: 'CN=ecomm-orch.client.cp.api.dev-godaddy.com, OU=, O='
         legacyGenClientCert:

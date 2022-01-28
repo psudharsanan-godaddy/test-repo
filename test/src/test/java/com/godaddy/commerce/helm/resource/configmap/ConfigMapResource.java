@@ -12,5 +12,3 @@ public class ConfigMapResource extends Resource {
   private Map<String, Object> data;
 
 }
-
-
