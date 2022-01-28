@@ -325,7 +325,7 @@ public abstract class BaseTest {
     assertThat(secrets).containsKey(withAppPrefix("vertx-options-test"));
 
     assertThat(secrets.get(withAppPrefix("vertx-options-test")).getData())
-        .containsKey("config.json");
+        .containsKey("vertx-options.json");
 
     assertThat(deployment.getVolumes())
         .contains(Volume.secretVolume("vertx-options-secret",

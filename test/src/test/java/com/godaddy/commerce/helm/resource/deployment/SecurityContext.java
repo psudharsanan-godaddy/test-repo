@@ -6,4 +6,5 @@ import lombok.Data;
 public class SecurityContext {
 
   private boolean readOnlyRootFilesystem;
+
 }

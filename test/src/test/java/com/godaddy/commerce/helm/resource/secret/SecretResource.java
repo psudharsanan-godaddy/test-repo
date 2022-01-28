@@ -12,5 +12,3 @@ public class SecretResource extends Resource {
   private Map<String, Object> data;
 
 }
-
-
