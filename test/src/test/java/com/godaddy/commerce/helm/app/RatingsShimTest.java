@@ -28,10 +28,10 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
 
-public class ShopperMigrationTest extends BaseTest {
+public class RatingsShimTest extends BaseTest {
 
   private static final Yaml yamlLoader = YamlUtil.buildYamlLoader();
-  private static final String APP_NAME = "shopper-migration";
+  private static final String APP_NAME = "ratings-shim";
 
   @Override
   protected Yaml getYamlLoader() {
@@ -63,8 +63,7 @@ public class ShopperMigrationTest extends BaseTest {
 
     assertContainsAllOf(generatedResources,
         STANDARD_APP,
-        STANDARD_DB,
-        STANDARD_CLASSIC_DB,
+        STANDARD_DB, ,
         STANDARD_PROMETHEUS,
         STANDARD_CLIENT_CERT,
         STANDARD_CLIENT_CERT_CONTEXT,
