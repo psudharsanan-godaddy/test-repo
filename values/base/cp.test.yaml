@@ -1,5 +1,6 @@
 env: test
 envMisnomer: test
+nodeEnv: test
 vertxEnv: test
 gdDomainEnvPrefix: test-
 
