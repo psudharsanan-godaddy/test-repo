@@ -17,7 +17,6 @@ configs:
     prometheus:
       enabled: false
     sensitive:
-      enabled: true
       defaultMode: 420
 deployment:
   readOnlyRootFilesystem: false
