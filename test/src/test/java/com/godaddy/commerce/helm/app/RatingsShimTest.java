@@ -63,7 +63,7 @@ public class RatingsShimTest extends BaseTest {
 
     assertContainsAllOf(generatedResources,
         STANDARD_APP,
-        STANDARD_DB, ,
+        STANDARD_DB,
         STANDARD_PROMETHEUS,
         STANDARD_CLIENT_CERT,
         STANDARD_CLIENT_CERT_CONTEXT,
