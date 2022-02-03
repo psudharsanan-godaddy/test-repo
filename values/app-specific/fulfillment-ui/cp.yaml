@@ -17,6 +17,7 @@ configs:
     prometheus:
       enabled: false
 deployment:
+  readOnlyRootFilesystem: false
   readinessProbe:
     path: /v2/fulfillment-ui/ping
   resources:
