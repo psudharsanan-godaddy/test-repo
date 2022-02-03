@@ -57,8 +57,6 @@ configs:
     db:
       name: currency_exchange_v2
 deployment:
-  readinessProbe:
-    path: /v2/currency-exchange/ping
   resources:
     requests:
       cpu: 15m

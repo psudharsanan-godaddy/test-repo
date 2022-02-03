@@ -2,25 +2,31 @@
 
 The goals of building this new Helm chart for deploying commerce applications are to replace the bash-script-based deployment processes and to standardize the deployment of all NES applications, including Kubernetes resource templates, config file formats, mount paths, etc.
 
+# Local development
+
+## Generate YAML output
+
 ```bash
-APP=currency-exchange
+APP=currency-exchange;AWS_REGION=us-west-2
 helm template . \
  -f ./values/base/cp.yaml \
  -f ./values/base/cp.dp.yaml \
  -f ./values/base/cp.dp.gen.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.shared.yaml \
+ -f ./values/base/cp.dp.gen.$AWS_REGION.yaml \
+ -f ./values/base/cp.dp.gen.$AWS_REGION.shared.yaml \
  -f ./values/app-specific/$APP/cp.yaml \
  -f ./values/app-specific/$APP/cp.dp.yaml \
- -f ./values/app-specific/$APP/cp.dp.us-east-1.yaml \
+ -f ./values/app-specific/$APP/cp.dp.$AWS_REGION.yaml \
  --set deployment.image.tag=0.0.21 \
- --set deploymentSuffix=--EP-43093 \
- --set currentPrimaryRegion=us-east-1 \
+ --set deploymentSuffix='' \
+ --set currentPrimaryRegion=us-west-2 \
  --set clusterSide=a \
  --set liveClusterSide=a \
  --debug \
  > .output/$APP.yaml
 ```
+
+## Deploy from local machine
 
 ```bash
 helm upgrade --install currency-exchange-ep-43093 . \
@@ -41,25 +47,9 @@ helm upgrade --install currency-exchange-ep-43093 . \
  --atomic
 ```
 
+## Run unit tests
 
-```bash
-helm upgrade --install tax-rates-service-ep-43093 . \
- -f ./values/base/cp.yaml \
- -f ./values/base/cp.dp.yaml \
- -f ./values/base/cp.dp.gen.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.shared.yaml \
- -f ./values/app-specific/tax-rates/cp.yaml \
- -f ./values/app-specific/tax-rates/cp.dp.yaml \
- -f ./values/app-specific/tax-rates/cp.dp.us-east-1.yaml \
- --set deployment.image.tag=0.0.10 \
- --set deploymentSuffix=--EP-43093 \
- --set currentPrimaryRegion=us-east-1 \
- --set clusterSide=a \
- --set liveClusterSide=a \
- --debug \
- --atomic
-```
+`mvn clean verify -f test/pom.xml`
 
 # Helm existing resources adoption
 
@@ -128,7 +118,6 @@ helm template . \
  > .output/tax-rates.yaml
 ```
 
-
 # Use cases
 
 ## Launch a new service
@@ -137,7 +126,6 @@ helm template . \
 2. Create a branch of the Helm chart repo, add all necessary values files, blocks and get it merged into master
 3. Run app-setup to have app-speicific resources created, e.g. jks secret, hosts config secret, ECR repo, IngressRoute, HPA, NLB Ingress, ClusterIP Svc, Route 53 records, APIG etc.
 4. Merge the app repo branch to master to trigger build and deploy the app repo to DP
-
 
 ## Update an existing service
 

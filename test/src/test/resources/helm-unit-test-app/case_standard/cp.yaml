@@ -12,8 +12,8 @@ deployment:
   readinessProbe:
     path: /v2/helm-unit-test-app/ping
     initialDelaySeconds: 30
-  enableLivenessProbe: true
   livenessProbe:
+    enabled: true
     path: /v2/helm-unit-test-app/healthcheck
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false

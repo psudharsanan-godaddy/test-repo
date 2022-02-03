@@ -17,8 +17,6 @@ configs:
     prometheus:
       enabled: false
 deployment:
-  readinessProbe:
-    path: /v2/fulfillment-ui/ping
   resources:
     requests:
       cpu: 25m

@@ -2,6 +2,8 @@
 {{- if .Values.deployment.enabled }}
 {{- $branchSpecificAppName := include "commerce-app-v2.branchSpecificAppName" . }}
 {{- $appName := required ".Values.app.name required!" .Values.app.name }}
+{{- $apiVersion := required ".Values.app.apiVersion required!" .Values.app.apiVersion }}
+{{- $pathNoun := required ".Values.app.pathNoun required!" .Values.app.pathNoun }}
 {{- $cacertsSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-cacerts") .) }}
 {{- $storeKeysSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-storekeys") .) }}
 {{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
@@ -132,14 +134,13 @@ spec:
               protocol: "TCP"
           securityContext:
             readOnlyRootFilesystem: {{ .Values.deployment.readOnlyRootFilesystem }}
-          {{- if .Values.deployment.enableLivenessProbe }}
+          {{- if .Values.deployment.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
-              {{- $livenessProbePathExists := include "commerce-app-v2.deployment.livenessProbe.path.exists" . | include "strToBool"}}
-              {{- if $livenessProbePathExists }}
+              {{- if .Values.deployment.livenessProbe.path }}
               path: "{{ .Values.deployment.livenessProbe.path }}"
               {{- else }}
-              path: "/{{ .Values.app.apiVersion }}/{{ .Values.app.pathNoun }}/ping"
+              path: "/{{ $apiVersion }}/{{ $pathNoun }}/ping"
               {{- end }}
               port: 8443
               scheme: HTTPS
@@ -154,7 +155,11 @@ spec:
           {{- end }}
           readinessProbe:
             httpGet:
-              path: {{ required ".Values.deployment.readinessProbe.path required!" .Values.deployment.readinessProbe.path | quote }}
+              {{- if .Values.deployment.readinessProbe.path }}
+              path: {{ .Values.deployment.readinessProbe.path | quote }}
+              {{- else }}
+              path: "/{{ $apiVersion }}/{{ $pathNoun }}/ping"
+              {{- end }}
               port: 8443
               scheme: HTTPS
               httpHeaders:

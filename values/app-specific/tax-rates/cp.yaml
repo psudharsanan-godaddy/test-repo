@@ -57,8 +57,6 @@ configs:
     db:
       name: tax_rates_v2
 deployment:
-  readinessProbe:
-    path: /v2/tax-rates/ping
   resources:
     requests:
       cpu: 25m
