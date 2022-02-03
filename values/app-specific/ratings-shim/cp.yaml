@@ -1,27 +1,26 @@
 app:
-  name: shopper-migration
-  apiVersion: v1
-  pathNoun: shopper-migration
+  name: ratings-shim
+  apiVersion: v2
+  pathNoun: ratings-shim
   type: service
   frameworkType: spring-boot
   size: MEDIUM
-  artifactId: shopper-migration-service
+  artifactId: ratings-shim-service
 
 deployment:
   enabled: true
   readinessProbe:
-    path: /v2/shopper-migration/ping
+    path: /v2/ratings/ping
     initialDelaySeconds: 30
   enableLivenessProbe: true
   livenessProbe:
-    path: /v2/shopper-migration/ping
+    path: /v2/ratings/ping
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false
-  enableApm: false
+  enableApm: true
   extraVolumes: { }
 
 hasPrivateApiGateway: true
-
 
 configs:
   standard:
@@ -29,7 +28,7 @@ configs:
     app:
       enabled: true
     classicDb:
-      enabled: true
+      enabled: false
     clientCert:
       enabled: true
     pki:
@@ -48,8 +47,7 @@ configs:
     crypto:
       enabled: false
     db:
-      enabled: true
-      name: shopper_migration
+      enabled: false
     log:
       enabled: false
   springBoot:

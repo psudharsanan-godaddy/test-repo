@@ -1,0 +1,2 @@
+deployment:
+  numberOfReplicas: 3
