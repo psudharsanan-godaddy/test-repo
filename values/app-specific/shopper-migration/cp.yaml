@@ -20,9 +20,6 @@ deployment:
   enableApm: false
   extraVolumes: { }
 
-hasPrivateApiGateway: true
-
-
 configs:
   standard:
     enabled: true

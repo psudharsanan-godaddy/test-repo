@@ -60,4 +60,3 @@ deployment:
   resources:
     requests:
       cpu: 15m
-hasPrivateApiGateway: true

@@ -24,8 +24,6 @@ job:
   enableApm: false
   extraVolumes: {}
 
-hasPrivateApiGateway: false
-
 clientCerts: {}
 serverCerts: {}
 
