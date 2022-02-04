@@ -1,0 +1,116 @@
+env: ote
+envMisnomer: ote
+nodeEnv: production
+vertxEnv: ote
+gdDomainEnvPrefix: ote-
+
+configs:
+  standard:
+    auth:
+      profiles:
+        adminClientCert: # only set in ote and prod
+          mtlsSubjectName: 'CN=ecommadmin.ote.intranet.gdg, OU=GoDaddy INC., O=GoDaddy INC., L=Scottsdale, ST=AZ, C=US'
+          jwtSubjectName: 'CN=ecommadmin.ote.intranet.gdg, OU=GoDaddy INC., O=GoDaddy INC.'
+        ecommClientCert:
+          mtlsSubjectName: 'CN=ecomm-shared.client.cp.api.ote-godaddy.com'
+          jwtSubjectName: 'CN=ecomm-shared.client.cp.api.ote-godaddy.com, OU=, O='
+        ecommOrchOldClientCert:
+          jwtSubjectName: 'CN=ecomm-orch.client.cp.api.ote-godaddy.com, OU=Domain Control Validated, O='
+        ecommOrchClientCert:
+          jwtSubjectName: 'CN=ecomm-orch.client.cp.api.ote-godaddy.com, OU=, O='
+        legacyGenClientCert:
+          mtlsSubjectName: 'CN=ecommclient.ote.intranet.gdg, OU=IT, O="GoDaddy.com, LLC.", L=Scottsdale, ST=AZ, C=US'
+          jwtSubjectName: 'CN=ecommclient.ote.intranet.gdg, OU=IT, O=GoDaddy.com, LLC.'
+        legacyPciClientCert:
+          mtlsSubjectName: 'CN=ecommclient.ote.intranet.gdg, OU=IT, O="GoDaddy.com, LLC.", L=Scottsdale, ST=AZ, C=US'
+          jwtSubjectName: 'CN=ecommclient.ote.intranet.gdg, OU=IT, O=GoDaddy.com, LLC.'
+        qaClientCert:
+          mtlsSubjectName: 'CN=qa.ote-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC., L=Scottsdale, ST=AZ, C=US'
+          jwtSubjectName: 'CN=qa.ote-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC.'
+        qaToolClientCert: {} # only set dp, test
+        qaToolClientCert2: {} # only set dp, test
+        pricingAppClient:
+          jwtSubjectName: 'CN=pricing.client.cp.api.int.ote-godaddy.com, OU=Domain Control Validated, O='
+        # partners' client certs
+        ckpClientCert:
+          mtlsSubjectName: 'CN=c360-journal-reader.authclient.godaddy.com'
+          jwtSubjectName: 'CN=c360-journal-reader.authclient.godaddy.com, OU=, O='
+        crmClientCert: {} # only set in dp, test, prod
+        cpanelClientCert: {} # only set in dp, test, prod
+        hfsClientCert:
+          mtlsSubjectName: 'CN=hfs.ecomm.ote.authclient.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=hfs.ecomm.ote.authclient.int.godaddy.com, OU=Domain Control Validated, O='
+          right: all
+        graphApiClientCert:
+          jwtSubjectName: 'CN=c360-graph-api.authclient.godaddy.com, OU=Domain Control Validated, O='
+        globalClientCert: {} # only set in dp, test, prod
+        legalClientCert: {} # only set in dp, test, prod
+        martechClientCert:
+          mtlsSubjectName: 'CN=deltaemail.ote.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=deltaemail.ote.client.int.godaddy.com, OU=Domain Control Validated, O='
+        myhClientCert:
+          commonName: 'myh.ote.client.int.godaddy.com'
+        domainsClientCert:
+          mtlsSubjectName: 'CN=domclientauth.int.ote-godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=domclientauth.int.ote-godaddy.com, OU=Domain Control Validated, O='
+        domainsRegistrarClientCert:
+          mtlsSubjectName: 'CN=registrar.ote.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=registrar.ote.client.int.godaddy.com, OU=Domain Control Validated, O='
+        domainsRegistrarClientCert2: {} # only set in prod
+        fraudAppsClientCert: {} # only set in dp, test, prod
+        ipeClientCert: {} # only set in dp, test, prod
+        paidItClientCert: {} # only set in dp, test, prod
+        paidItClientCert2: {} # only set in test and prod
+        appSvcQuickStartClientCert: {} # only set in dp
+        fosClientCert:
+          mtlsSubjectName: 'CN=corp.web.sales.ote.client.int.godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=corp.web.sales.ote.client.int.godaddy.com, OU=Domain Control Validated, O='
+        wssClientCert:
+          mtlsSubjectName: 'CN=wss-nesi.client.int.ote-secureserver.net, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=wss-nesi.client.int.ote-secureserver.net, OU=Domain Control Validated, O='
+        woprClientCert: {} # only set in test and prod
+        dudaClientCert:
+          jwtSubjectName: 'CN=client.duda.partners.ote-godaddy.com, OU=, O='
+        pricingAppClientCert:
+          jwtSubjectName: 'CN=pricing.client.cp.api.int.ote-godaddy.com, OU=Domain Control Validated, O='
+        migrationIntegrationClientCert:
+          jwtSubjectName: 'CN=mtf.migration-integration.ote-godaddy.com, OU=Domain Control Validated, O='
+        sitelockClientCert:
+          jwtSubjectName: 'CN=sitelock.ote.client.int.godaddy.com, OU=Domain Control Validated, O='
+        proHubClientCert: {} # only set in dp, test, prod
+        projectNucleusClientCert:
+          jwtSubjectName: 'CN=pg.api.client.int.ote-godaddy.com, OU=, O='
+        projectNucleusProductGraphClientCert:
+          jwtSubjectName: 'CN=pg.api.client.int.ote-godaddy.com, OU=, O='
+        sslManagementClientCert: {} # only set in dp, test, prod
+        websiteAccountsClientCert: {} # only set in test and prod
+        websiteAccountsSubscriptionsClientCert: {} # only set in dp, test, prod
+        ventureDashboardClientCert: {} # only set in dp, test, prod
+        vnextTestingClientCert: {} # only set in dp, test
+        paymentClientCert:
+          jwtSubjectName: 'CN=*.payments.ote-godaddy.com, OU=Domain Control Validated, O='
+        paymentStatsClientCert:
+          jwtSubjectName: 'CN=*.stats.poynt.ote-godaddy.com, OU=Domain Control Validated, O='
+        confabulatorClientCert: {} # only set in dp, test, prod
+        pleskClientCert:
+          jwtSubjectName: 'CN=resourcegen.plesk.ote-godaddy.com, OU=, O='
+        overClientCert: {} # only set in dp, test, prod
+        spaqPollingClientCert: {} # only set in prod
+        pkiClientCert: {} # only set in dp, test, prod
+        mwpClientCert: {} # only set in dp, test, prod
+        epiClientCert: {} # only set in dp, test, prod
+        secUiClientCert: {} # only set in dp, test, prod
+        c3Qa: # only set in dp, test
+        thirdParty:
+          shopperIds:
+            123Reg: '976400' # only set in test, ote and prod
+            tsoHost: null # only set in dp, test, prod
+            mt: null # only set in prod, media temple?
+            heartInternet: null # only set in dp, test, prod
+            heartInternet2: null # only set in test
+            heg: null # only set in test and prod
+            migrationIntegration: '1500459542'
+            domainFactory: '976402' # only set in test, ote and prod
+
+deployment:
+  numberOfReplicas: 2
