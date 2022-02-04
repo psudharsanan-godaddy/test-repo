@@ -63,6 +63,8 @@ public class AvalaraTaxTest extends BaseTest {
 
     assertContainsAllOf(generatedResources,
         STANDARD_APP,
+        STANDARD_CLIENT_CERT,
+        STANDARD_CLIENT_CERT_CONTEXT,
         STANDARD_PROMETHEUS,
         STANDARD_HOSTS,
         STANDARD_SENSITIVE,
@@ -74,8 +76,6 @@ public class AvalaraTaxTest extends BaseTest {
 
     assertContainsNoneOf(generatedResources,
         STANDARD_CLASSIC_DB,
-        STANDARD_CLIENT_CERT,
-        STANDARD_CLIENT_CERT_CONTEXT,
         STANDARD_CRYPTO,
         STANDARD_DB,
         STANDARD_LOG,
