@@ -25,3 +25,4 @@ deployment:
   resources:
     requests:
       cpu: 25m
+nodeEnv: production
