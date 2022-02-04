@@ -58,6 +58,8 @@ configs:
         martechClientCert:
           mtlsSubjectName: 'CN=deltaemail.dev.client.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=deltaemail.dev.client.int.godaddy.com, OU=Domain Control Validated, O='
+        myhClientCert:
+          commonName: 'myh.dev.client.int.godaddy.com'
         domainsClientCert:
           mtlsSubjectName: 'CN=domclientauth.int.dev-godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=domclientauth.int.dev-godaddy.com, OU=Domain Control Validated, O='
@@ -97,7 +99,7 @@ configs:
           jwtSubjectName: 'CN=entitlement.px.client.dev-godaddy.com, OU=Domain Control Validated, O='
         projectNucleusClientCert:
           jwtSubjectName: 'CN=pg.api.int.dev-godaddy.com, OU=Domain Control Validated, O='
-        projectNucleusClientClientCert:
+        projectNucleusProductGraphClientCert:
           jwtSubjectName: 'CN=pg.api.int.dev-godaddy.com, OU=Domain Control Validated, O='
         sslManagementClientCert:
           jwtSubjectName: 'CN=bot.managedssl.client.int.dev-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC.'
