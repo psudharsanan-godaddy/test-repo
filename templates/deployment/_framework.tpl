@@ -7,6 +7,8 @@
 {{- template "commerce-app-v2.deployment.vertx.env" . }}
 {{- else if eq .Values.app.frameworkType "spring-boot" }}
 {{- template "commerce-app-v2.deployment.spring-boot.env" . }}
+{{- else if eq .Values.app.frameworkType "nodejs" }}
+{{- template "commerce-app-v2.deployment.nodejs.env" . }}
 {{- end }}
 #END: {{ .Values.app.frameworkType }} specific envs
 {{- end }}
