@@ -23,14 +23,10 @@ configs:
   standard:
     auth:
       enabled: false
-    clientCert:
-      enabled: false
     db:
       enabled: false
     log:
       enabled: false
-    pki:
-      enabled: true
     sensitive:
       enabled: true
       defaultMode: "0656"
