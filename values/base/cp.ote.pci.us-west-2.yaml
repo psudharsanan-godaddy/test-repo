@@ -2,6 +2,6 @@ awsRegion: us-west-2
 configs:
   standard:
     db:
-      clusterId: ecomm-ote-pci-us-west-2-aurora
+      clusterId: sc-804135914364-pp-4maovkhdw5wzw-databasecluster-1isbx894d411u
     queryDb:
-      clusterId: ecomm-ote-pci-us-west-2-aurora
+      clusterId: sc-804135914364-pp-4maovkhdw5wzw-databasecluster-1isbx894d411u
