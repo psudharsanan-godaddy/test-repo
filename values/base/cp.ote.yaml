@@ -75,6 +75,7 @@ configs:
           jwtSubjectName: 'CN=pricing.client.cp.api.int.ote-godaddy.com, OU=Domain Control Validated, O='
         migrationIntegrationClientCert:
           jwtSubjectName: 'CN=mtf.migration-integration.ote-godaddy.com, OU=Domain Control Validated, O='
+        networkViolationsClientCert: {} # only set in dp, test, prod
         sitelockClientCert:
           jwtSubjectName: 'CN=sitelock.ote.client.int.godaddy.com, OU=Domain Control Validated, O='
         proHubClientCert: {} # only set in dp, test, prod

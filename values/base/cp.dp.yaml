@@ -93,6 +93,8 @@ configs:
           jwtSubjectName: 'CN=pricing.client.cp.api.int.dev-godaddy.com, OU=Domain Control Validated, O='
         migrationIntegrationClientCert:
           jwtSubjectName: 'CN=mtf.migration-integration.dev-godaddy.com, OU=Domain Control Validated, O='
+        networkViolationsClientCert:
+          jwtSubjectName: 'CN=netvio-api.int.dev-godaddy.com, OU=Domain Control Validated, O='
         sitelockClientCert:
           jwtSubjectName: 'CN=sitelock.dev.client.int.godaddy.com, OU=Domain Control Validated, O='
         proHubClientCert:
