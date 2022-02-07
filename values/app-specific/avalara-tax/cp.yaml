@@ -1,6 +1,6 @@
 app:
   name: avalara-tax
-  apiVersion: v1
+  apiVersion: v2
   pathNoun: avalara-tax
   type: service
   frameworkType: spring-boot
@@ -9,11 +9,11 @@ app:
 
 deployment:
   readinessProbe:
-    path: /v1/taxes/avalara/ping
+    path: /v2/avalara-tax/ping
     initialDelaySeconds: 30
   enableLivenessProbe: true
   livenessProbe:
-    path: /v1/taxes/avalara/ping
+    path: /v2/avalara-tax/ping
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false
 
