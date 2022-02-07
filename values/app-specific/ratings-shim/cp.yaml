@@ -31,7 +31,3 @@ configs:
     enabled: true
     application:
       enabled: true
-      logging:
-        type: CONSOLE_JSON
-        logbook:
-          enabled: true
