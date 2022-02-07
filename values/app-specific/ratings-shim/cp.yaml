@@ -8,43 +8,20 @@ app:
   artifactId: ratings-shim-service
 
 deployment:
-  enabled: true
   readinessProbe:
     path: /v2/ratings/ping
     initialDelaySeconds: 30
-  enableLivenessProbe: true
   livenessProbe:
     path: /v2/ratings/ping
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false
   enableApm: true
-  extraVolumes: { }
-
-hasPrivateApiGateway: true
 
 configs:
   standard:
-    enabled: true
-    app:
-      enabled: true
-    classicDb:
-      enabled: false
-    clientCert:
-      enabled: true
-    pki:
-      enabled: true
-    hosts:
-      enabled: true
-    prometheus:
-      enabled: true
     sensitive:
-      enabled: true
       defaultMode: "0656"
-    tls:
-      enabled: true
     auth:
-      enabled: false
-    crypto:
       enabled: false
     db:
       enabled: false
@@ -58,5 +35,3 @@ configs:
         type: CONSOLE_JSON
         logbook:
           enabled: true
-
-
