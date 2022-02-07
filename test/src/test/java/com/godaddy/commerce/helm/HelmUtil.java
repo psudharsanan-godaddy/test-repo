@@ -3,40 +3,107 @@ package com.godaddy.commerce.helm;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+import lombok.SneakyThrows;
 
 public final class HelmUtil {
+
+  public static final String YAML_EXTENSION = ".yaml";
+
+  public static final String DELIMITER = ".";
+
+  public static final String DEFAULT_AWS_REGION = "us-east-1";
 
   private HelmUtil() {
     throw new UnsupportedOperationException("Forbidden");
   }
 
-  private static String[] buildCommandArgs(String app, String env, String appValuesFolder) {
-    return new String[]{"helm",
-        "template",
-        ".",
-        "-f", "./values/base/cp.yaml",
-        "-f", String.format("./values/base/cp.%s.yaml", env),
-        "-f", String.format("./values/base/cp.%s.gen.yaml", env),
-        "-f", String.format("./values/base/cp.%s.gen.us-east-1.yaml", env),
-        "-f", String.format("./values/base/cp.%s.gen.us-east-1.shared.yaml", env),
-        "-f", String.format(".%s/%s/cp.yaml", appValuesFolder, app),
-        "-f", String.format(".%s/%s/cp.%s.yaml",appValuesFolder, app, env),
-        "-f", String.format(".%s/%s/cp.%s.us-east-1.yaml",appValuesFolder,  app, env),
-        "--set", "deployment.image.tag=1.1.1",
-        "--set", "deploymentSuffix=-test",
-        "--set", "clusterSide=a",
-        "--set", "liveClusterSide=a",
-        "--set", "currentPrimaryRegion=us-east-1"};
+  private static List<String> buildCommandArgs(
+      String env,
+      List<String> appSpecificValuesFiles) {
+
+    List<String> allValuesFiles = Stream.concat(Stream.of(
+                "/values/base/cp.yaml",
+                String.format("/values/base/cp.%s.yaml", env),
+                String.format("/values/base/cp.%s.gen.yaml", env),
+                String.format("/values/base/cp.%s.gen.us-east-1.yaml", env),
+                String.format("/values/base/cp.%s.gen.us-east-1.shared.yaml", env)),
+            appSpecificValuesFiles.stream())
+        .toList();
+
+    List<String> commandArgs = new ArrayList<>();
+    commandArgs.add("helm");
+    commandArgs.add("template");
+    commandArgs.add(".");
+    for (String valuesFile : allValuesFiles) {
+      commandArgs.add("-f");
+      commandArgs.add("." + valuesFile);
+    }
+    commandArgs.add("--set");
+    commandArgs.add("deployment.image.tag=1.1.1");
+    commandArgs.add("--set");
+    commandArgs.add("deploymentSuffix=-test");
+    commandArgs.add("--set");
+    commandArgs.add("clusterSide=a");
+    commandArgs.add("--set");
+    commandArgs.add("liveClusterSide=a");
+    commandArgs.add("--set");
+    commandArgs.add("currentPrimaryRegion=us-east-1");
+
+    return commandArgs;
+  }
+
+  private static List<String> findValuesFiles(
+      String env,
+      String app,
+      String appValuesFolder,
+      String awsRegion) {
+    String relativeAppFilesFolder = String.format("../%s/%s", appValuesFolder, app);
+    String appFilesFolder = String.format("/%s/%s/", appValuesFolder, app);
+    return findFilesFilteredBy(relativeAppFilesFolder,
+        fileName -> fileName.endsWith("cp.yaml")
+            || fileName.endsWith(env + YAML_EXTENSION)
+            || fileName.endsWith(env + DELIMITER + awsRegion + YAML_EXTENSION))
+        .map(fileName -> appFilesFolder + fileName)
+        .toList();
+  }
+
+  @SneakyThrows
+  private static Stream<String> findFilesFilteredBy(String folder,
+      Predicate<String> fileNameFilter) {
+    return Files.walk(Paths.get(folder))
+        .filter(Files::isRegularFile)
+        .map(path -> path.getFileName().toString())
+        .filter(fileNameFilter)
+        .sorted(Comparator.reverseOrder());
   }
 
   public static ProcessBuilder helmProcessBuilder(String app, String env) {
+    List<String> valuesFiles = findValuesFiles(env, app, "/values/app-specific",
+        DEFAULT_AWS_REGION);
     ProcessBuilder processBuilder = new ProcessBuilder();
-    return processBuilder.command(buildCommandArgs(app, env, "/values/app-specific")).directory(new File("../"));
+    return processBuilder.command(buildCommandArgs(env, valuesFiles).toArray(String[]::new))
+        .directory(new File("../"));
   }
 
   public static ProcessBuilder helmProcessBuilder(String app, String env, String appValuesFolder) {
+    List<String> valuesFiles = findValuesFiles(env, app, appValuesFolder, DEFAULT_AWS_REGION);
     ProcessBuilder processBuilder = new ProcessBuilder();
-    return processBuilder.command(buildCommandArgs(app, env, appValuesFolder))
+    return processBuilder.command(buildCommandArgs(env, valuesFiles).toArray(String[]::new))
+        .directory(new File("../"));
+  }
+
+  public static ProcessBuilder helmProcessBuilder(String app, String env, String appValuesFolder,
+      String awsRegion) {
+    List<String> valuesFiles = findValuesFiles(env, app, appValuesFolder, awsRegion);
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    return processBuilder.command(buildCommandArgs(env, valuesFiles).toArray(String[]::new))
         .directory(new File("../"));
   }
 

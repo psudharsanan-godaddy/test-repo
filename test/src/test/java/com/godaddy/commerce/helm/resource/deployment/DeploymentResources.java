@@ -1,6 +1,5 @@
 package com.godaddy.commerce.helm.resource.deployment;
 
-import com.godaddy.commerce.helm.resource.deployment.Limits;
 import lombok.Data;
 
 @Data
