@@ -46,7 +46,7 @@ public class RatingsShimTest extends BaseTest {
   @Test
   void test_ratingsShimDpEnv() throws IOException, InterruptedException {
     //Given
-    ProcessBuilder helmProcessBuilder = HelmUtil.helmProcessBuilder(APP_NAME, "dp");
+    ProcessBuilder helmProcessBuilder = HelmUtil.helmProcessBuilder(APP_NAME, "");
     //When
     Process helmProcess = helmProcessBuilder.start();
     String successOutput = HelmUtil.readSuccessOutput(helmProcess);
