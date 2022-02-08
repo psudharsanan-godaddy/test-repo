@@ -1,0 +1,7 @@
+awsRegion: us-west-2
+configs:
+  standard:
+    db:
+      clusterId: sc-601054641380-pp-ajv4gzqd6rwqm-databasecluster-15cy7whsl9w28
+    queryDb:
+      clusterId: sc-601054641380-pp-ajv4gzqd6rwqm-databasecluster-15cy7whsl9w28

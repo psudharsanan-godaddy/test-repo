@@ -58,6 +58,8 @@ configs:
         martechClientCert:
           mtlsSubjectName: 'CN=deltaemail.test.client.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=deltaemail.test.client.int.godaddy.com, OU=Domain Control Validated, O='
+        myhClientCert:
+          commonName: 'myh.test.client.int.godaddy.com'
         domainsClientCert:
           mtlsSubjectName: 'CN=domclientauth.int.test-godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=domclientauth.int.test-godaddy.com, OU=Domain Control Validated, O='
@@ -89,13 +91,15 @@ configs:
           jwtSubjectName: 'CN=pricing.client.cp.api.int.test-godaddy.com, OU=Domain Control Validated, O='
         migrationIntegrationClientCert:
           jwtSubjectName: 'CN=mtf.migration-integration.test-godaddy.com, OU=Domain Control Validated, O='
+        networkViolationsClientCert:
+          jwtSubjectName: 'CN=netvio-api.int.test-godaddy.com, OU=Domain Control Validated, O='
         sitelockClientCert:
           jwtSubjectName: 'CN=sitelock.test.client.int.godaddy.com, OU=Domain Control Validated, O='
         proHubClientCert:
           jwtSubjectName: 'CN=entitlement.px.client.test-godaddy.com, OU=Domain Control Validated, O='
         projectNucleusClientCert:
           jwtSubjectName: 'CN=pg.api.int.test-godaddy.com, OU=Domain Control Validated, O='
-        projectNucleusClientClientCert:
+        projectNucleusProductGraphClientCert:
           jwtSubjectName: 'CN=pg.api.int.test-godaddy.com, OU=Domain Control Validated, O='
         sslManagementClientCert:
           jwtSubjectName: 'CN=bot.managedssl.client.int.test-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC.'

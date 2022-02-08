@@ -1,0 +1,7 @@
+awsRegion: us-west-2
+configs:
+  standard:
+    db:
+      clusterId: sc-966953542425-pp-i22kyrzunfenm-databasecluster-115skuw2337wn
+    queryDb:
+      clusterId: sc-966953542425-pp-i22kyrzunfenm-databasecluster-115skuw2337wn
