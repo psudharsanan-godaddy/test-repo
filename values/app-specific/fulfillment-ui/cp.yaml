@@ -20,8 +20,6 @@ configs:
       defaultMode: 420
 deployment:
   readOnlyRootFilesystem: false
-  readinessProbe:
-    path: /v2/fulfillment-ui/ping
   resources:
     requests:
       cpu: 25m

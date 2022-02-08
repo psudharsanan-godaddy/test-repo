@@ -1,6 +1,8 @@
 deployment:
   enabled: true
-  enableLivenessProbe: false
+  livenessProbe:
+    enabled: false
+  readinessProbe: {}
   readOnlyRootFilesystem: true
   prometheus:
     scrape: 'true'
@@ -21,8 +23,6 @@ job:
   annotations: {}
   enableApm: false
   extraVolumes: {}
-
-hasPrivateApiGateway: false
 
 clientCerts: {}
 serverCerts: {}

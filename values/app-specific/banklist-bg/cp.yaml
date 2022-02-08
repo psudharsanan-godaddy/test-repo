@@ -53,8 +53,6 @@ configs:
       enabled: false
 
 deployment:
-  readinessProbe:
-    path: /v2/banklist-bg/ping
   resources:
     requests:
       cpu: 15m

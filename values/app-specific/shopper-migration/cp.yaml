@@ -12,16 +12,13 @@ deployment:
   readinessProbe:
     path: /v2/shopper-migration/ping
     initialDelaySeconds: 30
-  enableLivenessProbe: true
   livenessProbe:
+    enabled: true
     path: /v2/shopper-migration/ping
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false
   enableApm: false
   extraVolumes: { }
-
-hasPrivateApiGateway: true
-
 
 configs:
   standard:
