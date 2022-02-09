@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This script simulates the deployment system, merges all helm values files of a given app and outputs the merged values as YAML
+
 if [[ -z "$ENV" || -z "$ACCOUNT_TYPE" || -z "$AWS_REGION" || -z "$CLUSTER_TYPE" || -z "$CLUSTER_SIDE" || -z "$APP" ]]; then
   echo "ENV, ACCOUNT_TYPE, AWS_REGION, CLUSTER_TYPE, CLUSTER_SIDE, APP environment variables need to be set!"
   echo "e.g. ENV=dp ACCOUNT_TYPE=gen AWS_REGION=us-west-2 CLUSTER_TYPE=shard CLUSTER_SIDE=a APP=currency-exchange ./scripts/render-values-files.sh"
@@ -33,7 +35,6 @@ lookupPaths=(
   "protected-app-specific/$APP/cp.$ENV.$ACCOUNT_TYPE.$AWS_REGION.$CLUSTER_TYPE.yaml"
   "protected-app-specific/$APP/cp.$ENV.$ACCOUNT_TYPE.$AWS_REGION.$CLUSTER_TYPE.$CLUSTER_SIDE.yaml"
 )
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 delimiter=''
 for valuesFile in "${lookupPaths[@]}"; do
   valuesFilePath="./values/$valuesFile"
