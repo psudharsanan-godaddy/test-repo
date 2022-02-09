@@ -20,7 +20,7 @@ The following directories are used for generating templates of the helm release,
 - [templates](../templates/README.md)
 - [values](../values/README.md)
 
-The `test` folder contains a Java-based test project where we add tests to guard our Helm chart against unexpected changes.
+The `test` folder contains a Java-based test project where we add tests to guard our Helm chart against breaking changes.
 
 ## What resources of an application are NOT managed by this Helm chart?
 
