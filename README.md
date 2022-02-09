@@ -6,7 +6,7 @@ The goals of building this new Helm chart for deploying commerce applications ar
 
 1. [Local development](#local-development)
 2. [FAQ](./docs/faq.md)
-3. [User cases](./docs/user-cases.md)
+3. [Use cases](./docs/use-cases.md)
 
 ## Local development
 
