@@ -47,4 +47,3 @@ Check if spring logbook logging config is enabled.
   {{- end -}}
   {{- $r -}}
 {{- end }}
-

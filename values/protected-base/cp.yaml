@@ -1,0 +1,8 @@
+deployment:
+  readinessProbe:
+    enabled: true
+
+configs:
+  mountPath: /tmp
+  standard:
+    enabled: true

@@ -1,4 +1,4 @@
-{{- define "commerce-app-v2.deployment.spring-boot.volume" }}
+{{- define "commerce-app-v2.deployment.spring-boot.volumes" }}
 {{- $applicationEnabled := include "commerce-app-v2.configs.spring-boot.application.enabled" . | include "strToBool" }}
 {{- $loggingConfigEnabled := include "commerce-app-v2.configs.spring-boot.application.logging.enabled" . | include "strToBool" }}
 {{- if $applicationEnabled }}

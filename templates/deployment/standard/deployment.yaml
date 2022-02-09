@@ -147,9 +147,9 @@ spec:
               httpHeaders:
                 - name: X-Request-Id
                   value: "54732a76-9566-47b7-8248-5aebd637a5c6"
-            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds | default "15" }}
-            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds | default "15" }}
-            timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds | default "5" }}
+            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
             successThreshold: 1
             failureThreshold: 2
           {{- end }}
@@ -165,9 +165,9 @@ spec:
               httpHeaders:
                 - name: X-Request-Id
                   value: "54732a76-9566-47b7-8248-5aebd637a5c6"
-            initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds | default "15" }}
-            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds | default "15" }}
-            timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds | default "5" }}
+            initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds }}
             successThreshold: 1
             failureThreshold: 2
           resources:
@@ -260,7 +260,7 @@ spec:
         - name: sensitive-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-sensitive-config") .) }}
-            defaultMode: {{ .Values.configs.standard.sensitive.defaultMode | default "256" }}
+            defaultMode: {{ .Values.configs.standard.sensitive.defaultMode }}
         {{- end }}
         {{- if $tlsConfigEnabled }}
         - name: tls-config-secret

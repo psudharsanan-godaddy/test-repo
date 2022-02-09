@@ -22,8 +22,9 @@
 *.tmproj
 .vscode/
 
-/config-content/README.md
-/templates/README.md
-/values/README.md
-
+config-content/README.md
+templates/README.md
+values/README.md
+test/
+scripts/
 .output/

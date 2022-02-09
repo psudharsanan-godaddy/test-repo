@@ -4,26 +4,24 @@ app:
 
 deployment:
   readinessProbe:
-    path: /v2/shopper-migration/ping
+    path: /v2/framework-test-apps/ping
     initialDelaySeconds: 30
   livenessProbe:
     enabled: true
-    path: /v2/shopper-migration/ping
+    path: /v2/framework-test-apps/healthcheck
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false
+  enableApm: false
+  extraVolumes: { }
 
 configs:
   standard:
     classicDb:
       enabled: true
-    sensitive:
-      defaultMode: "0656"
-    auth:
-      enabled: false
+    crypto:
+      enabled: true
     db:
-      name: shopper_migration
-    log:
-      enabled: false
+      name: testDbName
   springBoot:
     enabled: true
     application:
@@ -32,5 +30,3 @@ configs:
         type: CONSOLE_JSON
         logbook:
           enabled: true
-
-

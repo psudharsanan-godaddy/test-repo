@@ -1,2 +1,4 @@
-app:
-  hostname: fulfillment-ui-int.cp.api.ote.godaddy.com
+configs:
+  standard:
+    app:
+      hostname: fulfillment-ui-int.cp.api.ote.godaddy.com

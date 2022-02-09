@@ -1,23 +1,6 @@
 app:
-  name: avalara-tax
-  apiVersion: v2
-  pathNoun: avalara-tax
-  type: service
   frameworkType: spring-boot
   size: MEDIUM
-  artifactId: avalara-tax-service
-
-deployment:
-  readinessProbe:
-    path: /v2/avalara-tax/ping
-    initialDelaySeconds: 30
-  enableLivenessProbe: true
-  livenessProbe:
-    path: /v2/avalara-tax/ping
-    initialDelaySeconds: 45
-  readOnlyRootFilesystem: false
-
-hasPrivateApiGateway: true
 
 configs:
   standard:
@@ -28,7 +11,6 @@ configs:
     log:
       enabled: false
     sensitive:
-      enabled: true
       defaultMode: "0656"
   springBoot:
     enabled: true
@@ -38,3 +20,12 @@ configs:
         type: CONSOLE_JSON
         logbook:
           enabled: true
+
+deployment:
+  readinessProbe:
+    initialDelaySeconds: 30
+  livenessProbe:
+    enabled: true
+    path: /v2/avalara-tax/ping
+    initialDelaySeconds: 45
+  readOnlyRootFilesystem: false

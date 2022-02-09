@@ -1,0 +1,12 @@
+app:
+  frameworkType: nodejs
+
+deployment:
+  readOnlyRootFilesystem: false
+
+configs:
+  standard:
+    db:
+      enabled: false
+    log:
+      enabled: false

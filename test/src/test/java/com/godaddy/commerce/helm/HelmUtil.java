@@ -26,16 +26,23 @@ public final class HelmUtil {
 
   private static List<String> buildCommandArgs(
       String env,
+      String app,
       List<String> appSpecificValuesFiles) {
 
-    List<String> allValuesFiles = Stream.concat(Stream.of(
-                "/values/base/cp.yaml",
-                String.format("/values/base/cp.%s.yaml", env),
-                String.format("/values/base/cp.%s.gen.yaml", env),
-                String.format("/values/base/cp.%s.gen.us-east-1.yaml", env),
-                String.format("/values/base/cp.%s.gen.us-east-1.shared.yaml", env)),
-            appSpecificValuesFiles.stream())
-        .toList();
+    List<String> allValuesFiles =
+        Stream.concat(
+            Stream.concat(
+                Stream.of("/values/base/cp.yaml"),
+                appSpecificValuesFiles.stream()
+            ),
+            Stream.of(
+                "/values/protected-base/cp.yaml",
+                String.format("/values/protected-base/cp.%s.yaml", env),
+                String.format("/values/protected-base/cp.%s.gen.yaml", env),
+                String.format("/values/protected-base/cp.%s.gen.us-east-1.yaml", env),
+                String.format("/values/protected-base/cp.%s.gen.us-east-1.shared.yaml", env)
+            )
+        ).toList();
 
     List<String> commandArgs = new ArrayList<>();
     commandArgs.add("helm");
@@ -53,6 +60,18 @@ public final class HelmUtil {
     commandArgs.add("clusterSide=a");
     commandArgs.add("--set");
     commandArgs.add("liveClusterSide=a");
+    commandArgs.add("--set");
+    commandArgs.add(String.format("app.name=%s", app));
+    commandArgs.add("--set");
+    commandArgs.add("app.apiVersion=v2");
+    commandArgs.add("--set");
+    commandArgs.add(String.format("app.pathNoun=%s", app));
+    commandArgs.add("--set");
+    commandArgs.add("app.resourceIdPathParamName=fakeResourceId");
+    commandArgs.add("--set");
+    commandArgs.add(String.format("app.artifactId=%s-service", app));
+    commandArgs.add("--set");
+    commandArgs.add("app.type=service");
     commandArgs.add("--set");
     commandArgs.add("currentPrimaryRegion=us-east-1");
 
@@ -88,14 +107,14 @@ public final class HelmUtil {
     List<String> valuesFiles = findValuesFiles(env, app, "/values/app-specific",
         DEFAULT_AWS_REGION);
     ProcessBuilder processBuilder = new ProcessBuilder();
-    return processBuilder.command(buildCommandArgs(env, valuesFiles).toArray(String[]::new))
+    return processBuilder.command(buildCommandArgs(env, app, valuesFiles).toArray(String[]::new))
         .directory(new File("../"));
   }
 
   public static ProcessBuilder helmProcessBuilder(String app, String env, String appValuesFolder) {
     List<String> valuesFiles = findValuesFiles(env, app, appValuesFolder, DEFAULT_AWS_REGION);
     ProcessBuilder processBuilder = new ProcessBuilder();
-    return processBuilder.command(buildCommandArgs(env, valuesFiles).toArray(String[]::new))
+    return processBuilder.command(buildCommandArgs(env, app, valuesFiles).toArray(String[]::new))
         .directory(new File("../"));
   }
 
@@ -103,7 +122,7 @@ public final class HelmUtil {
       String awsRegion) {
     List<String> valuesFiles = findValuesFiles(env, app, appValuesFolder, awsRegion);
     ProcessBuilder processBuilder = new ProcessBuilder();
-    return processBuilder.command(buildCommandArgs(env, valuesFiles).toArray(String[]::new))
+    return processBuilder.command(buildCommandArgs(env, app, valuesFiles).toArray(String[]::new))
         .directory(new File("../"));
   }
 
