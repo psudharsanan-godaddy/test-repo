@@ -10,8 +10,6 @@ configs:
       enabled: false
     log:
       enabled: false
-    sensitive:
-      defaultMode: "0656"
   springBoot:
     enabled: true
     application:

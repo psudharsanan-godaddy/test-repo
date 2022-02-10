@@ -6,3 +6,5 @@ configs:
   mountPath: /tmp
   standard:
     enabled: true
+    sensitive:
+      defaultMode: 0400

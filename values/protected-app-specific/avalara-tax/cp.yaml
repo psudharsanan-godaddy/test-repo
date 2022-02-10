@@ -2,5 +2,3 @@ configs:
   standard:
     sensitive:
       defaultMode: 0404
-
-nodeEnv: production

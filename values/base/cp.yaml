@@ -87,7 +87,6 @@ configs:
       enabled: true
     sensitive:
       enabled: true
-      defaultMode: 256
     tls:
       enabled: true
   vertx:

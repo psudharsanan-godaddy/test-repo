@@ -16,8 +16,6 @@ configs:
   standard:
     classicDb:
       enabled: true
-    sensitive:
-      defaultMode: "0656"
     auth:
       enabled: false
     db:
