@@ -19,8 +19,6 @@ deployment:
 
 configs:
   standard:
-    sensitive:
-      defaultMode: "0656"
     auth:
       enabled: false
     db:
