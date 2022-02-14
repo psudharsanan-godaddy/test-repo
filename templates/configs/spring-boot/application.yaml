@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-spring-boot-application-config") .) }}
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-spring-boot-app-config") .) }}
   labels:
     {{- include "commerce-app-v2.labels" . | nindent 4 }}
 data:

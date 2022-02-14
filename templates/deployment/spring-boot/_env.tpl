@@ -14,7 +14,7 @@
 {{- if $springConfigEnabled }}
   #Do not change env name this is specific at least for spring-boot 2.5.*
 - name: SPRING_CONFIG_ADDITIONAL_LOCATION
-  value: "{{ $mountPath }}/spring-boot-application-config/"
+  value: "{{ $mountPath }}/spring-boot-app-config/"
 {{- end }}
 {{- if  $loggingConfigEnabled }}
   #Do not change env name this is specific at least for spring-boot 2.5.*

@@ -301,24 +301,23 @@ public abstract class BaseTest {
 
   protected void assertSpringBootApplicationConfig(Map<String, SecretResource> secrets,
       DeploymentResource deployment) {
-    assertThat(secrets).containsKey(withAppPrefix("spring-boot-application-config-test"));
+    assertThat(secrets).containsKey(withAppPrefix("spring-boot-app-config-test"));
 
-    assertThat(secrets.get(withAppPrefix("spring-boot-application-config-test")).getData())
+    assertThat(secrets.get(withAppPrefix("spring-boot-app-config-test")).getData())
         .containsKey("application.yaml");
 
     assertThat(deployment.getVolumes())
-        .contains(Volume.secretVolume("spring-boot-application-config-secret",
-            withAppPrefix("spring-boot-application-config-test")));
+        .contains(Volume.secretVolume("spring-boot-app-config-secret",
+            withAppPrefix("spring-boot-app-config-test")));
 
     assertThat(deployment.getVolumeMounts()).contains(
-        VolumeMount.of("spring-boot-application-config-secret",
-            getBaseMountPath() + "/spring-boot-application-config"));
+        VolumeMount.of("spring-boot-app-config-secret",
+            getBaseMountPath() + "/spring-boot-app-config"));
 
     assertThat(deployment.getEnvs()).contains(
         Env.of("SPRING_CONFIG_ADDITIONAL_LOCATION",
-            getBaseMountPath() + "/spring-boot-application-config/"));
+            getBaseMountPath() + "/spring-boot-app-config/"));
   }
-
 
   protected void assertVertxOptionsConfig(Map<String, SecretResource> secrets,
       DeploymentResource deployment) {
@@ -335,6 +334,5 @@ public abstract class BaseTest {
         VolumeMount.of("vertx-options-secret",
             getBaseMountPath() + "/vertx-options"));
   }
-
 
 }
