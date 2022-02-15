@@ -25,6 +25,10 @@ metadata:
   name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-deployment") .) }}
   labels:
     {{- include "commerce-app-v2.labels" . | nindent 4 }}
+  {{- if $dbConfigEnabled }}
+  annotations:
+    secret.reloader.stakater.com/reload: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-db-config") .) }}"
+  {{- end }}
 spec:
   replicas: {{ include "commerce-app-v2.deploymentNumberOfReplicas" . }}
   revisionHistoryLimit: 0
@@ -43,9 +47,6 @@ spec:
         prometheus.io/port: "{{ .Values.deployment.prometheus.port }}"
         prometheus.io/scheme: "{{ .Values.deployment.prometheus.scheme }}"
         prometheus.io/path: "{{ .Values.deployment.prometheus.path }}"
-        {{- end }}
-        {{- if $dbConfigEnabled }}
-        secret.reloader.stakater.com/reload: "{{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-db-config") .) }}"
         {{- end }}
     spec:
       affinity:
