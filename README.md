@@ -21,17 +21,19 @@ The goals of building this new Helm chart for deploying commerce applications ar
 
 ### Generate YAML output
 
+The below script is just a sample, modify the values of variables if necessary.
+
 ```bash
-APP=currency-exchange;RESOURCE_ID_PATH_PARAM_NAME=currencyExchangeId;AWS_REGION=us-west-2;APP_TYPE=service;API_VERSION=v2;
+APP=currency-exchange;ENV=dp;ACCOUNT_TYPE=gen;RESOURCE_ID_PATH_PARAM_NAME=currencyExchangeId;AWS_REGION=us-west-2;APP_TYPE=service;API_VERSION=v2;IMAGE_TAG=0.0.21;
 helm template . \
  -f ./values/base/cp.yaml \
  -f ./values/app-specific/$APP/cp.yaml \
  -f ./values/protected-base/cp.yaml \
- -f ./values/protected-base/cp.dp.yaml \
- -f ./values/protected-base/cp.dp.gen.yaml \
- -f ./values/protected-base/cp.dp.gen.$AWS_REGION.yaml \
- -f ./values/protected-base/cp.dp.gen.$AWS_REGION.shared.yaml \
- --set deployment.image.tag=0.0.21 \
+ -f ./values/protected-base/cp.$ENV.yaml \
+ -f ./values/protected-base/cp.$ENV.$ACCOUNT_TYPE.yaml \
+ -f ./values/protected-base/cp.$ENV.$ACCOUNT_TYPE.$AWS_REGION.yaml \
+ -f ./values/protected-base/cp.$ENV.$ACCOUNT_TYPE.$AWS_REGION.shared.yaml \
+ --set deployment.image.tag=$IMAGE_TAG \
  --set deploymentSuffix='' \
  --set currentPrimaryRegion=us-west-2 \
  --set clusterSide=a \
@@ -48,21 +50,29 @@ helm template . \
 
 ### Deploy from local machine
 
+The below script is just a sample, modify the values of variables if necessary.
+
 ```bash
-helm upgrade --install currency-exchange-ep-43093 . \
+APP=currency-exchange;ENV=dp;ACCOUNT_TYPE=gen;RESOURCE_ID_PATH_PARAM_NAME=currencyExchangeId;AWS_REGION=us-west-2;APP_TYPE=service;API_VERSION=v2;DEPLOYMENT_SUFFIX='--abcdefg';IMAGE_TAG=0.0.21;
+helm upgrade --install "${APP}${DEPLOYMENT_SUFFIX}" . \
  -f ./values/base/cp.yaml \
- -f ./values/base/cp.dp.yaml \
- -f ./values/base/cp.dp.gen.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.yaml \
- -f ./values/base/cp.dp.gen.us-east-1.shared.yaml \
- -f ./values/app-specific/currency-exchange/cp.yaml \
- -f ./values/app-specific/currency-exchange/cp.dp.yaml \
- -f ./values/app-specific/currency-exchange/cp.dp.us-east-1.yaml \
- --set deployment.image.tag=0.0.21 \
- --set deploymentSuffix=--EP-43093 \
- --set currentPrimaryRegion=us-east-1 \
+ -f ./values/app-specific/$APP/cp.yaml \
+ -f ./values/protected-base/cp.yaml \
+ -f ./values/protected-base/cp.$ENV.yaml \
+ -f ./values/protected-base/cp.$ENV.$ACCOUNT_TYPE.yaml \
+ -f ./values/protected-base/cp.$ENV.$ACCOUNT_TYPE.$AWS_REGION.yaml \
+ -f ./values/protected-base/cp.$ENV.$ACCOUNT_TYPE.$AWS_REGION.shared.yaml \
+ --set deployment.image.tag=$IMAGE_TAG \
+ --set deploymentSuffix='--abcdefg' \
+ --set currentPrimaryRegion=us-west-2 \
  --set clusterSide=a \
  --set liveClusterSide=a \
+ --set app.name=$APP \
+ --set app.apiVersion=$API_VERSION \
+ --set app.pathNoun=$APP \
+ --set app.resourceIdPathParamName=$RESOURCE_ID_PATH_PARAM_NAME \
+ --set app.artifactId=$APP-service \
+ --set app.type=$APP_TYPE \
  --debug \
  --atomic
 ```
