@@ -28,14 +28,14 @@ Currently, the following resources of an application are not managed by this Hel
 
 - Server CA certs (handled by the app-setup workflow)
 - IngressRoute (handled by the app-setup workflow)
-- ClusterIP and nlb services (handled by the app-setup workflow)
+- ClusterIP and NLB services (handled by the app-setup workflow)
 - Route 53/Corp DNS records (handled by the app-setup workflow)
 - HPA (handled by the app-setup workflow)
 - Sensitive config (handled by the existing deploy sh scripts)
 - Client certs (handled by the existing deploy sh scripts)
 - Hosts config (handled by the existing deploy sh scripts)
 
-## How to do customize the auth config of an application?
+## How can an application’s auth config be customized?
 
 The auth config base template is located at `config-content/base/standard/auth.yaml.tpl`
 

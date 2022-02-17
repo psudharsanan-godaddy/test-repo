@@ -112,7 +112,7 @@ deployment:
     scheme: 'https'
     path: '/metrics'
   resources:
-    # memory fields here will not be used if defined as they will be determined by the .Value.app.size
+    # memory fields here will not be used if defined as they will be determined by .Values.app.size
     requests:
       cpu: 80m
     limits:

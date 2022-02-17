@@ -76,7 +76,7 @@ helm upgrade --install currency-exchange-ep-43093 . \
 Now that there are multiple values files involved during a deployment of an application, a script is created to output the final values that will be used for deploying an application for local debugging purposes, e.g.:
 
 ```bash
-ENV=dp ACCOUNT_TYPE=gen AWS_REGION=us-west-2 CLUSTER_TYPE=shard CLUSTER_SIDE=a APP=fulfillment-ui ./scripts/render-values-files.sh
+ENV=dp ACCOUNT_TYPE=gen AWS_REGION=us-west-2 CLUSTER_TYPE=shared CLUSTER_SIDE=a APP=fulfillment-ui ./scripts/render-values-files.sh
 ```
 
 Note that the generated values will not contain value fields passed in via `--set` as part of the Helm command, e.g. `helm upgrade ... --set app.name=fulfillment-ui`.

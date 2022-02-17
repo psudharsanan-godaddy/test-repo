@@ -4,7 +4,7 @@
 
 1. Create a branch of cd-jobs, add an entry in the app-manifest.json and get it merged into master
 2. Create a branch of the Helm chart repo, add all necessary values files, blocks and get it merged into master
-3. Run app-setup to have app-speicific resources created, e.g. jks secret, hosts config secret, ECR repo, IngressRoute, HPA, NLB Ingress, ClusterIP Svc, Route 53 records, APIG etc.
+3. Run app-setup to have app-specific resources created, e.g. JKS secret, hosts config secret, ECR repo, IngressRoute, HPA, NLB Ingress, ClusterIP service, Route 53 records, APIG etc.
 4. Merge the app repo branch to master to trigger build and deploy the app repo to DP
 
 ## Update an existing service

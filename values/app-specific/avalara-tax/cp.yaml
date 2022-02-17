@@ -24,6 +24,5 @@ deployment:
     initialDelaySeconds: 30
   livenessProbe:
     enabled: true
-    path: /v2/avalara-tax/ping
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false

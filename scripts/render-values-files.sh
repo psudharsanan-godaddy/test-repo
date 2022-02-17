@@ -4,7 +4,7 @@
 
 if [[ -z "$ENV" || -z "$ACCOUNT_TYPE" || -z "$AWS_REGION" || -z "$CLUSTER_TYPE" || -z "$CLUSTER_SIDE" || -z "$APP" ]]; then
   echo "ENV, ACCOUNT_TYPE, AWS_REGION, CLUSTER_TYPE, CLUSTER_SIDE, APP environment variables need to be set!"
-  echo "e.g. ENV=dp ACCOUNT_TYPE=gen AWS_REGION=us-west-2 CLUSTER_TYPE=shard CLUSTER_SIDE=a APP=currency-exchange ./scripts/render-values-files.sh"
+  echo "e.g. ENV=dp ACCOUNT_TYPE=gen AWS_REGION=us-west-2 CLUSTER_TYPE=shared CLUSTER_SIDE=a APP=currency-exchange ./scripts/render-values-files.sh"
   exit 1
 fi
 
