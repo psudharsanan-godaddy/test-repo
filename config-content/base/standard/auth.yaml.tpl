@@ -3,7 +3,6 @@
 {{- $resourceIdPathParamName := required ".Values.app.resourceIdPathParamName required!" (printf ":%s" .Values.app.resourceIdPathParamName) }}
 {{- $customerIdParamPath := ternary ":ownerId" "customers/:customerId" (eq $appApiVersion "v1") }}
 {{- $env := required ".Values.env required!" .Values.env }}
-{{- $gdDomainEnvPrefix := required ".Values.gdDomainEnvPrefix required!" .Values.gdDomainEnvPrefix -}}
 
 roles:
   {{- $additionalSuperRoleRoutes := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "roles/additional-super-role-routes") .) }}
