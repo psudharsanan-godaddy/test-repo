@@ -221,6 +221,7 @@ profiles:
     right: '{{ $qaClientCertRight }}'
   {{- end }}
 
+  {{- if or (eq $env "dp") (eq $env "test") }}
   {{- if .Values.configs.standard.auth.profiles.qaToolClientCert.enabled }}
   {{- $qaToolClientCertRight := required ".Values.configs.standard.auth.profiles.qaToolClientCert.right required!" .Values.configs.standard.auth.profiles.qaToolClientCert.right }}
   - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.qaToolClientCert.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.qaToolClientCert.mtlsSubjectName }}'
@@ -239,6 +240,7 @@ profiles:
     jwtType: cert
     certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.qaToolClientCert2.jwtSubjectName required!" .Values.configs.standard.auth.profiles.qaToolClientCert2.jwtSubjectName }}'
     right: '{{ $qaToolClientCert2Right }}'
+  {{- end }}
   {{- end }}
 
   {{- if .Values.configs.standard.auth.profiles.noneCert.enabled }}
