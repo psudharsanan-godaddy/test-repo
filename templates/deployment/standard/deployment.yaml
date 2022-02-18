@@ -4,8 +4,13 @@
 {{- $appName := required ".Values.app.name required!" .Values.app.name }}
 {{- $apiVersion := required ".Values.app.apiVersion required!" .Values.app.apiVersion }}
 {{- $pathNoun := required ".Values.app.pathNoun required!" .Values.app.pathNoun }}
-{{- $cacertsSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-cacerts") .) }}
-{{- $storeKeysSecretName := include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-storekeys") .) }}
+{{- $awsRegion := required ".Values.awsRegion required!" .Values.awsRegion }}
+{{- $env := required ".Values.env required!" .Values.env }}
+{{- $accountType := required ".Values.accountType required!" .Values.accountType }}
+{{- $accountTypeMisnomer := ternary "shared" $accountType (eq $accountType "gen") }}
+{{- $useLegacyStoreSecretName := and (eq $env "prod") (eq $awsRegion "us-east-1") }}
+{{- $cacertsSecretName := ternary (printf "%s-prod-%s%s" $appName $accountTypeMisnomer "-cacerts") (include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-cacerts") .)) $useLegacyStoreSecretName }}
+{{- $storeKeysSecretName := ternary (printf "%s-prod-%s%s" $appName $accountTypeMisnomer "-storekeys") (include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-storekeys") .)) $useLegacyStoreSecretName }}
 {{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
 {{- $appConfigEnabled := include "commerce-app-v2.configs.standard.app.enabled" . | include "strToBool" }}
 {{- $authConfigEnabled := include "commerce-app-v2.configs.standard.auth.enabled" . | include "strToBool" }}
@@ -180,7 +185,7 @@ spec:
             - name: APP_VERSION
               value: {{ .Values.deployment.image.tag | quote }}
             - name: AWS_REGION
-              value: {{ required ".Values.awsRegion required!" .Values.awsRegion | quote }}
+              value: {{ $awsRegion | quote }}
             {{- if .Values.deployment.enableApm }}
             - name: ELASTIC_APM_SECRET_TOKEN
               valueFrom:
