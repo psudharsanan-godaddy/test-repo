@@ -3,7 +3,6 @@
 {{- $resourceIdPathParamName := required ".Values.app.resourceIdPathParamName required!" (printf ":%s" .Values.app.resourceIdPathParamName) }}
 {{- $customerIdParamPath := ternary ":ownerId" "customers/:customerId" (eq $appApiVersion "v1") }}
 {{- $env := required ".Values.env required!" .Values.env }}
-{{- $gdDomainEnvPrefix := required ".Values.gdDomainEnvPrefix required!" .Values.gdDomainEnvPrefix -}}
 roles:
   {{- $additionalSuperRoleRoutes := include "commerce-app-v2.appSpecificConfigBlock" (merge (dict "configType" "auth" "blockName" "roles/additional-super-role-routes") .) }}
   {{- $includeSuperRoleDefaultRoutes := required ".Values.configs.standard.auth.roles.super.defaultRoutes.enabled required!" .Values.configs.standard.auth.roles.super.defaultRoutes.enabled }}
@@ -221,6 +220,7 @@ profiles:
     right: '{{ $qaClientCertRight }}'
   {{- end }}
 
+  {{- if or (eq $env "dp") (eq $env "test") }}
   {{- if .Values.configs.standard.auth.profiles.qaToolClientCert.enabled }}
   {{- $qaToolClientCertRight := required ".Values.configs.standard.auth.profiles.qaToolClientCert.right required!" .Values.configs.standard.auth.profiles.qaToolClientCert.right }}
   - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.qaToolClientCert.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.qaToolClientCert.mtlsSubjectName }}'
@@ -239,6 +239,7 @@ profiles:
     jwtType: cert
     certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.qaToolClientCert2.jwtSubjectName required!" .Values.configs.standard.auth.profiles.qaToolClientCert2.jwtSubjectName }}'
     right: '{{ $qaToolClientCert2Right }}'
+  {{- end }}
   {{- end }}
 
   {{- if .Values.configs.standard.auth.profiles.noneCert.enabled }}

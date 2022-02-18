@@ -1,4 +1,4 @@
-- certificateSubjectName: CN=instore-credit-gateway-icp.client.cp.api.{{ required ".Values.gdDomainEnvPrefix required!" .Values.gdDomainEnvPrefix }}godaddy.com, OU=, O=
+- certificateSubjectName: CN=instore-credit-gateway-icp.client.cp.api.{{ .Values.gdDomainEnvPrefix }}godaddy.com, OU=, O=
   jwtAuth: basic
   jwtType: cert
   right: readOnly
