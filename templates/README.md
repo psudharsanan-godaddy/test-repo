@@ -25,3 +25,15 @@ This sub-folder contains application-framework-type-specific job Kubernetes reso
 ## _helpers.tpl
 
 This file contains re-usable helper functions used throughout this Helm chart.
+
+## _spring-boot.tpl
+
+This file contains re-usable helper functions used specifically for Spring Boot applications.
+
+## _standard.tpl
+
+This file contains re-usable helper functions used for all applications.
+
+## _vertx.tpl
+
+This file contains re-usable helper functions used specifically for Vert.x applications.

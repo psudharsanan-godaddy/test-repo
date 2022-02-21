@@ -1,1 +1,1 @@
-HOSTNAME: {{ required ".Values.app.hostname required!" .Values.app.hostname }}
+HOSTNAME: {{ required ".Values.configs.standard.app.hostname required!" .Values.configs.standard.app.hostname }}

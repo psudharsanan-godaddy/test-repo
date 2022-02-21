@@ -2,3 +2,4 @@
 
 config-content/app-specific @ecomm-continuous-delivery/ecomm-developers
 values/app-specific @ecomm-continuous-delivery/ecomm-developers
+test/src/test/java/com/godaddy/commerce/helm/app @ecomm-continuous-delivery/ecomm-developers

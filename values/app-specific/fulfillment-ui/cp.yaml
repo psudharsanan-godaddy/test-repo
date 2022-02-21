@@ -1,11 +1,6 @@
 app:
-  apiVersion: v2
-  artifactId: fulfillment-ui-service
   frameworkType: nodejs
-  name: fulfillment-ui
-  pathNoun: fulfillment-ui
-  size: SMALL
-  type: service
+
 configs:
   standard:
     auth:
@@ -16,11 +11,9 @@ configs:
       enabled: false
     prometheus:
       enabled: false
-    sensitive:
-      defaultMode: 420
+
 deployment:
   readOnlyRootFilesystem: false
   resources:
     requests:
       cpu: 25m
-nodeEnv: production

@@ -12,8 +12,9 @@ spec:
   region: {{ required ".Values.awsRegion required!" .Values.awsRegion }}
   data:
     {{- $dbClusterId := required ".Values.configs.standard.db.clusterId required!" .Values.configs.standard.db.clusterId }}
+    {{- $dbName := required ".Values.configs.standard.db.name required!" .Values.configs.standard.db.name }}
     - name: DbUsername
-      key: /RDS/{{ $appName }}/Username
+      key: /RDS/{{ $appName }}/{{ $dbName}}/Username
     - name: DbActiveEndpoint
       key: /Team/Aurora/{{ $dbClusterId }}/ActiveEndpoint
     - name: DbReaderEndpoint
@@ -24,8 +25,9 @@ spec:
       key: /Team/Aurora/{{ $dbClusterId }}/Port
     {{- if .Values.configs.standard.queryDb.enabled }}
     {{- $queryDbClusterId := required ".Values.configs.standard.queryDb.clusterId required!" .Values.configs.standard.queryDb.clusterId }}
+    {{- $queryDbName := required ".Values.configs.standard.queryDb.name required!" .Values.configs.standard.queryDb.name }}
     - name: QueryDbUsername
-      key: /RDS/{{ $appName }}/Username
+      key: /RDS/{{ $appName }}/{{ $queryDbName }}/Username
     - name: QueryDbActiveEndpoint
       key: /Team/Aurora/{{ $queryDbClusterId }}/ActiveEndpoint
     - name: QueryDbReaderEndpoint

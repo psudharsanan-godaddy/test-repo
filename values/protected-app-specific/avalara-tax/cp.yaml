@@ -1,0 +1,4 @@
+configs:
+  standard:
+    sensitive:
+      defaultMode: 0404

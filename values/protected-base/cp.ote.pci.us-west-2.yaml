@@ -1,0 +1,7 @@
+awsRegion: us-west-2
+configs:
+  standard:
+    db:
+      clusterId: ecomm-ote-pci-us-west-2-aurora
+    queryDb:
+      clusterId: ecomm-ote-pci-us-west-2-aurora

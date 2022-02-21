@@ -1,7 +1,0 @@
-awsRegion: us-west-2
-configs:
-  standard:
-    db:
-      clusterId: sc-804135914364-pp-4maovkhdw5wzw-databasecluster-1isbx894d411u
-    queryDb:
-      clusterId: sc-804135914364-pp-4maovkhdw5wzw-databasecluster-1isbx894d411u

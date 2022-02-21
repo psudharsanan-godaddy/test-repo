@@ -1,4 +1,4 @@
-{{- define "commerce-app-v2.deployment.vertx.volume" }}
+{{- define "commerce-app-v2.deployment.vertx.volumes" }}
 {{- $optionsEnabled := include "commerce-app-v2.configs.vertx.options.enabled" . | include "strToBool" }}
 {{- if $optionsEnabled }}
 - name: vertx-options-secret

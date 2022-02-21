@@ -1,12 +1,6 @@
 app:
-  apiVersion: v2
-  artifactId: tax-rates-service
   frameworkType: vertx
-  name: tax-rates
-  pathNoun: tax-rates
-  resourceIdPathParamName: taxRateId
-  size: SMALL
-  type: service
+
 configs:
   standard:
     auth:
@@ -56,6 +50,7 @@ configs:
             enabled: false
     db:
       name: tax_rates_v2
+
 deployment:
   resources:
     requests:

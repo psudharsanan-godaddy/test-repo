@@ -1,0 +1,32 @@
+app:
+  frameworkType: spring-boot
+  size: MEDIUM
+
+deployment:
+  readinessProbe:
+    path: /v2/framework-test-apps/ping
+    initialDelaySeconds: 30
+  livenessProbe:
+    enabled: true
+    path: /v2/framework-test-apps/healthcheck
+    initialDelaySeconds: 45
+  readOnlyRootFilesystem: false
+  enableApm: false
+  extraVolumes: { }
+
+configs:
+  standard:
+    classicDb:
+      enabled: true
+    crypto:
+      enabled: true
+    db:
+      name: testDbName
+  springBoot:
+    enabled: true
+    application:
+      enabled: true
+      logging:
+        type: CONSOLE_JSON
+        logbook:
+          enabled: true

@@ -1,36 +1,8 @@
-deployment:
-  enabled: true
-  livenessProbe:
-    enabled: false
-  readinessProbe: {}
-  readOnlyRootFilesystem: true
-  prometheus:
-    scrape: 'true'
-    port: '8081'
-    scheme: 'https'
-    path: '/metrics'
-  resources:
-    # memory fields here will not be used if defined as they will be determined by the .Value.app.size
-    requests:
-      cpu: 80m
-    limits:
-      cpu: 2000m
-  enableApm: false
-  extraVolumes: {}
-
-job:
-  enabled: false
-  annotations: {}
-  enableApm: false
-  extraVolumes: {}
-
-clientCerts: {}
-serverCerts: {}
+app:
+  size: SMALL
 
 configs:
-  mountPath: /tmp
   standard:
-    enabled: true
     app:
       enabled: true
     auth:
@@ -122,11 +94,41 @@ configs:
     options:
       enabled: true
 
+deployment:
+  enabled: true
+  livenessProbe:
+    enabled: false
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    timeoutSeconds: 5
+  readinessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    timeoutSeconds: 5
+  readOnlyRootFilesystem: true
+  prometheus:
+    scrape: 'true'
+    port: '8081'
+    scheme: 'https'
+    path: '/metrics'
+  resources:
+    # memory fields here will not be used if defined as they will be determined by .Values.app.size
+    requests:
+      cpu: 80m
+    limits:
+      cpu: 2000m
+  enableApm: false
+
+job:
+  enabled: false
+  enableApm: false
+
 vertx:
   cryptoMode: LOCAL
   enableAuth: true
   enableTls: true
   enableJwt: false
   enableSecurityLogging: true
+
 jmx:
   enabled: false
