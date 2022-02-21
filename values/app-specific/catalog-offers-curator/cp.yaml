@@ -1,0 +1,31 @@
+app:
+  name: catalog-offers-curator
+  apiVersion: v2
+  pathNoun: catalog-offers-curator
+  type: service
+  frameworkType: spring-boot
+  size: MEDIUM
+  artifactId: catalog-offers-curator-service
+
+deployment:
+  readinessProbe:
+    path: /v2/catalog-offers-curator/ping
+    initialDelaySeconds: 30
+  livenessProbe:
+    path: /v2/catalog-offers-curator/ping
+    initialDelaySeconds: 45
+  readOnlyRootFilesystem: false
+  enableApm: true
+
+configs:
+  standard:
+    auth:
+      enabled: false
+    db:
+      enabled: false
+    log:
+      enabled: false
+  springBoot:
+    enabled: true
+    application:
+      enabled: true
