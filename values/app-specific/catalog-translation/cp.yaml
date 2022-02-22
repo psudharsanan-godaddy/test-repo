@@ -1,0 +1,32 @@
+app:
+  frameworkType: spring-boot
+  size: MEDIUM
+
+deployment:
+  enabled: true
+  readinessProbe:
+    path: /v2/catalog-translation/ping
+    initialDelaySeconds: 75
+  livenessProbe:
+    enabled: true
+    path: /v2/catalog-translation/ping
+    initialDelaySeconds: 90
+  readOnlyRootFilesystem: false
+  enableApm: true
+
+configs:
+  enabled: true
+  standard:
+    auth:
+      enabled: false
+    db:
+      enabled: false
+    log:
+      enabled: false
+
+  springBoot:
+    enabled: true
+    application:
+      enabled: true
+
+
