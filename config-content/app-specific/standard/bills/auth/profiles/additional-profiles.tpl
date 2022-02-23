@@ -1,3 +1,4 @@
+{{- $env := required ".Values.env required!" .Values.env }}
 - jwtAuth: basic
   jwtMaxHoursAge: 12
   jwtType: idp
@@ -38,6 +39,7 @@
   jwtMaxHoursAge: 2
   jwtType: jomax
   right: refundTool
+{{- if or (eq $env "dp") (eq $env "test") }}
 - jwtAuth: basic
   jwtGroup: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.c3Qa.jwtGroups.tier0 }}'
   jwtMaxHoursAge: 2
@@ -58,6 +60,7 @@
   jwtMaxHoursAge: 2
   jwtType: jomax
   right: refundTool
+{{- end }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.ckpClientCert.mtlsSubjectName }}'
   right: journalOnly
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.ckpClientCert.jwtSubjectName }}'

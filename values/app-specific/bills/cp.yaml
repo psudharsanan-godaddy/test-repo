@@ -7,12 +7,13 @@ configs:
       profiles:
         adminClientCert:
           enabled: true
+          right: admin
         legacyGenClientCert:
           enabled: true
         legacyPciClientCert:
           enabled: true
-        legacyPciClientCert2:
-          enabled: true
+        ecommOrchClientCert:
+          right: admin
       rights:
         admin:
           defaultRoles:
