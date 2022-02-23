@@ -17,10 +17,8 @@ configs:
         ecommOrchClientCert:
           jwtSubjectName: 'CN=ecomm-orch.client.cp.api.dev-godaddy.com, OU=, O='
         legacyGenClientCert:
-          mtlsSubjectName: 'CN=eCommClient.dev.intranet.gdg, OU=Domain Control Validated, O=eCommClient.dev.intranet.gdg'
           jwtSubjectName: 'CN=eCommClient.dev.intranet.gdg, OU=Domain Control Validated, O=eCommClient.dev.intranet.gdg'
         legacyPciClientCert:
-          mtlsSubjectName: 'CN=eCommClient.dev.intranet.gdg, OU=Domain Control Validated, O=eCommClient.dev.intranet.gdg'
           jwtSubjectName: 'CN=eCommClient.dev.intranet.gdg, OU=Domain Control Validated, O=eCommClient.dev.intranet.gdg'
         qaClientCert:
           mtlsSubjectName: 'CN=qa.dev-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC., L=Scottsdale, ST=AZ, C=US'
@@ -35,56 +33,41 @@ configs:
           jwtSubjectName: 'CN=pricing.client.cp.api.int.dev-godaddy.com, OU=Domain Control Validated, O='
         # partners' client certs
         ckpClientCert:
-          mtlsSubjectName: 'CN=c360-journal-reader.authclient.dev-godaddy.com'
           jwtSubjectName: 'CN=c360-journal-reader.authclient.dev-godaddy.com, OU=, O='
         crmClientCert:
-          mtlsSubjectName: 'CN=crm.dev.client.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=crm.dev.client.int.godaddy.com, OU=Domain Control Validated, O='
         cpanelClientCert:
-          mtlsSubjectName: 'CN=diablo.dev.authclient.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=diablo.dev.authclient.int.godaddy.com, OU=Domain Control Validated, O='
         hfsClientCert:
-          mtlsSubjectName: 'CN=hfs.ecomm.dev.authclient.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=hfs.ecomm.dev.authclient.int.godaddy.com, OU=Domain Control Validated, O='
           right: all
         graphApiClientCert:
           jwtSubjectName: 'CN=c360-graph-api.authclient.dev-godaddy.com, OU=Domain Control Validated, O='
         globalClientCert:
-          mtlsSubjectName: 'CN=global-provisioning.client.int.dev-godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=global-provisioning.client.int.dev-godaddy.com, OU=Domain Control Validated, O='
         legalClientCert:
-          mtlsSubjectName: 'CN=legalinvestigations.dev.client.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=legalinvestigations.dev.client.int.godaddy.com, OU=Domain Control Validated, O='
         martechClientCert:
-          mtlsSubjectName: 'CN=deltaemail.dev.client.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=deltaemail.dev.client.int.godaddy.com, OU=Domain Control Validated, O='
         myhClientCert:
           commonName: 'myh.dev.client.int.godaddy.com'
         domainsClientCert:
-          mtlsSubjectName: 'CN=domclientauth.int.dev-godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=domclientauth.int.dev-godaddy.com, OU=Domain Control Validated, O='
         domainsRegistrarClientCert:
-          mtlsSubjectName: 'CN=registrar.dev.client.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=registrar.dev.client.int.godaddy.com, OU=Domain Control Validated, O='
         domainsRegistrarClientCert2: {} # only set in prod
         fraudAppsClientCert:
-          mtlsSubjectName: 'CN=fraudapps.dev.client.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=fraudapps.dev.client.godaddy.com, OU=Domain Control Validated, O='
         ipeClientCert:
-          mtlsSubjectName: 'CN=client.partners.dev-godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=client.partners.dev-godaddy.com, OU=Domain Control Validated, O='
         paidItClientCert:
-          mtlsSubjectName: 'CN=paid-it.dev.client.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=paid-it.dev.client.int.godaddy.com, OU=Domain Control Validated, O='
         paidItClientCert2: {} # only set in test and prod
         appSvcQuickStartClientCert:
-          mtlsSubjectName: 'CN=entitlements.qs.cpsln.dev-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC., L=Scottsdale, ST=AZ, C=US'
           jwtSubjectName: 'CN=entitlements.qs.cpsln.dev-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC.'
         fosClientCert:
-          mtlsSubjectName: 'CN=corp.web.sales.dev.client.int.godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=corp.web.sales.dev.client.int.godaddy.com, OU=Domain Control Validated, O='
         wssClientCert:
-          mtlsSubjectName: 'CN=wss-nesi.client.int.dev-godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=wss-nesi.client.int.dev-godaddy.com, OU=Domain Control Validated, O='
         woprClientCert: {} # only set in test and prod
         dudaClientCert:

@@ -1,0 +1,5 @@
+- internalOnly
+- utility
+- read
+- purchase
+- write
