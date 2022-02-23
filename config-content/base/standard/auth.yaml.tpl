@@ -63,7 +63,13 @@ roles:
   # healthCheck is not allowed to customize
   healthCheck:
     - route: 'GET:/{{ $appApiVersion }}/{{ $appPathNoun }}/healthcheck'
+      {{- with .Values.configs.standard.auth.roles.healthCheck.getImpact }}
+      impact: {{ . }}
+      {{- end }}
     - route: 'POST:/{{ $appApiVersion }}/{{ $appPathNoun }}/healthcheck'
+      {{- with .Values.configs.standard.auth.roles.healthCheck.postImpact }}
+      impact: {{ . }}
+      {{- end }}
 
   utility:
     # the /ping route is not allowed to customize
