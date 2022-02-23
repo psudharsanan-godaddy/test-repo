@@ -61,52 +61,42 @@
   jwtType: jomax
   right: refundTool
 {{- end }}
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.ckpClientCert.mtlsSubjectName }}'
-  right: journalOnly
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.ckpClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtMaxHoursAge: 24
   jwtType: cert
   right: journalOnly
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.crmClientCert.mtlsSubjectName }}'
-  right: crmOnly
+{{- if not (eq $env "ote") }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.crmClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
   right: crmOnly
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.legalClientCert.mtlsSubjectName }}'
-  right: legalOnly
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.legalClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
   right: legalOnly
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.martechClientCert.mtlsSubjectName }}'
-  right: marTechOnly
+{{- end }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.martechClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
   right: marTechOnly
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsRegistrarClientCert.mtlsSubjectName }}'
-  right: domainsRegistrarOnly
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsRegistrarClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
   right: domainsRegistrarOnly
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsRegistrarClientCert2.mtlsSubjectName }}'
-  right: domainsRegistrarOnly
+{{- if eq $env "prod" }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsRegistrarClientCert2.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
   right: domainsRegistrarOnly
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.fraudAppsClientCert.mtlsSubjectName }}'
-  right: fraudApps
+{{- end }}
+{{- if not (eq $env "ote") }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.fraudAppsClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
   right: fraudApps
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.ipeClientCert.mtlsSubjectName }}'
-  right: ipeOnly
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.ipeClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
   right: ipeOnly
+{{- end }}

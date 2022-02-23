@@ -8,12 +8,14 @@ configs:
         adminClientCert:
           enabled: true
           right: admin
+        ecommOrchClientCert:
+          right: admin
+        ecommOrchOldClientCert:
+          right: admin
         legacyGenClientCert:
           enabled: true
         legacyPciClientCert:
           enabled: true
-        ecommOrchClientCert:
-          right: admin
       rights:
         admin:
           defaultRoles:
