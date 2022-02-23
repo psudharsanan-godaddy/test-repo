@@ -1,0 +1,26 @@
+app:
+  frameworkType: spring-boot
+  size: MEDIUM
+
+deployment:
+  readinessProbe:
+    initialDelaySeconds: 75
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 90
+  readOnlyRootFilesystem: false
+  enableApm: true
+
+configs:
+  standard:
+    auth:
+      enabled: false
+    db:
+      enabled: false
+    log:
+      enabled: false
+
+  springBoot:
+    enabled: true
+    application:
+      enabled: true
