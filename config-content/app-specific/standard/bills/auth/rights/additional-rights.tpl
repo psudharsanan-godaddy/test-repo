@@ -1,7 +1,10 @@
+{{- $env := required ".Values.env required!" .Values.env }}
 bgProcessor:
   - read
+{{- if not (eq $env "ote") }}
 crmOnly:
   - externalRead
+{{- end }}
 customer:
   - externalRead
 domainsRegistrarOnly:
@@ -11,6 +14,7 @@ domainsRegistrarOnly:
   - healthCheck
   - create
   - update
+{{- if not (eq $env "ote") }}
 fraudApps:
   - create
   - read
@@ -19,10 +23,13 @@ fraudApps:
 ipeOnly:
   - read
   - journal
+{{- end }}
 journalOnly:
   - journal
+{{- if not (eq $env "ote") }}
 legalOnly:
   - read
+{{- end }}
 marTechOnly:
   - read
 refundTool:
