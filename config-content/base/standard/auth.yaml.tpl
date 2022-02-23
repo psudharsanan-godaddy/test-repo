@@ -180,11 +180,11 @@ profiles:
 
   {{- if .Values.configs.standard.auth.profiles.legacyPciClientCert2.enabled }}
   {{- $legacyPciClientCert2Right := required ".Values.configs.standard.auth.profiles.legacyPciClientCert2.right required!" .Values.configs.standard.auth.profiles.legacyPciClientCert2.right }}
-  - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClient2.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.legacyPciClient2.mtlsSubjectName }}'
+  - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClientCert2.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.legacyPciClientCert2.mtlsSubjectName }}'
     right: '{{ $legacyPciClientCert2Right }}'
   - jwtAuth: basic
     jwtType: cert
-    certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClientCert.jwtSubjectName required!" .Values.configs.standard.auth.profiles.legacyPciClient2.jwtSubjectName }}'
+    certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClientCert2.jwtSubjectName required!" .Values.configs.standard.auth.profiles.legacyPciClientCert2.jwtSubjectName }}'
     right: '{{ $legacyPciClientCert2Right }}'
   {{- end }}
 
