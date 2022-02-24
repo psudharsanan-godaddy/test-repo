@@ -1,0 +1,58 @@
+app:
+  frameworkType: vertx
+  size: LARGE
+configs:
+  standard:
+    auth:
+      profiles:
+        adminClientCert:
+          enabled: true
+          right: admin
+        ecommOrchClientCert:
+          right: admin
+        ecommOrchOldClientCert:
+          right: admin
+        legacyGenClientCert:
+          enabled: true
+        legacyPciClientCert:
+          enabled: true
+      rights:
+        admin:
+          defaultRoles:
+            enabled: true
+        all:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: false
+        utilityOnly:
+          defaultRoles:
+            enabled: true
+      roles:
+        admin:
+          defaultRoutes:
+            enabled: false
+        journal:
+          defaultRoutes:
+            enabled: true
+        read:
+          defaultRoutes:
+            enabled: false
+        super:
+          defaultRoutes:
+            enabled: false
+        utility:
+          defaultRoutes:
+            enabled: true
+        write:
+          defaultRoutes:
+            enabled: false
+    crypto:
+      enabled: true
+    db:
+      name: bills_v2
+deployment:
+  resources:
+    requests:
+      cpu: 25m
