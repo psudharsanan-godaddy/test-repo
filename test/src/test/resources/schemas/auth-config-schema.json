@@ -1,0 +1,176 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://ecomm.godaddy.com/auth-config-schema.json",
+  "type": "object",
+  "title": "Ecomm app auth config schema",
+  "required": [
+    "roles",
+    "rights",
+    "profiles"
+  ],
+  "properties": {
+    "roles": {
+      "$id": "#/properties/roles",
+      "type": "object",
+      "title": "The roles schema",
+      "required": [],
+      "patternProperties": {
+        ".*": {
+          "$id": "#/properties/roles/properties/role",
+          "type": "array",
+          "title": "The role schema",
+          "additionalItems": true,
+          "items": {
+            "$id": "#/properties/roles/properties/.*/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/roles/properties/.*/items/anyOf/0",
+                "type": "object",
+                "title": "The schema of a role",
+                "required": [
+                  "route"
+                ],
+                "properties": {
+                  "route": {
+                    "$id": "#/properties/roles/properties/.*/items/anyOf/0/properties/route",
+                    "type": "string",
+                    "title": "The route schema"
+                  },
+                  "impact": {
+                    "$id": "#/properties/roles/properties/.*/items/anyOf/0/properties/impact",
+                    "type": "string",
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high"
+                    ],
+                    "title": "The impact schema"
+                  },
+                  "requireAllQueryStrings": {
+                    "$id": "#/properties/roles/properties/.*/items/anyOf/0/properties/requireAllQueryStrings",
+                    "type": "string",
+                    "title": "The requireAllQueryStrings schema"
+                  },
+                  "queryString": {
+                    "$id": "#/properties/roles/properties/.*/items/anyOf/0/properties/queryString",
+                    "type": "object",
+                    "title": "The queryString of a route schema",
+                    "required": [],
+                    "patternProperties": {
+                      ".*": {
+                        "$id": "#/properties/roles/properties/.*/items/anyOf/0/properties/queryString/properties/.*",
+                        "type": "array",
+                        "title": "The queryString items schema",
+                        "additionalItems": true,
+                        "items": {
+                          "$id": "#/properties/roles/properties/.*/items/anyOf/0/properties/queryString/properties/.*/items",
+                          "anyOf": [
+                            {
+                              "$id": "#/properties/roles/properties/.*/items/anyOf/0/properties/queryString/properties/.*/items/anyOf/0",
+                              "type": "string",
+                              "title": "The queryString item filter schema"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rights": {
+      "$id": "#/properties/rights",
+      "type": "object",
+      "title": "The rights schema",
+      "required": [],
+      "patternProperties": {
+        ".*": {
+          "$id": "#/properties/rights/properties/roleName",
+          "type": "array",
+          "title": "The role names of a right",
+          "additionalItems": true,
+          "items": {
+            "$id": "#/properties/rights/properties/roleName/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/rights/properties/roleName/items/anyOf/0",
+                "type": "string",
+                "title": "The role name"
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "profiles": {
+      "$id": "#/properties/profiles",
+      "type": "array",
+      "title": "The profiles schema",
+      "items": {
+        "$id": "#/properties/profiles/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/profiles/items/anyOf/0",
+            "type": "object",
+            "title": "The first anyOf schema",
+            "default": {},
+            "required": [
+              "right"
+            ],
+            "properties": {
+              "jwtAuth": {
+                "$id": "#/properties/profiles/items/anyOf/0/properties/jwtAuth",
+                "type": "string",
+                "title": "The jwtAuth schema"
+              },
+              "jwtType": {
+                "$id": "#/properties/profiles/items/anyOf/0/properties/jwtType",
+                "type": "string",
+                "title": "The jwtType schema"
+              },
+              "jwtGroup": {
+                "$id": "#/properties/profiles/items/anyOf/0/properties/jwtGroup",
+                "type": "string",
+                "title": "The jwtGroup schema"
+              },
+              "jwtMaxHoursAge": {
+                "$id": "#/properties/profiles/items/anyOf/0/properties/jwtMaxHoursAge",
+                "type": "number",
+                "title": "The jwtMaxHoursAge schema"
+              },
+              "matchCustomerIdTo": {
+                "$id": "#/properties/profiles/items/anyOf/0/properties/matchCustomerIdTo",
+                "type": "string",
+                "title": "The matchCustomerIdTo schema"
+              },
+              "certificateSubjectName": {
+                "$id": "#/properties/profiles/items/anyOf/0/properties/certificateSubjectName",
+                "type": "string",
+                "title": "The certificateSubjectName schema"
+              },
+              "certificateCommonName": {
+                "$id": "#/properties/profiles/items/anyOf/0/properties/certificateCommonName",
+                "type": "string",
+                "title": "The certificateCommonName schema"
+              },
+              "right": {
+                "$id": "#/properties/profiles/items/anyOf/0/properties/right",
+                "type": "string",
+                "title": "The right schema"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}
