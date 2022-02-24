@@ -10,9 +10,6 @@ deployment:
     initialDelaySeconds: 90
   readOnlyRootFilesystem: false
   enableApm: true
-  env:
-    - name: SERVER_SSL_KEYSTORE
-      value: /tmp/tls/tls_certs_keystore.pkcs12
 
 configs:
   standard:
