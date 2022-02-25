@@ -13,14 +13,15 @@ spec:
   data:
     - key: /AdminParams/Team/KMSKeyArn
       name: kmsKeyArn
-  stringData:
-    crypto_config.json: |
-      {
-        "mode": "KMS",
-        "product": "ecomm",
-        "preferredRegion": "{{ $awsRegion }}",
-        "regionMap": {
-          "{{ $awsRegion }}": "<%= data.kmsKeyArn %>"
+  template:
+    stringData:
+      crypto_config.json: |
+        {
+          "mode": "KMS",
+          "product": "ecomm",
+          "preferredRegion": "{{ $awsRegion }}",
+          "regionMap": {
+            "{{ $awsRegion }}": "<%= data.kmsKeyArn %>"
+          }
         }
-      }
 {{- end }}
