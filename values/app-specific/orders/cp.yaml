@@ -7,6 +7,10 @@ configs:
       profiles:
         adminClientCert:
           enabled: true
+        ecommOrchClientCert:
+          right: readOnly
+        ecommOrchOldClientCert:
+          right: readOnly
         legacyGenClientCert:
           enabled: true
         legacyPciClientCert:

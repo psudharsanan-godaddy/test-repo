@@ -40,6 +40,8 @@ configs:
         ecommClientCert:
           enabled: true
           right: all
+        ecommOrchOldClientCert:
+          right: all
         ecommOrchClientCert:
           right: all
         legacyGenClientCert:
