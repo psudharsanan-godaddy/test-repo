@@ -1,3 +1,4 @@
+{{- $env := required ".Values.env required!" .Values.env }}
 - jwtAuth: none
   jwtType: idp
   matchCustomerIdTo: customerId
@@ -47,6 +48,7 @@
   jwtMaxHoursAge: 24
   jwtType: cert
   right: journalOnly
+{{- if not (eq $env "ote") }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.crmClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
@@ -55,6 +57,7 @@
   jwtAuth: basic
   jwtType: cert
   right: legalOnly
+{{- end }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
@@ -63,10 +66,13 @@
   jwtAuth: basic
   jwtType: cert
   right: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsRegistrarClientCert.right }}'
+{{- if eq $env "prod" }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsRegistrarClientCert2.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
   right: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsRegistrarClientCert2.right }}'
+{{- end }}
+{{- if not (eq $env "ote") }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.fraudAppsClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtType: cert
@@ -75,8 +81,11 @@
   jwtAuth: basic
   jwtType: cert
   right: ipeOnly
+{{- end }}
+{{- if eq $env "prod" }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.spaqPollingClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtMaxHoursAge: 24
   jwtType: cert
   right: readOnly
+{{- end }}

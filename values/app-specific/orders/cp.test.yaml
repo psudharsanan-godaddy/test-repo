@@ -5,8 +5,3 @@ configs:
         domainsRegistrarClientCert:
           enabled: true
           right: admin
-        domainsRegistrarClientCert2:
-          enabled: true
-          right: admin
-      rights:
-      roles:

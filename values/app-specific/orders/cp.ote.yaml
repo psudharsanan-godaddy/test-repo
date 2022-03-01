@@ -2,11 +2,9 @@ configs:
   standard:
     auth:
       profiles:
+        adminClientCert:
+          enabled: true
+          right: admin
         domainsRegistrarClientCert:
           enabled: true
           right: domainsRegistrarOnly
-        domainsRegistrarClientCert2:
-          enabled: true
-          right: domainsRegistrarOnly
-      rights:
-      roles:

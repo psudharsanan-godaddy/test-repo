@@ -32,6 +32,9 @@ configs:
         admin:
           defaultRoutes:
             enabled: false
+        healthCheck:
+          getImpact: low
+          postImpact: medium
         journal:
           defaultRoutes:
             enabled: false
