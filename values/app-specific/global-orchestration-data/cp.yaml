@@ -1,0 +1,35 @@
+app:
+  frameworkType: spring-boot
+
+deployment:
+  readOnlyRootFilesystem: false
+  resources:
+    requests:
+      cpu: 15m
+  prometheus:
+    path: /actuator/prometheus
+
+configs:
+  standard:
+    # Currently uses one-off auth lib with cert name allow-list, so no need for
+    # auth config.
+    auth:
+      enabled: false
+    # No outbound calls requiring client cert or to other NES services, so no
+    # need for client cert, client cert context, or hosts config.
+    clientCert:
+      enabled: false
+    pki:
+      enabled: false
+    hosts:
+      enabled: false
+    # No DB functionality.
+    db:
+      enabled: false
+    # Does not use standard logging.
+    log:
+      enabled: false
+  springBoot:
+    enabled: true
+    application:
+      enabled: true
