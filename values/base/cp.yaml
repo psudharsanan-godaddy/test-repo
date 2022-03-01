@@ -20,6 +20,9 @@ configs:
         journal:
           defaultRoutes:
             enabled: true
+        healthCheck:
+          getImpact: null
+          postImpact: null
         utility:
           defaultRoutes:
             enabled: true

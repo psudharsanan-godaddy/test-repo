@@ -1,0 +1,6 @@
+configs:
+  standard:
+    auth:
+      profiles:
+        legacyPciClientCert2:
+          enabled: true

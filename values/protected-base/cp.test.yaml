@@ -24,8 +24,8 @@ configs:
           mtlsSubjectName: 'CN=qa.test-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC., L=Scottsdale, ST=AZ, C=US'
           jwtSubjectName: 'CN=qa.test-godaddy.com, OU=GoDaddy INC., O=GoDaddy INC.'
         qaToolClientCert:
-          mtlsSubjectName: 'CN=ecommqa.test-godaddy.com, OU=Domain Control Validated'
-          jwtSubjectName: 'CN=ecommqa.test-godaddy.com, OU=Domain Control Validated, O='
+          mtlsSubjectName: 'CN=ecommqa.dev-godaddy.com, OU=Domain Control Validated'
+          jwtSubjectName: 'CN=ecommqa.dev-godaddy.com, OU=Domain Control Validated, O='
         qaToolClientCert2:
           mtlsSubjectName: 'CN=ecommqa.test-godaddy.com, OU=Domain Control Validated'
           jwtSubjectName: 'CN=ecommqa.test-godaddy.com, OU=Domain Control Validated, O='
