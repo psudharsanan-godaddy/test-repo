@@ -9,7 +9,6 @@ configs:
     auth:
       profiles:
         adminClientCert:
-          mtlsSubjectName: 'CN=ecommadmin.prod.intranet.gdg, OU=GoDaddy INC., O=GoDaddy INC., L=Scottsdale, ST=AZ, C=US'
           jwtSubjectName: 'CN=ecommadmin.prod.intranet.gdg, OU=GoDaddy INC., O=GoDaddy INC.'
         ecommClientCert:
           mtlsSubjectName: 'CN=ecomm-shared.client.cp.api.godaddy.com'

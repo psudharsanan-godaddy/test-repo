@@ -9,7 +9,6 @@ configs:
     auth:
       profiles:
         adminClientCert: # only set in ote and prod
-          mtlsSubjectName: 'CN=ecommadmin.ote.intranet.gdg, OU=GoDaddy INC., O=GoDaddy INC., L=Scottsdale, ST=AZ, C=US'
           jwtSubjectName: 'CN=ecommadmin.ote.intranet.gdg, OU=GoDaddy INC., O=GoDaddy INC.'
         ecommClientCert:
           mtlsSubjectName: 'CN=ecomm-shared.client.cp.api.ote-godaddy.com'

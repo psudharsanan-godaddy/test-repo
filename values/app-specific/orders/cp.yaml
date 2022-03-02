@@ -7,6 +7,7 @@ configs:
       profiles:
         adminClientCert:
           enabled: true
+          right: admin
         ecommOrchClientCert:
           right: readOnly
         ecommOrchOldClientCert:
