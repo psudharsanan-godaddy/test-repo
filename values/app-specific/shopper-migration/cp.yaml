@@ -4,11 +4,9 @@ app:
 
 deployment:
   readinessProbe:
-    path: /v1/shopper-migration/ping
     initialDelaySeconds: 30
   livenessProbe:
     enabled: true
-    path: /v1/shopper-migration/ping
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false
 
