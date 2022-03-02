@@ -33,8 +33,6 @@ configs:
     # then be deleted.
     sensitive:
       useInitContainerToCopyToWritableVolume: true
-    writableVolume:
-      enabled: true
   springBoot:
     enabled: true
     application:
