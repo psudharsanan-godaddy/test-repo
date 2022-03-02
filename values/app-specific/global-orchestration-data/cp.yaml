@@ -2,7 +2,6 @@ app:
   frameworkType: spring-boot
 
 deployment:
-  readOnlyRootFilesystem: false
   resources:
     requests:
       cpu: 15m
