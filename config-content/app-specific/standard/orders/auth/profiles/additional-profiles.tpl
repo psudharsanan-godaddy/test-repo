@@ -57,6 +57,14 @@
   jwtAuth: basic
   jwtType: cert
   right: legalOnly
+- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.fraudAppsClientCert.jwtSubjectName }}'
+  jwtAuth: basic
+  jwtType: cert
+  right: fraudApps
+- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.ipeClientCert.jwtSubjectName }}'
+  jwtAuth: basic
+  jwtType: cert
+  right: ipeOnly
 {{- end }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsClientCert.jwtSubjectName }}'
   jwtAuth: basic
@@ -71,18 +79,6 @@
   jwtAuth: basic
   jwtType: cert
   right: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.domainsRegistrarClientCert2.right }}'
-{{- end }}
-{{- if not (eq $env "ote") }}
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.fraudAppsClientCert.jwtSubjectName }}'
-  jwtAuth: basic
-  jwtType: cert
-  right: fraudApps
-- certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.ipeClientCert.jwtSubjectName }}'
-  jwtAuth: basic
-  jwtType: cert
-  right: ipeOnly
-{{- end }}
-{{- if eq $env "prod" }}
 - certificateSubjectName: '{{ default "VAR_NOT_SET" .Values.configs.standard.auth.profiles.spaqPollingClientCert.jwtSubjectName }}'
   jwtAuth: basic
   jwtMaxHoursAge: 24
