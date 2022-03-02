@@ -68,7 +68,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 100
       restartPolicy: "{{ required ".Values.deployment.restartPolicy required!" .Values.deployment.restartPolicy }}"
-      {{ $if useInitContainerToCopySensitiveConfigToWritableVolume }}
+      {{ if useInitContainerToCopySensitiveConfigToWritableVolume }}
       initContainers:
         - name: copy-sensitive-config-to-writable-volume
           image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
