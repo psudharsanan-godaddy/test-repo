@@ -68,6 +68,12 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 100
       restartPolicy: "{{ required ".Values.deployment.restartPolicy required!" .Values.deployment.restartPolicy }}"
+      {{ $if useInitContainerToCopySensitiveConfigToWritableVolume }}
+      initContainers:
+        - name: copy-sensitive-config-to-writable-volume
+          image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
+          command: ['sh', '-c', 'cp {{ $mountPath }}/sensitive-permanent/* {{ $mountPath }}/sensitive; chown -R eCommUser:eCommUser {{ $mountPath }}/sensitive']
+      {{- end }}
       containers:
         - name: {{ $branchSpecificAppName }}
           lifecycle:
@@ -223,12 +229,6 @@ spec:
             {{- with .Values.deployment.env }}
             {{ toYaml . | nindent 12 }}
             {{- end }}
-      {{ $if useInitContainerToCopySensitiveConfigToWritableVolume }}
-      initContainers:
-        - name: copy-sensitive-config-to-writable-volume
-          image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
-          command: ['sh', '-c', 'cp {{ $mountPath }}/sensitive-permanent/* {{ $mountPath }}/sensitive; chown -R eCommUser:eCommUser {{ $mountPath }}/sensitive']
-      {{- end }}
       terminationGracePeriodSeconds: 90
       volumes:
         #BEGIN: standard specific volumes
