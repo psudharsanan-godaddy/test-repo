@@ -94,3 +94,11 @@ Check if standard tls config enabled
 {{- $r := and .Values.configs.standard.enabled .Values.configs.standard.tls.enabled }}
 {{- $r }}
 {{- end }}
+
+{{/*
+Check if sensitive config should be copied to writable volume
+*/}}
+{{- define "commerce-app-v2.configs.standard.sensitive.useInitContainerToCopyToWritableVolume" }}
+{{- $r := and .Values.configs.standard.enabled .Values.configs.standard.sensitive.enabled .Values.configs.standard.sensitive.useInitContainerToCopyToWritableVolume }}
+{{- $r }}
+{{- end }}

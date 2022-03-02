@@ -24,6 +24,7 @@
 {{- $pkiConfigEnabled := include "commerce-app-v2.configs.standard.pki.enabled" . | include "strToBool" }}
 {{- $sensitiveConfigEnabled := include "commerce-app-v2.configs.standard.sensitive.enabled" . | include "strToBool" }}
 {{- $tlsConfigEnabled := include "commerce-app-v2.configs.standard.tls.enabled" . | include "strToBool" }}
+{{- $useInitContainerToCopySensitiveConfigToWritableVolume := include "commerce-app-v2.configs.standard.sensitive.useInitContainerToCopyToWritableVolume" . | include "strToBool" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -66,6 +67,7 @@ spec:
                         - {{ $branchSpecificAppName }}
                 topologyKey: kubernetes.io/hostname
               weight: 100
+      restartPolicy: "{{ required ".Values.deployment.restartPolicy required!" .Values.deployment.restartPolicy }}"
       containers:
         - name: {{ $branchSpecificAppName }}
           lifecycle:
@@ -116,6 +118,14 @@ spec:
             {{- end }}
             {{- if $sensitiveConfigEnabled }}
             - name: sensitive-config-secret
+              {{- if $useInitContainerToCopySensitiveConfigToWritableVolume }}
+              mountPath: "{{ $mountPath }}/sensitive-permanent"
+              {{- else }}
+              mountPath: "{{ $mountPath }}/sensitive"
+              {{- end }}
+            {{- end }}
+            {{- if $useInitContainerToCopySensitiveConfigToWritableVolume }}
+            - name: sensitive-config-writable
               mountPath: "{{ $mountPath }}/sensitive"
             {{- end }}
             {{- if $tlsConfigEnabled }}
@@ -213,6 +223,12 @@ spec:
             {{- with .Values.deployment.env }}
             {{ toYaml . | nindent 12 }}
             {{- end }}
+      {{ $if useInitContainerToCopySensitiveConfigToWritableVolume }}
+      initContainers:
+        - name: copy-sensitive-config-to-writable-volume
+          image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
+          command: ['sh', '-c', 'cp {{ $mountPath }}/sensitive-permanent/* {{ $mountPath }}/sensitive; chown -R eCommUser:eCommUser {{ $mountPath }}/sensitive']
+      {{- end }}
       terminationGracePeriodSeconds: 90
       volumes:
         #BEGIN: standard specific volumes
@@ -272,6 +288,10 @@ spec:
         - name: tls-config-secret
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-tls-config") .) }}
+        {{- end }}
+        {{- if $useInitContainerToCopySensitiveConfigToWritableVolume }}
+        - name: sensitive-config-writable
+          emptyDir: {}
         {{- end }}
         {{- if $classicDbConfigEnabled }}
         - name: classic-db-config
