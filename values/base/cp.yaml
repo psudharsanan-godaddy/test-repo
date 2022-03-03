@@ -101,6 +101,9 @@ configs:
 deployment:
   enabled: true
   restartPolicy: Always
+  runAs:
+    user: eCommUser
+    group: eCommUser
   livenessProbe:
     enabled: false
     initialDelaySeconds: 15

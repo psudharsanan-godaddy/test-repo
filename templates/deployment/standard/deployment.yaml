@@ -72,7 +72,7 @@ spec:
       initContainers:
         - name: copy-sensitive-config-to-writable-volume
           image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
-          command: ['sh', '-c', 'cp {{ $mountPath }}/sensitive-permanent/sensitive-config.json {{ $mountPath }}/sensitive/sensitive-config.json; chown eCommUser:eCommUser {{ $mountPath }}/sensitive/sensitive-config.json']
+          command: ['sh', '-c', 'cp {{ $mountPath }}/sensitive-permanent/sensitive-config.json {{ $mountPath }}/sensitive/sensitive-config.json; chown {{ required ".Values.deployment.runAs.user required!" .Values.deployment.runAs.user }}:{{ required ".Values.deployment.runAs.group required!" .Values.deployment.runAs.group }} {{ $mountPath }}/sensitive/sensitive-config.json']
       {{- end }}
       containers:
         - name: {{ $branchSpecificAppName }}
