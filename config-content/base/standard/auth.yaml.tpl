@@ -201,8 +201,6 @@ profiles:
   {{- if or (eq $env "ote") (eq $env "prod") }}
   {{- if .Values.configs.standard.auth.profiles.adminClientCert.enabled }}
   {{- $adminClientCertRight := required ".Values.configs.standard.auth.profiles.adminClientCert.right required!" .Values.configs.standard.auth.profiles.adminClientCert.right }}
-  - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.adminClientCert.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.adminClientCert.mtlsSubjectName }}'
-    right: '{{ $adminClientCertRight }}'
   - jwtAuth: basic
     jwtType: cert
     certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.adminClientCert.jwtSubjectName required!" .Values.configs.standard.auth.profiles.adminClientCert.jwtSubjectName }}'
