@@ -1,0 +1,7 @@
+configs:
+  standard:
+    auth:
+      profiles:
+        domainsRegistrarClientCert:
+          enabled: true
+          right: admin

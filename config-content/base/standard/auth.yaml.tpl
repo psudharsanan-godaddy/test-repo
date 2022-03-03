@@ -176,8 +176,6 @@ profiles:
 
   {{- if .Values.configs.standard.auth.profiles.legacyPciClientCert.enabled }}
   {{- $legacyPciClientCertRight := required ".Values.configs.standard.auth.profiles.legacyPciClientCert.right required!" .Values.configs.standard.auth.profiles.legacyPciClientCert.right }}
-  - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClientCert.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.legacyPciClientCert.mtlsSubjectName }}'
-    right: '{{ $legacyPciClientCertRight }}'
   - jwtAuth: basic
     jwtType: cert
     certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClientCert.jwtSubjectName required!" .Values.configs.standard.auth.profiles.legacyPciClientCert.jwtSubjectName }}'
@@ -186,8 +184,6 @@ profiles:
 
   {{- if .Values.configs.standard.auth.profiles.legacyPciClientCert2.enabled }}
   {{- $legacyPciClientCert2Right := required ".Values.configs.standard.auth.profiles.legacyPciClientCert2.right required!" .Values.configs.standard.auth.profiles.legacyPciClientCert2.right }}
-  - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClientCert2.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.legacyPciClientCert2.mtlsSubjectName }}'
-    right: '{{ $legacyPciClientCert2Right }}'
   - jwtAuth: basic
     jwtType: cert
     certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClientCert2.jwtSubjectName required!" .Values.configs.standard.auth.profiles.legacyPciClientCert2.jwtSubjectName }}'
@@ -196,8 +192,6 @@ profiles:
 
   {{- if .Values.configs.standard.auth.profiles.legacyGenClientCert.enabled }}
   {{- $legacyGenClientCertRight := required ".Values.configs.standard.auth.profiles.legacyGenClientCert.right required!" .Values.configs.standard.auth.profiles.legacyGenClientCert.right }}
-  - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyGenClientCert.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.legacyGenClientCert.mtlsSubjectName }}'
-    right: '{{ $legacyGenClientCertRight }}'
   - jwtAuth: basic
     jwtType: cert
     certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.legacyPciClientCert.jwtSubjectName required!" .Values.configs.standard.auth.profiles.legacyGenClientCert.jwtSubjectName }}'
@@ -207,8 +201,6 @@ profiles:
   {{- if or (eq $env "ote") (eq $env "prod") }}
   {{- if .Values.configs.standard.auth.profiles.adminClientCert.enabled }}
   {{- $adminClientCertRight := required ".Values.configs.standard.auth.profiles.adminClientCert.right required!" .Values.configs.standard.auth.profiles.adminClientCert.right }}
-  - certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.adminClientCert.mtlsSubjectName required!" .Values.configs.standard.auth.profiles.adminClientCert.mtlsSubjectName }}'
-    right: '{{ $adminClientCertRight }}'
   - jwtAuth: basic
     jwtType: cert
     certificateSubjectName: '{{ required ".Values.configs.standard.auth.profiles.adminClientCert.jwtSubjectName required!" .Values.configs.standard.auth.profiles.adminClientCert.jwtSubjectName }}'

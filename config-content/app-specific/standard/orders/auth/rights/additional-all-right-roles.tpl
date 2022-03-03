@@ -1,0 +1,3 @@
+- internalOnly
+- purchase
+- thirdPartyInAppPurchase

@@ -1,0 +1,65 @@
+app:
+  frameworkType: vertx
+  size: LARGE
+configs:
+  standard:
+    auth:
+      profiles:
+        adminClientCert:
+          enabled: false
+          right: admin
+        ecommOrchClientCert:
+          right: readOnly
+        ecommOrchOldClientCert:
+          right: readOnly
+        legacyGenClientCert:
+          enabled: true
+        legacyPciClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert2:
+          enabled: false
+          right: all
+      rights:
+        admin:
+          defaultRoles:
+            enabled: true
+        all:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: true
+        utilityOnly:
+          defaultRoles:
+            enabled: true
+      roles:
+        admin:
+          defaultRoutes:
+            enabled: false
+        healthCheck:
+          getImpact: low
+          postImpact: medium
+        journal:
+          defaultRoutes:
+            enabled: false
+        read:
+          defaultRoutes:
+            enabled: false
+        super:
+          defaultRoutes:
+            enabled: false
+        utility:
+          defaultRoutes:
+            enabled: false
+        write:
+          defaultRoutes:
+            enabled: false
+    crypto:
+      enabled: true
+    db:
+      name: orders_v2
+deployment:
+  resources:
+    requests:
+      cpu: 40m
