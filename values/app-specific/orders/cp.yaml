@@ -6,7 +6,7 @@ configs:
     auth:
       profiles:
         adminClientCert:
-          enabled: true
+          enabled: false
           right: admin
         ecommOrchClientCert:
           right: readOnly
