@@ -1,5 +1,6 @@
 {{- $env := required ".Values.env required!" .Values.env }}
 {{- $env := required ".Values.env required!" .Values.env }}
+{{- $env := required ".Values.env required!" .Values.env }}
 - jwtAuth: none
   jwtType: idp
   matchCustomerIdTo: customerId
