@@ -92,7 +92,6 @@ configs:
       enabled: true
     sensitive:
       enabled: true
-      useInitContainerToCopyToWritableVolume: false
     tls:
       enabled: true
   vertx:
@@ -102,10 +101,6 @@ configs:
 
 deployment:
   enabled: true
-  restartPolicy: Always
-  runAs:
-    user: eCommUser
-    group: eCommUser
   livenessProbe:
     enabled: false
     initialDelaySeconds: 15
