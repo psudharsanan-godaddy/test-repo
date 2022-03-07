@@ -2,7 +2,6 @@ app:
   frameworkType: spring-boot
 
 deployment:
-  restartPolicy: Never
   resources:
     requests:
       cpu: 15m
@@ -29,10 +28,6 @@ configs:
     # Does not use standard logging.
     log:
       enabled: false
-    # Use new pattern to read sensitive config from writable location that can
-    # then be deleted.
-    sensitive:
-      useInitContainerToCopyToWritableVolume: true
   springBoot:
     enabled: true
     application:
