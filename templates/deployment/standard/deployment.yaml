@@ -39,10 +39,13 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      name: {{ $branchSpecificAppName | quote }}
+      ecomm/deployment: {{ $branchSpecificAppName | quote }}
   template:
     metadata:
       labels:
+        {{- include "commerce-app-v2.ecommLabels" . | nindent 8 }}
+        # Keeping `name` and `service` to avoid regressions but not sure if
+        # anything still even needs them.
         name: {{ $branchSpecificAppName | quote }}
         service: {{ $branchSpecificAppName | quote }}
       annotations:
@@ -60,7 +63,7 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                    - key: name
+                    - key: ecomm/deployment
                       operator: In
                       values:
                         - {{ $branchSpecificAppName }}

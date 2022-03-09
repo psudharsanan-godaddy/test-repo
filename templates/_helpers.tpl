@@ -93,9 +93,18 @@ helm.sh/chart: {{ include "commerce-app-v2.chart" . | quote }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+{{ include "commerce-app-v2.ecommLabels" . }}
+{{- end }}
+
+{{/*
+Ecomm labels
+*/}}
+{{- define "commerce-app-v2.ecommLabels" -}}
 ecomm/app-branch: {{ default "master" .Values.appBranch | quote }}
 ecomm/helm-chart-branch: {{ default "master" .Values.helmChartBranch | quote }}
 ecomm/cd-jobs-branch: {{ default "master" .Values.cdJobsBranch | quote }}
+ecomm/app: {{ required ".Values.app.name required!" .Values.app.name }}
+ecomm/deployment: {{ include "commerce-app-v2.branchSpecificAppName" . | quote }}
 {{- end }}
 
 {{/*
