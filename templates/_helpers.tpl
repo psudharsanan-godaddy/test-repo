@@ -103,7 +103,7 @@ Ecomm labels
 ecomm/app-branch: {{ default "master" .Values.appBranch | quote }}
 ecomm/helm-chart-branch: {{ default "master" .Values.helmChartBranch | quote }}
 ecomm/cd-jobs-branch: {{ default "master" .Values.cdJobsBranch | quote }}
-ecomm/app: {{ required ".Values.app.name required!" .Values.app.name }}
+ecomm/app: {{ required ".Values.app.name required!" .Values.app.name | quote }}
 ecomm/deployment: {{ include "commerce-app-v2.branchSpecificAppName" . | quote }}
 {{- end }}
 
