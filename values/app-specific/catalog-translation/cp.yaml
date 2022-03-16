@@ -4,10 +4,10 @@ app:
 
 deployment:
   readinessProbe:
-    initialDelaySeconds: 75
+    initialDelaySeconds: 40
   livenessProbe:
     enabled: true
-    initialDelaySeconds: 90
+    initialDelaySeconds: 55
   readOnlyRootFilesystem: false
   enableApm: true
 
