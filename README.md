@@ -12,12 +12,8 @@ The goals of building this new Helm chart for deploying commerce applications ar
 
 ### Setup
 
-1. Install [asdf](https://asdf-vm.com/) with `brew install asdf`
-2. Install required asdf plugins:
-   1. `asdf plugin add helm`
-   2. `asdf plugin add java`
-   3. `asdf plugin add yq`
-3. Install project dependencies with `asdf install` (project dependencies are defined in `./tool-versions`)
+1. Install ASDF if you don't already have it: https://confluence.godaddy.com/display/CTOPLAT/ASDF-VM+Setup 
+2. Then run: `asdf install` (it will install all versions in `.tool-versions`)
 
 ### Generate YAML output
 
