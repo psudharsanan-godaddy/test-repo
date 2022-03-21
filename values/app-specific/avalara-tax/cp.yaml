@@ -1,6 +1,6 @@
 app:
   frameworkType: spring-boot
-  size: MEDIUM
+  size: LARGE
 
 configs:
   standard:
