@@ -104,4 +104,4 @@ configs:
             domainFactory: '976402' # only set in test, ote and prod
 
 deployment:
-  numberOfReplicas: 2
+  numberOfReplicas: 1
