@@ -19,8 +19,6 @@ configs:
       enabled: false
     log:
       enabled: false
-    hosts:
-      enabled: false
   springBoot:
     enabled: true
     application:
