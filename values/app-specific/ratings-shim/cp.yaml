@@ -1,17 +1,13 @@
 app:
-  name: ratings-shim
-  apiVersion: v2
-  pathNoun: ratings-shim
-  type: service
   frameworkType: spring-boot
   size: MEDIUM
-  artifactId: ratings-shim-service
 
 deployment:
   readinessProbe:
     path: /v2/ratings/ping
     initialDelaySeconds: 30
   livenessProbe:
+    enabled: true
     path: /v2/ratings/ping
     initialDelaySeconds: 45
   readOnlyRootFilesystem: false
