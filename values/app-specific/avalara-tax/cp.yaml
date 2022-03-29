@@ -20,6 +20,12 @@ configs:
           enabled: true
 
 deployment:
+  extraVolumeMounts:
+    - name: avalaratmp
+      mountPath: "/tmp/avalaratmp"
+  extraVolumes:
+    - name: avalaratmp
+      emptyDir: {}
   readinessProbe:
     initialDelaySeconds: 30
   livenessProbe:
