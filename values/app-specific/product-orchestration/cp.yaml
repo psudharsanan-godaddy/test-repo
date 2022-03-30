@@ -22,6 +22,8 @@ configs:
       enabled: false
     log:
       enabled: false
+    classicDb:
+      enabled: true
   springBoot:
     enabled: true
     application:
