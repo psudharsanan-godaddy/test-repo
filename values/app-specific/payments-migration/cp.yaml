@@ -1,0 +1,52 @@
+app:
+  frameworkType: vertx
+
+configs:
+  standard:
+    auth:
+      profiles:
+        adminClientCert:
+          enabled: true
+          right: all
+        legacyPciClientCert:
+          enabled: true
+          right: all
+      rights:
+        admin:
+          defaultRoles:
+            enabled: false
+        all:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: true
+        utilityOnly:
+          defaultRoles:
+            enabled: true
+      roles:
+        admin:
+          defaultRoutes:
+            enabled: false
+        journal:
+          defaultRoutes:
+            enabled: false
+        read:
+          defaultRoutes:
+            enabled: true
+        super:
+          defaultRoutes:
+            enabled: false
+        utility:
+          defaultRoutes:
+            enabled: true
+        write:
+          defaultRoutes:
+            enabled: false
+    db:
+      enabled: false
+
+deployment:
+  resources:
+    requests:
+      cpu: 15m
