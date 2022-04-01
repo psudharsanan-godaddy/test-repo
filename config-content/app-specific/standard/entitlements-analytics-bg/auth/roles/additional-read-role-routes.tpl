@@ -1,0 +1,1 @@
+- route: GET:/v2/entitlements-analytics-bg/failures/:failureId

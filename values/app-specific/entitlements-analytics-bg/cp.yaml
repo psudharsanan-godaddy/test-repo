@@ -1,0 +1,54 @@
+app:
+  apiVersion: v2
+  artifactId: entitlements-analytics-bgservice
+  frameworkType: vertx
+  name: entitlements-analytics-bg
+  pathNoun: entitlements-analytics-bg
+  resourceIdPathParamName: failureId
+  size: SMALL
+  type: reader
+configs:
+  standard:
+    db:
+      connectionTtlEnabled: true
+      name: entitlements_analytics_bg
+    auth:
+      profiles:
+        adminClientCert:
+          enabled: true
+          right: all
+        legacyPciClientCert:
+          enabled: true
+          right: all
+      rights:
+        admin:
+          defaultRoles:
+            enabled: false
+        all:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: true
+        utilityOnly:
+          defaultRoles:
+            enabled: true
+      roles:
+        admin:
+          defaultRoutes:
+            enabled: false
+        journal:
+          defaultRoutes:
+            enabled: false
+        read:
+          defaultRoutes:
+            enabled: false
+        super:
+          defaultRoutes:
+            enabled: false
+        utility:
+          defaultRoutes:
+            enabled: true
+        write:
+          defaultRoutes:
+            enabled: false
