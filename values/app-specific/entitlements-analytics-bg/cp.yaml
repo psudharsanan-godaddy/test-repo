@@ -17,9 +17,6 @@ configs:
         adminClientCert:
           enabled: true
           right: all
-        legacyPciClientCert:
-          enabled: true
-          right: all
       rights:
         admin:
           defaultRoles:
