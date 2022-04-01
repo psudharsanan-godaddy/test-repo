@@ -7,8 +7,12 @@ app:
   resourceIdPathParamName: failureId
   size: SMALL
   type: reader
+
 configs:
   standard:
+    # Prometheus exporter is not needed, since micrometer takes care of this.
+    prometheusAgent:
+      enabled: false
     db:
       connectionTtlEnabled: true
       name: entitlements_analytics_bg

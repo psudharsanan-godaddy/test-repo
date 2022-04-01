@@ -17,7 +17,7 @@
 {{- $cryptoConfigEnabled := include "commerce-app-v2.configs.standard.crypto.enabled" . | include "strToBool" }}
 {{- $dbConfigEnabled := include "commerce-app-v2.configs.standard.db.enabled" . | include "strToBool" }}
 {{- $logConfigEnabled := include "commerce-app-v2.configs.standard.log.enabled" . | include "strToBool" }}
-{{- $prometheusConfigEnabled := include "commerce-app-v2.configs.standard.prometheus.enabled" . | include "strToBool" }}
+{{- $prometheusAgentEnabled := include "commerce-app-v2.configs.standard.prometheusAgent.enabled" . | include "strToBool" }}
 {{- $classicDbConfigEnabled := include "commerce-app-v2.configs.standard.classicDb.enabled" . | include "strToBool" }}
 {{- $clientCertConfigEnabled := include "commerce-app-v2.configs.standard.clientCert.enabled" . | include "strToBool" }}
 {{- $hostsConfigEnabled := include "commerce-app-v2.configs.standard.hosts.enabled" . | include "strToBool" }}
@@ -110,7 +110,7 @@ spec:
             - name: client-cert-context-secret
               mountPath: "{{ $mountPath }}/pki-context"
             {{- end }}
-            {{- if $prometheusConfigEnabled }}
+            {{- if $prometheusAgentEnabled }}
             - name: prometheus-config-secret
               mountPath: "{{ $mountPath }}/prometheus"
             {{- end }}
@@ -256,7 +256,7 @@ spec:
           secret:
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-client-cert-context") .) }}
         {{- end }}
-        {{- if $prometheusConfigEnabled }}
+        {{- if $prometheusAgentEnabled }}
         - name: prometheus-config-secret
           secret:
             optional: true
