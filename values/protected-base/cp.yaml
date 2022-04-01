@@ -8,3 +8,5 @@ configs:
     enabled: true
     sensitive:
       defaultMode: 0400
+    crypto:
+      kmsKeyArns: {}
