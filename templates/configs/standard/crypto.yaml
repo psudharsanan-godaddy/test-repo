@@ -1,20 +1,28 @@
 {{- $enabled := include "commerce-app-v2.configs.standard.crypto.enabled" . | include "strToBool" }}
 {{- if $enabled }}
-apiVersion: v1
-kind: Secret
+{{ $awsRegion := required ".Values.awsRegion required!" .Values.awsRegion }}
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
 metadata:
-  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-crypto-config-updated") .) }}
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-crypto-config") .) }}
   labels:
     {{- include "commerce-app-v2.labels" . | nindent 4 }}
-data:
-  crypto_config.json: |
-    {
-      "mode": "KMS",
-      "product": "ecomm",
-      "preferredRegion": "{{ required ".Values.awsRegion required!" .Values.awsRegion }}",
-      "regionMap": {
-        "us-east-1": "arn:aws:kms:us-east-1:669979021785:key/cab1d51f-6172-405b-bd06-423c09d3df67"
-      },
-      "regionMapTest": {{ .Values.configs.standard.crypto.kmsKeyArns | toJson }}
-    }
+spec:
+  backendType: systemManager
+  region: {{ required ".Values.awsRegion required!" .Values.awsRegion }}
+  data:
+    - key: /AdminParams/Team/KMSKeyArn
+      name: kmsKeyArn
+  template:
+    stringData:
+      crypto_config.json: |
+        {
+          "mode": "KMS",
+          "product": "ecomm",
+          "preferredRegion": "{{ $awsRegion }}",
+          "regionMap": {
+            "{{ $awsRegion }}": "<%= data.kmsKeyArn %>"
+          },
+          "regionMapTest": {{ .Values.configs.standard.crypto.kmsKeyArns | toJson }}
+        }
 {{- end }}
