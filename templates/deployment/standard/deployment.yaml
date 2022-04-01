@@ -234,7 +234,7 @@ spec:
         {{- if $cryptoConfigEnabled }}
         - name: crypto-config-secret
           secret:
-            secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-crypto-config") .) }}
+            secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-crypto-config-updated") .) }}
         {{- end }}
         {{- if $dbConfigEnabled }}
         - name: db-config-secret

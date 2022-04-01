@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-crypto-config") .) }}
+  name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-crypto-config-updated") .) }}
   labels:
     {{- include "commerce-app-v2.labels" . | nindent 4 }}
 data:
