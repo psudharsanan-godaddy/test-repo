@@ -1,27 +1,17 @@
 {{- $enabled := include "commerce-app-v2.configs.standard.crypto.enabled" . | include "strToBool" }}
 {{- if $enabled }}
-{{ $awsRegion := required ".Values.awsRegion required!" .Values.awsRegion }}
-apiVersion: kubernetes-client.io/v1
-kind: ExternalSecret
+apiVersion: v1
+kind: Secret
 metadata:
   name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-crypto-config") .) }}
   labels:
     {{- include "commerce-app-v2.labels" . | nindent 4 }}
-spec:
-  backendType: systemManager
-  region: {{ required ".Values.awsRegion required!" .Values.awsRegion }}
-  data:
-    - key: /AdminParams/Team/KMSKeyArn
-      name: kmsKeyArn
-  template:
-    stringData:
-      crypto_config.json: |
-        {
-          "mode": "KMS",
-          "product": "ecomm",
-          "preferredRegion": "{{ $awsRegion }}",
-          "regionMap": {
-            "{{ $awsRegion }}": "<%= data.kmsKeyArn %>"
-          }
-        }
+data:
+  crypto_config.json: |
+    {
+      "mode": "KMS",
+      "product": "ecomm",
+      "preferredRegion": "{{ required ".Values.awsRegion required!" .Values.awsRegion }}",
+      "regionMap": {{ required ".Values.configs.standard.crypto.kmsKeyArnRegionMap required!" .Values.configs.standard.crypto.kmsKeyArnRegionMap }}
+    }
 {{- end }}
