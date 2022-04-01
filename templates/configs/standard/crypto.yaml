@@ -12,6 +12,9 @@ data:
       "mode": "KMS",
       "product": "ecomm",
       "preferredRegion": "{{ required ".Values.awsRegion required!" .Values.awsRegion }}",
-      "regionMap": {{ required ".Values.configs.standard.crypto.kmsKeyArnRegionMap required!" .Values.configs.standard.crypto.kmsKeyArnRegionMap }}
+      "regionMap": {
+        "us-east-1": "arn:aws:kms:us-east-1:669979021785:key/cab1d51f-6172-405b-bd06-423c09d3df67"
+      },
+      "regionMapTest": {{ .Values.configs.standard.crypto.kmsKeyArns | toJson }}
     }
 {{- end }}
