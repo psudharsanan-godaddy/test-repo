@@ -88,6 +88,8 @@ configs:
       enabled: true
     pki:
       enabled: true
+    prometheusAgent:
+      enabled: true
     prometheus:
       enabled: true
     sensitive:

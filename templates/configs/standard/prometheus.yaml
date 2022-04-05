@@ -1,4 +1,4 @@
-{{- $enabled := include "commerce-app-v2.configs.standard.prometheus.enabled" . | include "strToBool" }}
+{{- $enabled := include "commerce-app-v2.configs.standard.prometheusAgent.enabled" . | include "strToBool" }}
 {{- if $enabled }}
 apiVersion: v1
 kind: Secret

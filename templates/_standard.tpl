@@ -48,10 +48,18 @@ Check if standard log config enabled
 {{- end }}
 
 {{/*
-Check if standard prometheus config enabled
+Check if standard prometheus config enabled for metrics collection
 */}}
 {{- define "commerce-app-v2.configs.standard.prometheus.enabled" }}
 {{- $r := and .Values.configs.standard.enabled .Values.configs.standard.prometheus.enabled }}
+{{- $r }}
+{{- end }}
+
+{{/*
+Check if prometheus agent is enabled - This is only needed by Apps exporting metrics through JMX
+*/}}
+{{- define "commerce-app-v2.configs.standard.prometheusAgent.enabled" }}
+{{- $r := and .Values.configs.standard.enabled .Values.configs.standard.prometheusAgent.enabled }}
 {{- $r }}
 {{- end }}
 
