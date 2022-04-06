@@ -20,8 +20,6 @@ spec:
           "mode": "KMS",
           "product": "ecomm",
           "preferredRegion": "{{ $awsRegion }}",
-          "regionMap": {
-            "{{ $awsRegion }}": "<%= data.kmsKeyArn %>"
-          }
+          "regionMap": {{ .Values.configs.standard.crypto.kmsKeyArns | toJson }}
         }
 {{- end }}

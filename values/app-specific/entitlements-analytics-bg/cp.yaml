@@ -1,0 +1,49 @@
+app:
+  frameworkType: vertx
+  size: SMALL
+
+configs:
+  standard:
+    # Prometheus exporter is not needed, since micrometer takes care of this.
+    prometheusAgent:
+      enabled: false
+    db:
+      connectionTtlEnabled: true
+      name: entitlements_analytics_bg
+    auth:
+      profiles:
+        adminClientCert:
+          enabled: true
+          right: all
+      rights:
+        admin:
+          defaultRoles:
+            enabled: false
+        all:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: true
+        utilityOnly:
+          defaultRoles:
+            enabled: true
+      roles:
+        admin:
+          defaultRoutes:
+            enabled: false
+        journal:
+          defaultRoutes:
+            enabled: false
+        read:
+          defaultRoutes:
+            enabled: false
+        super:
+          defaultRoutes:
+            enabled: false
+        utility:
+          defaultRoutes:
+            enabled: true
+        write:
+          defaultRoutes:
+            enabled: false

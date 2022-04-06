@@ -1,0 +1,7 @@
+configs:
+  standard:
+    app:
+      journalExportConfig:
+        s3ExportConfig:
+          awsRegion: us-west-2
+          bucketName: gd-ecommplatform-ote-entitlements-journal-us-west-2
