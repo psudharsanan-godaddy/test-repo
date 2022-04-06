@@ -18,6 +18,8 @@ configs:
         type: CONSOLE_JSON
         logbook:
           enabled: true
+        audit:
+          enabled: true
 
 deployment:
   readinessProbe:

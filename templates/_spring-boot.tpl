@@ -47,3 +47,19 @@ Check if spring logbook logging config is enabled.
   {{- end -}}
   {{- $r -}}
 {{- end }}
+
+{{/*
+Check if spring audit logging config is enabled.
+*/}}
+{{- define "commerce-app-v2.configs.spring-boot.application.logging.audit.enabled" }}
+  {{- $r := false -}}
+  {{- $loggingEnabled := include "commerce-app-v2.configs.spring-boot.application.logging.enabled" . | include "strToBool" -}}
+  {{- if $loggingEnabled -}}
+    {{- if .Values.configs.springBoot.application.logging.audit -}}
+      {{- if .Values.configs.springBoot.application.logging.audit.enabled -}}
+        {{- $r = true -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $r -}}
+{{- end }}

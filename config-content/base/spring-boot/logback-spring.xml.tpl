@@ -38,6 +38,14 @@
   </logger>
 {{- end }}
 
+{{- $auditLoggingEnabled := include "commerce-app-v2.configs.spring-boot.application.logging.audit.enabled" . | include "strToBool" }}
+{{ if $auditLoggingEnabled }}
+  <!--Audit logging-->
+  <logger name="com.godaddy.commerce.spring.logging.audit.LogAuditEventRepository" level="ALL" additivity="false">
+    <appender-ref ref="${rootAppender}"/>
+  </logger>
+{{- end }}
+
   <root level="${rootLevel}">
     <appender-ref ref="${rootAppender}"/>
   </root>
