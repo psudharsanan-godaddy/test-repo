@@ -21,4 +21,8 @@
 - name: LOGGING_CONFIG
   value: "{{ $mountPath }}/spring-boot-logging-config/logback-spring.xml"
 {{- end }}
+{{- if .Values.app.tmpdir }}
+- name: JAVA_TMP_DIR
+  value: "{{ .Values.app.tmpdir }}"
+{{- end }}
 {{- end }}

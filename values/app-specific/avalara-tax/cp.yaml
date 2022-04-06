@@ -1,6 +1,7 @@
 app:
   frameworkType: spring-boot
   size: LARGE
+  tmpdir: /tmp/tomcat
 
 configs:
   standard:
