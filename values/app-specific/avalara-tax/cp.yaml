@@ -20,16 +20,6 @@ configs:
           enabled: true
 
 deployment:
-  extraVolumeMounts:
-    - name: avalaratmp
-      mountPath: "/tmp/avalaratmp"
-    - name: javatmpdir
-      mountPath: "/tmp/javatmpdir"
-  extraVolumes:
-    - name: avalaratmp
-      emptyDir: {}
-    - name: javatmpdir
-      emptyDir: {}
   readinessProbe:
     initialDelaySeconds: 30
   livenessProbe:
