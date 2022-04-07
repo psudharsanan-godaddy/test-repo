@@ -27,4 +27,3 @@ deployment:
   livenessProbe:
     enabled: true
     initialDelaySeconds: 45
-  readOnlyRootFilesystem: false
