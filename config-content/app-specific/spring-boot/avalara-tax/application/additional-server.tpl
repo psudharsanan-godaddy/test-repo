@@ -1,0 +1,2 @@
+tomcat:
+  basedir: /tmp
