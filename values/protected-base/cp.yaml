@@ -1,4 +1,7 @@
 deployment:
+  extraVolumeMounts: {}
+  extraVolumes: {}
+  readOnlyRootFilesystem: true
   readinessProbe:
     enabled: true
 

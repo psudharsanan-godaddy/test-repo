@@ -2,3 +2,5 @@ configs:
   standard:
     sensitive:
       defaultMode: 0404
+deployment:
+  readOnlyRootFilesystem: false
