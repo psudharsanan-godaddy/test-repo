@@ -3,6 +3,7 @@ configs:
     sensitive:
       defaultMode: 0404
 deployment:
+  readOnlyRootFilesystem: false
   extraVolumeMounts:
     - name: avalaratmp
       mountPath: "/tmp/avalaratmp"

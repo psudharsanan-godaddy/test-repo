@@ -13,7 +13,6 @@ configs:
       enabled: false
 
 deployment:
-  readOnlyRootFilesystem: false
   resources:
     requests:
       cpu: 25m

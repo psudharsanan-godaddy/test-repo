@@ -1,3 +1,6 @@
+deployment:
+  readOnlyRootFilesystem: false
+
 configs:
   standard:
     sensitive:
