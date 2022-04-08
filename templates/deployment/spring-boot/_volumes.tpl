@@ -11,8 +11,4 @@
   configMap:
     name: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-spring-boot-logging-config") .) }}
 {{- end }}
-{{- if .Values.app.tmpdir }}
-- name: tomcat-tmp-dir
-  emptyDir: {}
-{{- end }}
 {{- end }}

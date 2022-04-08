@@ -10,8 +10,4 @@
 - name: spring-boot-logging-config-configmap
   mountPath: "{{ $mountPath }}/spring-boot-logging-config"
 {{- end }}
-{{- if .Values.app.tmpdir }}
-- name: tomcat-tmp-dir
-  mountPath: "{{ .Values.app.tmpdir }}"
-{{- end }}
 {{- end }}

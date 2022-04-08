@@ -24,6 +24,7 @@
 {{- $pkiConfigEnabled := include "commerce-app-v2.configs.standard.pki.enabled" . | include "strToBool" }}
 {{- $sensitiveConfigEnabled := include "commerce-app-v2.configs.standard.sensitive.enabled" . | include "strToBool" }}
 {{- $tlsConfigEnabled := include "commerce-app-v2.configs.standard.tls.enabled" . | include "strToBool" }}
+{{- $appTmpDirEnabled := .Values.app.tmpdir }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -130,6 +131,10 @@ spec:
               mountPath: "{{ $mountPath }}/cacerts"
             - name: "{{ $storeKeysSecretName }}"
               mountPath: "{{ $mountPath }}/storekeys"
+            {{- if $appTmpDirEnabled }}
+            - name: app-tmp-dir
+              mountPath: "{{ .Values.app.tmpdir }}"
+            {{- end }}
             #END: standard specific volume mounts
             {{- include "commerce-app-v2.deployment.framework.volumeMount"  . | nindent 12 }}
             {{- with .Values.deployment.extraVolumeMounts }}
@@ -208,6 +213,10 @@ spec:
               value: "{{ $cacertsSecretName }}"
             - name: STOREKEYS
               value: "{{ $storeKeysSecretName }}"
+            {{- if $appTmpDirEnabled }}
+            - name: APP_TMP_DIR
+              value: "{{ .Values.app.tmpdir }}"
+            {{- end }}
             #END: standard specific envs
             {{- include "commerce-app-v2.deployment.framework.env" . | nindent 12 }}
             {{- with .Values.deployment.env }}
@@ -285,6 +294,10 @@ spec:
         - name: {{ $storeKeysSecretName }}
           secret:
             secretName: {{ $storeKeysSecretName }}
+        {{- if $appTmpDirEnabled }}
+        - name: app-tmp-dir
+          emptyDir: {}
+        {{- end }}
         #END: standard specific volumes
         {{- include "commerce-app-v2.deployment.framework.volume" . | nindent 8 }}
         {{- with .Values.deployment.extraVolumes }}
