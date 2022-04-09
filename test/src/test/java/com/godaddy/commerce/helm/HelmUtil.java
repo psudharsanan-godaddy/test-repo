@@ -12,6 +12,10 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 
+/**
+ * @deprecated Use {@link HelmRunner}
+ */
+@Deprecated
 public final class HelmUtil {
 
   public static final String YAML_EXTENSION = ".yaml";

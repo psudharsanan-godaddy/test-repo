@@ -17,14 +17,10 @@ import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.godaddy.commerce.helm.BaseTest;
-import com.godaddy.commerce.helm.HelmUtil;
+import com.godaddy.commerce.helm.HelmRunner;
 import com.godaddy.commerce.helm.YamlUtil;
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
 
@@ -44,24 +40,14 @@ public class AvalaraTaxTest extends BaseTest {
   }
 
   @Test
-  void test_avalaraTaxDpEnv() throws IOException, InterruptedException {
-    //Given
-    ProcessBuilder helmProcessBuilder = HelmUtil.helmProcessBuilder(APP_NAME, "dp");
-    //When
-    Process helmProcess = helmProcessBuilder.start();
-    String successOutput = HelmUtil.readSuccessOutput(helmProcess);
-    String errorOutput = HelmUtil.readErrorOutput(helmProcess);
-    helmProcess.waitFor();
+  void test_avalaraTaxDpEnv() {
+    // Given When
+    String[] generatedResources =
+        HelmRunner.builder().app(APP_NAME).env("dp").build().run().getGeneratedResources();
 
-    assertTrue(errorOutput.isBlank(), errorOutput);
-    assertFalse(successOutput.isBlank());
-
-    //Then
-    assertNotNull(successOutput);
-    String[] generatedResources = successOutput.split("---");
-    assertNotNull(generatedResources);
-
-    assertContainsAllOf(generatedResources,
+    // Then
+    assertContainsAllOf(
+        generatedResources,
         STANDARD_APP,
         STANDARD_CLIENT_CERT,
         STANDARD_CLIENT_CERT_CONTEXT,
