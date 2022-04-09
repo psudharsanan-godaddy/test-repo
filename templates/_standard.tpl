@@ -1,4 +1,35 @@
 {{/*
+Check if standard write-able volume/mount is enabled
+*/}}
+{{- define "commerce-app-v2.volumes.standard.writeableVol.enabled" }}
+{{- $r := and  .Values.deployment.volumes.standard.enabled .Values.deployment.volumes.standard.writeableVol.enabled }}
+{{- $r }}
+{{- end }}
+
+{{/*
+Set standard write-able volume/mount directory
+*/}}
+{{- define "commerce-app-v2.volumes.standard.writeableVol.appMountPath" }}
+{{- $path := required ".Values.deployment.volumes.writeableVol.appMountPath required!" (trimAll " " .Values.deployment.volumes.writeableVol.appMountPath) }}
+{{- $valid := and (hasPrefix $path '/') (ne $path '/') }}
+{{- if not $valid }}
+{{- fail "Invalid value for .Values.deployment.volumes.writeableVol.appMountPath!"}}
+{{- end }}
+{{- printf $path }}
+{{- end }}
+
+{{/*
+Set standard write-able volume size
+Possible values: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#setting-requests-and-limits-for-local-ephemeral-storage
+This should be set to a very modest value.  Just enough for small temporary files to be stored.  Exceptions for larger storages should be handled on a one-off case basis.
+This storage mechanism is not for java memory dumps.  Sizes large enough for memory dumps or core dumps should only be enabled in dev and test.
+*/}}
+{{- define "commerce-app-v2.volumes.standard.writeableVol.size" }}
+{{- $size := required ".Values.deployment.volumes.writeableVol.size required!" (trimAll " " .Values.deployment.volumes.writeableVol.size) }}
+{{- printf $size }}
+{{- end }}
+
+{{/*
 Check if standard app config enabled
 */}}
 {{- define "commerce-app-v2.configs.standard.app.enabled" }}
