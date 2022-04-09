@@ -1,73 +1,88 @@
 #!/bin/bash
 
+manuallyInserted=false
 
 getApp() {
   if [[ -z $APP ]]; then
-    echo "Insert APP value"
+    echo "Insert APP value:"
     read input
     export APP="$input"
     export APP
     echo "APP input saved = $APP"
+    echo "------------------------------------------------"
+    manuallyInserted=true
   fi
   echo "Using APP = $APP"
 }
 
 getENV() {
   if [[ -z $ENV ]]; then
-    echo "Insert ENV value"
+    echo "Insert ENV value one of: dp, test, ote, prod:"
     read input
     export ENV="$input"
     echo "ENV input saved = $ENV"
+    echo "------------------------------------------------"
+    manuallyInserted=true
   fi
   echo "Using ENV = $ENV"
 }
 
 getACCOUNT_TYPE() {
   if [[ -z $ACCOUNT_TYPE ]]; then
-    echo "Insert ACCOUNT_TYPE value"
+    echo "Insert ACCOUNT_TYPE value one of: pci, icp, gen:"
     read input
     export ACCOUNT_TYPE="$input"
     echo "ACCOUNT_TYPE input saved = $ACCOUNT_TYPE"
+    echo "------------------------------------------------"
+    manuallyInserted=true
   fi
   echo "Using ACCOUNT_TYPE = $ACCOUNT_TYPE"
 }
 
 getAwsRegion() {
   if [[ -z $AWS_REGION ]]; then
-    echo "Insert AWS_REGION value"
+    echo "Insert AWS_REGION value one of: us-east-1, us-west-2:"
     read input
     export AWS_REGION="$input"
     echo "AWS_REGION input saved = $AWS_REGION"
+    echo "------------------------------------------------"
+    manuallyInserted=true
   fi
   echo "Using AWS_REGION = $AWS_REGION"
 }
 
 getAppType() {
   if [[ -z $APP_TYPE ]]; then
-    echo "Insert APP_TYPE value"
+    echo "Insert APP_TYPE value one of: service, reader:"
     read input
     export APP_TYPE="$input"
     echo "APP_TYPE input saved = $APP_TYPE"
+    echo "------------------------------------------------"
+    manuallyInserted=true
   fi
   echo "Using APP_TYPE = $APP_TYPE"
 }
 
 getApiVersion() {
   if [[ -z $API_VERSION ]]; then
-    echo "Insert API_VERSION value"
+    echo "Insert API_VERSION value, example: v1 :"
     read input
     export API_VERSION="$input"
     echo "API_VERSION input saved = $API_VERSION"
+    echo "------------------------------------------------"
+    manuallyInserted=true
   fi
   echo "Using API_VERSION = $API_VERSION"
 }
 
 getImageTag() {
   if [[ -z $IMAGE_TAG ]]; then
-    echo "Insert IMAGE_TAG value"
+    echo "Insert IMAGE_TAG value, example: 0.0.1 :"
     read input
     export IMAGE_TAG="$input"
     echo "IMAGE_TAG input saved = $IMAGE_TAG"
+    echo "------------------------------------------------"
+    manuallyInserted=true
   fi
   echo "Using IMAGE_TAG = $API_VERSION"
 }
@@ -94,19 +109,23 @@ helm template . \
  --set app.type=$APP_TYPE \
  --debug \
  > $APP.yaml
-  echo "Check output > $APP.yaml"
 }
 
-
-echo "You might want to export all env variables before using this script times. Like this:
-export APP=<your-app-name>
-export ENV=<one of: dp, test, ote, prod>
-export ACCOUNT_TYPE=<one of: pci, icp, gen>
-export AWS_REGION=<one of: us-east-1, us-west-2>
-export APP_TYPE=<one of: service, reader>
-export API_VERSION=<example: v1>
-export IMAGE_TAG=<example: 0.0.1>
-"
+printMessage(){
+   if [ "$manuallyInserted" = true ] ; then
+       echo "You might want to export all env variables before using this script several times.
+       Like this (copy and execute suggestion below):
+       export APP=$APP
+       export ENV=$ENV
+       export ACCOUNT_TYPE=$ACCOUNT_TYPE
+       export AWS_REGION=$AWS_REGION
+       export APP_TYPE=$APP_TYPE
+       export API_VERSION=$API_VERSION
+       export IMAGE_TAG=$IMAGE_TAG
+       "
+   fi
+  echo "CHECK OUTPUT > $APP.yaml"
+}
 
 getApp
 getENV
@@ -116,4 +135,5 @@ getAppType
 getApiVersion
 getImageTag
 runHelm
+printMessage
 
