@@ -85,8 +85,7 @@ public class HelmRunner {
     this.appValuesFolder = getOrDefault(appValuesFolder, "/values/app-specific");
   }
 
-  private static List<String> findValuesFiles(
-      String env, String app, String appValuesFolder, String awsRegion) {
+  private List<String> findAppValuesFiles() {
     String relativeAppFilesFolder = String.format("../%s/%s", appValuesFolder, app);
     String appFilesFolder = String.format("/%s/%s/", appValuesFolder, app);
     return findFilesFilteredBy(
@@ -142,7 +141,7 @@ public class HelmRunner {
   }
 
   private ProcessBuilder buildHelmProcess() {
-    List<String> valuesFiles = findValuesFiles(env, app, appValuesFolder, awsRegion);
+    List<String> valuesFiles = findAppValuesFiles();
     ProcessBuilder processBuilder = new ProcessBuilder();
     return processBuilder
         .command(buildCommandArgs(valuesFiles).toArray(String[]::new))
@@ -151,50 +150,39 @@ public class HelmRunner {
 
   private List<String> buildCommandArgs(List<String> appSpecificValuesFiles) {
 
-    List<String> allValuesFiles =
-        Stream.concat(
-                Stream.concat(Stream.of("/values/base/cp.yaml"), appSpecificValuesFiles.stream()),
-                Stream.of(
-                    "/values/protected-base/cp.yaml",
-                    String.format("/values/protected-base/cp.%s.yaml", env),
-                    String.format("/values/protected-base/cp.%s.%s.yaml", env, accountType),
-                    String.format(
-                        "/values/protected-base/cp.%s.%s.%s.yaml", env, accountType, awsRegion),
-                    String.format(
-                        "/values/protected-base/cp.%s.%s.%s.shared.yaml",
-                        env, accountType, awsRegion)))
-            .toList();
-
     List<String> commandArgs = new ArrayList<>();
     commandArgs.add("helm");
     commandArgs.add("template");
     commandArgs.add(".");
-    for (String valuesFile : allValuesFiles) {
-      commandArgs.add("-f");
-      commandArgs.add("." + valuesFile);
-    }
-    commandArgs.add("--set");
-    commandArgs.add(String.format("deployment.image.tag=%s", imageTag));
-    commandArgs.add("--set");
-    commandArgs.add("deploymentSuffix=-test");
-    commandArgs.add("--set");
-    commandArgs.add("currentPrimaryRegion=us-east-1");
-    commandArgs.add("--set");
-    commandArgs.add("clusterSide=a");
-    commandArgs.add("--set");
-    commandArgs.add("liveClusterSide=a");
-    commandArgs.add("--set");
-    commandArgs.add(String.format("app.name=%s", app));
-    commandArgs.add("--set");
-    commandArgs.add(String.format("app.apiVersion=%s", apiVersion));
-    commandArgs.add("--set");
-    commandArgs.add(String.format("app.pathNoun=%s", app));
-    commandArgs.add("--set");
-    commandArgs.add("app.resourceIdPathParamName=fakeResourceId");
-    commandArgs.add("--set");
-    commandArgs.add(String.format("app.artifactId=%s-service", app));
-    commandArgs.add("--set");
-    commandArgs.add(String.format("app.type=%s", appType));
+
+    // The order matters
+    Stream.concat(
+            Stream.concat(Stream.of("/values/base/cp.yaml"), appSpecificValuesFiles.stream()),
+            Stream.of(
+                "/values/protected-base/cp.yaml",
+                String.format("/values/protected-base/cp.%s.yaml", env),
+                String.format("/values/protected-base/cp.%s.%s.yaml", env, accountType),
+                String.format(
+                    "/values/protected-base/cp.%s.%s.%s.yaml", env, accountType, awsRegion),
+                String.format(
+                    "/values/protected-base/cp.%s.%s.%s.shared.yaml", env, accountType, awsRegion)))
+        .peek(valuesFile -> commandArgs.add("-f"))
+        .forEach(valuesFile -> commandArgs.add("." + valuesFile));
+
+    Stream.of(
+            String.format("deployment.image.tag=%s", imageTag),
+            "deploymentSuffix=-test",
+            "currentPrimaryRegion=us-east-1",
+            "clusterSide=a",
+            "liveClusterSide=a",
+            String.format("app.name=%s", app),
+            String.format("app.apiVersion=%s", apiVersion),
+            String.format("app.pathNoun=%s", app),
+            "app.resourceIdPathParamName=fakeResourceId",
+            String.format("app.artifactId=%s-service", app),
+            String.format("app.type=%s", appType))
+        .peek(arg -> commandArgs.add("--set"))
+        .forEach(commandArgs::add);
     return commandArgs;
   }
 }
