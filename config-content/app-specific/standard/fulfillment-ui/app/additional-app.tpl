@@ -3,7 +3,8 @@ ALLOWED_AD_GROUPS: ["Dev-eCommerce-APIs"]
 ATHENA:
     MAX_ATTEMPTS: 10
     ATTEMPT_INTERVAL_IN_MS: 1000
-    DATABASE: "entitlements_analytics_s3_db"
+    MAX_RESULTS: 200
+    DATABASE: "entitlements_s3_db"
     TABLE: "entitlements_journal"
     OUTPUT_LOCATION: '{{ required ".Values.configs.standard.app.athena.outputLocation required!" .Values.configs.standard.app.athena.outputLocation }}'
     REGION: '{{ required ".Values.configs.standard.app.athena.region required!" .Values.configs.standard.app.athena.region }}'
