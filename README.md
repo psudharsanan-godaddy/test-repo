@@ -43,6 +43,7 @@ helm template . \
  --debug \
  > .output/$APP.yaml
 ```
+**For local debug purposes you can use `local-debug.sh`**
 
 ### Deploy from local machine
 
