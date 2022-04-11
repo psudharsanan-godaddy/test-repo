@@ -1,6 +1,7 @@
 app:
   frameworkType: spring-boot
   size: MEDIUM
+  tmpdir: /tmp/apptmp
 
 deployment:
   readinessProbe:
