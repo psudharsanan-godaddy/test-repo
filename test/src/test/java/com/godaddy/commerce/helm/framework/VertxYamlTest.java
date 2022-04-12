@@ -17,15 +17,11 @@ import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.godaddy.commerce.helm.BaseTest;
-import com.godaddy.commerce.helm.HelmUtil;
+import com.godaddy.commerce.helm.HelmRunner;
 import com.godaddy.commerce.helm.YamlUtil;
 import com.godaddy.commerce.helm.resource.deployment.Env;
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
 
@@ -47,27 +43,21 @@ public class VertxYamlTest extends BaseTest {
   }
 
   @Test
-  void test_vertxAndStandard() throws IOException, InterruptedException {
-    //Given
-    ProcessBuilder helmProcessBuilder = HelmUtil.helmProcessBuilder(
-        TEST_APP_NAME,
-        "dp",
-        TEST_APP_VALUES_FOLDER);
-    //When
-    Process helmProcess = helmProcessBuilder.start();
-    String successOutput = HelmUtil.readSuccessOutput(helmProcess);
-    String errorOutput = HelmUtil.readErrorOutput(helmProcess);
-    helmProcess.waitFor();
+  void test_vertxAndStandard() {
+    // Given When
+    String[] generatedResources =
+        HelmRunner.builder()
+            .app(TEST_APP_NAME)
+            .env("dp")
+            .appValuesFolder(TEST_APP_VALUES_FOLDER)
+            .imageTag("1.1.1")
+            .build()
+            .run()
+            .getGeneratedResources();
 
-    assertTrue(errorOutput.isBlank(), errorOutput);
-    assertFalse(successOutput.isBlank());
-
-    //Then
-    assertNotNull(successOutput);
-    String[] generatedResources = successOutput.split("---");
-    assertNotNull(generatedResources);
-
-    assertContainsAllOf(generatedResources,
+    // Then
+    assertContainsAllOf(
+        generatedResources,
         STANDARD_APP,
         STANDARD_AUTH,
         STANDARD_DB,
