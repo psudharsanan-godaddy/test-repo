@@ -1,0 +1,9 @@
+deployment:
+  readOnlyRootFilesystem: false
+
+configs:
+  standard:
+    sensitive:
+      defaultMode: 0404
+
+nodeEnv: production

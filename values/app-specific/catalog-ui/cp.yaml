@@ -1,0 +1,22 @@
+app:
+  frameworkType: nodejs
+
+configs:
+  standard:
+    auth:
+      enabled: false
+    db:
+      enabled: false
+    log:
+      enabled: false
+
+deployment:
+  resources:
+    requests:
+      cpu: 25m
+  prometheus:
+    port: '8443'
+  enableApm: true
+  env:
+      - name: SERVER_SSL_KEYSTORE
+        value: /tmp/tls/tls_certs_keystore.pkcs12
