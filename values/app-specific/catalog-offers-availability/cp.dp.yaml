@@ -1,6 +1,0 @@
-deployment:
-  env:
-    - name: ENV_NAME
-      value: dev
-    - name: SERVER_SSL_KEYSTORE
-      value: /tmp/tls/tls_certs_keystore.pkcs12
