@@ -25,7 +25,3 @@ configs:
       enabled: false
     log:
       enabled: false
-  springBoot:
-    enabled: true
-    application:
-      enabled: true
