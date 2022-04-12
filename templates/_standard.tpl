@@ -2,7 +2,7 @@
 Check if standard write-able volume/mount is enabled
 */}}
 {{- define "commerce-app-v2.volumes.standard.writeableVol.enabled" }}
-{{- $r := and  .Values.deployment.volumes.standard.enabled .Values.deployment.volumes.standard.writeableVol.enabled }}
+{{- $r := and  .Values.deployment.enabled .Values.deployment.volumes.writeableVol.enabled }}
 {{- $r }}
 {{- end }}
 
@@ -11,11 +11,11 @@ Set standard write-able volume/mount directory
 */}}
 {{- define "commerce-app-v2.volumes.standard.writeableVol.appMountPath" }}
 {{- $path := required ".Values.deployment.volumes.writeableVol.appMountPath required!" (trimAll " " .Values.deployment.volumes.writeableVol.appMountPath) }}
-{{- $valid := and (hasPrefix $path '/') (ne $path '/') }}
+{{- $valid := and (hasPrefix "/" $path) (ne $path "/") }}
 {{- if not $valid }}
-{{- fail "Invalid value for .Values.deployment.volumes.writeableVol.appMountPath!"}}
+{{- fail ( cat "Invalid value for .Values.deployment.volumes.writeableVol.appMountPath: "  $path ) }}
 {{- end }}
-{{- printf $path }}
+{{- print $path }}
 {{- end }}
 
 {{/*
@@ -25,8 +25,8 @@ This should be set to a very modest value.  Just enough for small temporary file
 This storage mechanism is not for java memory dumps.  Sizes large enough for memory dumps or core dumps should only be enabled in dev and test.
 */}}
 {{- define "commerce-app-v2.volumes.standard.writeableVol.size" }}
-{{- $size := required ".Values.deployment.volumes.writeableVol.size required!" (trimAll " " .Values.deployment.volumes.writeableVol.size) }}
-{{- printf $size }}
+{{- $storageSize := required ".Values.deployment.volumes.writeableVol.storageSize required!" (trimAll " " .Values.deployment.volumes.writeableVol.storageSize) }}
+{{- printf $storageSize }}
 {{- end }}
 
 {{/*
