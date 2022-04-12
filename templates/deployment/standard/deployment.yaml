@@ -57,6 +57,8 @@ spec:
         prometheus.io/path: "{{ .Values.deployment.prometheus.path }}"
         {{- end }}
     spec:
+      securityContext:
+        fsGroup: 65534
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
