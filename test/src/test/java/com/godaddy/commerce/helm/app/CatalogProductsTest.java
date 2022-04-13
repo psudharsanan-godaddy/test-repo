@@ -83,6 +83,7 @@ public class CatalogProductsTest extends BaseTest {
                 STANDARD_LOG,
                 STANDARD_AUTH,
                 VERTX_OPTIONS,
+                SPRING_BOOT_APPLICATION,
                 SPRING_BOOT_LOG);
     }
 }
