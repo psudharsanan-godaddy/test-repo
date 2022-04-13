@@ -207,13 +207,23 @@ Create the resources content of a container
 {{- else }}
 {{- fail ".Values.app.size needs to be one of: SMALL, MEDIUM, and LARGE!" }}
 {{- end -}}
+{{- $writableVolEnabled := include "commerce-app-v2.volumes.standard.writableVol.enabled" . | include "strToBool" }}
+{{- $writableVolSize := include "commerce-app-v2.volumes.standard.writableVol.size" . }}
 requests:
   cpu: {{ $requestCpu | quote }}
   memory: {{ $requestMemory | quote }}
+{{- if $writableVolEnabled }}
+  ephemeral-storage: {{ $writableVolSize }}
+{{- end }}
 limits:
   cpu: {{ $limitCpu | quote }}
   memory: {{ $limitMemory | quote }}
+{{- if $writableVolEnabled }}
+  ephemeral-storage: {{ $writableVolSize }}
 {{- end }}
+{{- end }}
+
+
 
 {{/*
 Create JAVA_OPTS value based on .Values.app.size

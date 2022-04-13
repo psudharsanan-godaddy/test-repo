@@ -26,7 +26,6 @@
 {{- $tlsConfigEnabled := include "commerce-app-v2.configs.standard.tls.enabled" . | include "strToBool" }}
 {{- $writableVolEnabled := include "commerce-app-v2.volumes.standard.writableVol.enabled" . | include "strToBool" }}
 {{- $writableVolMountPath := include "commerce-app-v2.volumes.standard.writableVol.appMountPath" . }}
-{{- $writableVolSize := include "commerce-app-v2.volumes.standard.writableVol.size" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -83,13 +82,6 @@ spec:
                   - '30'
           image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
           imagePullPolicy: Always
-          {{- if $writableVolEnabled }}
-          resources:
-            requests:
-              ephemeral-storage: {{ $writableVolSize }}
-            limits:
-              ephemeral-storage: {{ $writableVolSize }}
-          {{- end }}
           volumeMounts:
             #BEGIN: standard specific volume mounts
             {{- if $appConfigEnabled }}
@@ -227,7 +219,7 @@ spec:
             - name: STOREKEYS
               value: "{{ $storeKeysSecretName }}"
             {{- if $writableVolEnabled }}
-            - name: APP_WRITEABLE_DIR
+            - name: APP_WRITABLE_DIR
               value: "{{ $writableVolMountPath }}"
             {{- end }}
             #END: standard specific envs
