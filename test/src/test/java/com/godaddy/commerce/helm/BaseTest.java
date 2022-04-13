@@ -12,9 +12,21 @@ import com.godaddy.commerce.helm.resource.externalsecret.ExternalSecretResource;
 import com.godaddy.commerce.helm.resource.secret.SecretResource;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.yaml.snakeyaml.Yaml;
 
+@Slf4j
 public abstract class BaseTest {
+
+  @BeforeEach
+  void setUp(final TestInfo testInfo) {
+    log.info("------------------------------------------------------------------");
+    log.info("RUNNING TEST: {}.{}",
+        testInfo.getTestClass().map(Class::getCanonicalName).orElse(""),
+        testInfo.getDisplayName());
+  }
 
   protected abstract Yaml getYamlLoader();
 
@@ -276,6 +288,17 @@ public abstract class BaseTest {
     assertThat(deployment.getVolumeMounts()).contains(
         VolumeMount.of(withAppPrefix("storekeys-test"), getBaseMountPath() + "/storekeys"));
     assertThat(deployment.getEnvs()).contains(Env.of("STOREKEYS", withAppPrefix("storekeys-test")));
+  }
+
+  protected void assertWriteableDirectory(DeploymentResource deployment) {
+    assertThat(deployment.getVolumes()).contains(Volume.emptyDirVolume("writable-volume"));
+
+    String writableMountPath = getBaseMountPath() + "/work";
+    assertThat(deployment.getVolumeMounts())
+        .contains(VolumeMount.of("writable-volume", writableMountPath));
+    assertThat(deployment.getEnvs()).contains(Env.of("APP_WRITABLE_DIR", writableMountPath));
+    assertThat(deployment.getSpec().getTemplate().getSpec().getSecurityContext().getFsGroup())
+        .isEqualTo(65534L);
   }
 
   protected void assertSpringBootLogConfig(Map<String, ConfigMapResource> configMaps,

@@ -159,5 +159,14 @@ public enum AssertType implements ResourceAssertion {
         Map<String, ConfigMapResource> configMaps, DeploymentResource deployment) {
       baseTestInstance.assertVertxOptionsConfig(secrets, deployment);
     }
+  },
+
+  WRITABLE_DIRECTORY {
+    @Override
+    public void executeAssertion(BaseTest baseTestInstance, Map<String, SecretResource> secrets,
+        Map<String, ExternalSecretResource> externalSecrets,
+        Map<String, ConfigMapResource> configMaps, DeploymentResource deployment) {
+      baseTestInstance.assertWriteableDirectory(deployment);
+    }
   }
 }

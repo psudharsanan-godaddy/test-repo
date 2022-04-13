@@ -17,6 +17,7 @@ import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
+import static com.godaddy.commerce.helm.AssertType.WRITABLE_DIRECTORY;
 
 import com.godaddy.commerce.helm.BaseTest;
 import com.godaddy.commerce.helm.HelmRunner;
@@ -73,10 +74,12 @@ public class StandardYamlTest extends BaseTest {
         STANDARD_CA_CERTS,
         STANDARD_STORE_KEYS);
 
-    assertContainsNoneOf(generatedResources,
+    assertContainsNoneOf(
+        generatedResources,
         VERTX_OPTIONS,
         SPRING_BOOT_APPLICATION,
-        SPRING_BOOT_LOG);
+        SPRING_BOOT_LOG,
+        WRITABLE_DIRECTORY);
     assertContainsAllEnvsOf(generatedResources,
         Env.of("LOG4J_FORMAT_MSG_NO_LOOKUPS", "true"),
         Env.of("AWS_REGION", "us-east-1"),

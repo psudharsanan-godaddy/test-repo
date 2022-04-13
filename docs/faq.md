@@ -1,5 +1,16 @@
 # FAQ
 
+# Content:
+
+- [What is Helm?](#what-is-helm?)
+- [Why using Helm?](#why-using-helm?)
+- [How do we organize this Helm chart?](#how-do-we-organize-this-helm-chart?)
+- [What resources of an application are NOT managed by this Helm chart?](#what-resources-of-an-application-are-not-managed-by-this-helm-chart?)
+- [Writable Volumes](#writable-volumes)
+- [How can an application’s auth config be customized?](#how-can-an-application’s-auth-config-be-customized?)
+- [How to make Helm adopt existing Kubernetes resources that were not installed with Helm?](#how-to-make-helm-adopt-existing-kubernetes-resources-that-were-not-installed-with-helm?)
+
+
 ## What is Helm?
 
 > [Helm](https://helm.sh/) helps you manage Kubernetes applications — Helm Charts help you define, install, and upgrade even the most complex Kubernetes application.
@@ -46,6 +57,10 @@ At the time this support was added, nearly 100 of 113 eComm NES applications are
 - Using Billsoft's EZTax (only needed by Avalara service)
 - Using Elastic's APM jar.  Please note, it is a question whether all of the 3 to 4 installation methods of the Elastic's APM module require the writable directory, but the method we use now does use a writable directory.
 - Using Tomcat. The department is currently reviewing whether we should use other Java application servers to remove this use-case.
+
+At the moment only spring-boot or nodejs applications supports writable directory. You can 
+enable it by using: `deployment.volumes.writableVol.enabled: true`, most likely you also need to 
+enable `deployment.volumes.fsGroup.enabled: true`.
 
 ## How can an application’s auth config be customized?
 

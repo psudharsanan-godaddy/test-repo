@@ -17,6 +17,7 @@ import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
+import static com.godaddy.commerce.helm.AssertType.WRITABLE_DIRECTORY;
 
 import com.godaddy.commerce.helm.BaseTest;
 import com.godaddy.commerce.helm.HelmRunner;
@@ -72,6 +73,7 @@ public class SpringBootYamlTest extends BaseTest {
         STANDARD_TLS,
         STANDARD_CA_CERTS,
         STANDARD_STORE_KEYS,
+        WRITABLE_DIRECTORY,
         SPRING_BOOT_APPLICATION,
         SPRING_BOOT_LOG);
 

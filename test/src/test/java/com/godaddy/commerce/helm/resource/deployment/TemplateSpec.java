@@ -10,5 +10,6 @@ public class TemplateSpec {
   private List<Container> containers;
   private long terminationGracePeriodSeconds;
   private List<Volume> volumes;
+  private DeploymentTemplateSecurityContext securityContext;
 
 }

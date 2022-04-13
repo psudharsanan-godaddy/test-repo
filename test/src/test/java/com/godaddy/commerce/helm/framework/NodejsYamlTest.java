@@ -5,28 +5,19 @@ import static com.godaddy.commerce.helm.AssertType.SPRING_BOOT_LOG;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_APP;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_AUTH;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_CA_CERTS;
-import static com.godaddy.commerce.helm.AssertType.STANDARD_CLASSIC_DB;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_CLIENT_CERT;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_CLIENT_CERT_CONTEXT;
-import static com.godaddy.commerce.helm.AssertType.STANDARD_CRYPTO;
-import static com.godaddy.commerce.helm.AssertType.STANDARD_DB;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_HOSTS;
-import static com.godaddy.commerce.helm.AssertType.STANDARD_LOG;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_PROMETHEUS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
-import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.godaddy.commerce.helm.AssertType.WRITABLE_DIRECTORY;
 
 import com.godaddy.commerce.helm.BaseTest;
 import com.godaddy.commerce.helm.HelmRunner;
-import com.godaddy.commerce.helm.HelmUtil;
 import com.godaddy.commerce.helm.YamlUtil;
 import com.godaddy.commerce.helm.resource.deployment.Env;
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
 
@@ -69,7 +60,8 @@ public class NodejsYamlTest extends BaseTest {
         STANDARD_HOSTS,
         STANDARD_SENSITIVE,
         STANDARD_TLS,
-        STANDARD_CA_CERTS);
+        STANDARD_CA_CERTS,
+        WRITABLE_DIRECTORY);
 
     assertContainsNoneOf(generatedResources,
         VERTX_OPTIONS,
