@@ -24,9 +24,9 @@
 {{- $pkiConfigEnabled := include "commerce-app-v2.configs.standard.pki.enabled" . | include "strToBool" }}
 {{- $sensitiveConfigEnabled := include "commerce-app-v2.configs.standard.sensitive.enabled" . | include "strToBool" }}
 {{- $tlsConfigEnabled := include "commerce-app-v2.configs.standard.tls.enabled" . | include "strToBool" }}
-{{- $writeableVolEnabled := include "commerce-app-v2.volumes.standard.writeableVol.enabled" . | include "strToBool" }}
-{{- $writeableVolMountPath := include "commerce-app-v2.volumes.standard.writeableVol.appMountPath" . }}
-{{- $writeableVolSize := include "commerce-app-v2.volumes.standard.writeableVol.size" . }}
+{{- $writableVolEnabled := include "commerce-app-v2.volumes.standard.writableVol.enabled" . | include "strToBool" }}
+{{- $writableVolMountPath := include "commerce-app-v2.volumes.standard.writableVol.appMountPath" . }}
+{{- $writableVolSize := include "commerce-app-v2.volumes.standard.writableVol.size" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -57,8 +57,10 @@ spec:
         prometheus.io/path: "{{ .Values.deployment.prometheus.path }}"
         {{- end }}
     spec:
+      {{- if .Values.deployment.volumes.fsGroup.enabled }}
       securityContext:
         fsGroup: 65534
+      {{- end }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -81,12 +83,12 @@ spec:
                   - '30'
           image: "{{ include "commerce-app-v2.containerImageRepository" . }}:{{ required ".Values.deployment.image.tag required!" .Values.deployment.image.tag }}"
           imagePullPolicy: Always
-          {{- if $writeableVolEnabled }}
+          {{- if $writableVolEnabled }}
           resources:
             requests:
-              ephemeral-storage: {{ $writeableVolSize }}
+              ephemeral-storage: {{ $writableVolSize }}
             limits:
-              ephemeral-storage: {{ $writeableVolSize }}
+              ephemeral-storage: {{ $writableVolSize }}
           {{- end }}
           volumeMounts:
             #BEGIN: standard specific volume mounts
@@ -142,9 +144,9 @@ spec:
               mountPath: "{{ $mountPath }}/cacerts"
             - name: "{{ $storeKeysSecretName }}"
               mountPath: "{{ $mountPath }}/storekeys"
-            {{- if $writeableVolEnabled }}
-            - name: writeable-volume
-              mountPath: "{{ $writeableVolMountPath }}"
+            {{- if $writableVolEnabled }}
+            - name: writable-volume
+              mountPath: "{{ $writableVolMountPath }}"
             {{- end }}
             #END: standard specific volume mounts
             {{- include "commerce-app-v2.deployment.framework.volumeMount"  . | nindent 12 }}
@@ -224,9 +226,9 @@ spec:
               value: "{{ $cacertsSecretName }}"
             - name: STOREKEYS
               value: "{{ $storeKeysSecretName }}"
-            {{- if $writeableVolEnabled }}
+            {{- if $writableVolEnabled }}
             - name: APP_WRITEABLE_DIR
-              value: "{{ $writeableVolMountPath }}"
+              value: "{{ $writableVolMountPath }}"
             {{- end }}
             #END: standard specific envs
             {{- include "commerce-app-v2.deployment.framework.env" . | nindent 12 }}
@@ -305,8 +307,8 @@ spec:
         - name: {{ $storeKeysSecretName }}
           secret:
             secretName: {{ $storeKeysSecretName }}
-        {{- if $writeableVolEnabled }}
-        - name: writeable-volume
+        {{- if $writableVolEnabled }}
+        - name: writable-volume
           emptyDir: {}
         {{- end }}
 

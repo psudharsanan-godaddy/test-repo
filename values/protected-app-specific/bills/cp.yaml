@@ -1,0 +1,6 @@
+deployment:
+  volumes:
+    writeableVol:
+      enabled: true
+      appMountPath: /tmp/work2
+      storageSize: "8Mi"

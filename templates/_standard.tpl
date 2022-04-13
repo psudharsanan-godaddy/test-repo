@@ -1,19 +1,19 @@
 {{/*
 Check if standard write-able volume/mount is enabled
 */}}
-{{- define "commerce-app-v2.volumes.standard.writeableVol.enabled" }}
-{{- $r := and  .Values.deployment.enabled .Values.deployment.volumes.writeableVol.enabled }}
+{{- define "commerce-app-v2.volumes.standard.writableVol.enabled" }}
+{{- $r := and  .Values.deployment.enabled .Values.deployment.volumes.writableVol.enabled }}
 {{- $r }}
 {{- end }}
 
 {{/*
 Set standard write-able volume/mount directory
 */}}
-{{- define "commerce-app-v2.volumes.standard.writeableVol.appMountPath" }}
-{{- $path := required ".Values.deployment.volumes.writeableVol.appMountPath required!" (trimAll " " .Values.deployment.volumes.writeableVol.appMountPath) }}
+{{- define "commerce-app-v2.volumes.standard.writableVol.appMountPath" }}
+{{- $path := required ".Values.deployment.volumes.writableVol.appMountPath required!" (trimAll " " .Values.deployment.volumes.writableVol.appMountPath) }}
 {{- $valid := and (hasPrefix "/" $path) (ne $path "/") }}
 {{- if not $valid }}
-{{- fail ( cat "Invalid value for .Values.deployment.volumes.writeableVol.appMountPath: "  $path ) }}
+{{- fail ( cat "Invalid value for .Values.deployment.volumes.writableVol.appMountPath: "  $path ) }}
 {{- end }}
 {{- print $path }}
 {{- end }}
@@ -24,8 +24,8 @@ Possible values: https://kubernetes.io/docs/concepts/configuration/manage-resour
 This should be set to a very modest value.  Just enough for small temporary files to be stored.  Exceptions for larger storages should be handled on a one-off case basis.
 This storage mechanism is not for java memory dumps.  Sizes large enough for memory dumps or core dumps should only be enabled in dev and test.
 */}}
-{{- define "commerce-app-v2.volumes.standard.writeableVol.size" }}
-{{- $storageSize := required ".Values.deployment.volumes.writeableVol.storageSize required!" (trimAll " " .Values.deployment.volumes.writeableVol.storageSize) }}
+{{- define "commerce-app-v2.volumes.standard.writableVol.size" }}
+{{- $storageSize := required ".Values.deployment.volumes.writableVol.storageSize required!" (trimAll " " .Values.deployment.volumes.writableVol.storageSize) }}
 {{- printf $storageSize }}
 {{- end }}
 

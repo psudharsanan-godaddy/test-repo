@@ -2,9 +2,7 @@ deployment:
   extraVolumeMounts: {}
   extraVolumes: {}
   volumes:
-    fsGroup:
-      enabled: false
-    writableVol:
+    writeableVol:
       enabled: false
       appMountPath: /tmp/work
       storageSize: "8Mi"
@@ -19,4 +17,6 @@ configs:
     sensitive:
       defaultMode: 0400
     crypto:
-      kmsKeyArns: {}
+      kmsKeyArns:
+        us-west-2: "arn:aws:kms:us-west-2:669979021785:key/dfaee69d-60a1-43ea-88b1-26c1abaa4bbf"
+        us-east-1: "arn:aws:kms:us-east-1:669979021785:key/cab1d51f-6172-405b-bd06-423c09d3df67"
