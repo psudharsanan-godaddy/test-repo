@@ -10,12 +10,17 @@ Check if standard write-able volume/mount is enabled
 Set standard write-able volume/mount directory
 */}}
 {{- define "commerce-app-v2.volumes.standard.writableVol.appMountPath" }}
-{{- $path := required ".Values.deployment.volumes.writableVol.appMountPath required!" (trimAll " " .Values.deployment.volumes.writableVol.appMountPath) }}
-{{- $valid := and (hasPrefix "/" $path) (ne $path "/") }}
-{{- if not $valid }}
-{{- fail ( cat "Invalid value for .Values.deployment.volumes.writableVol.appMountPath: "  $path ) }}
-{{- end }}
-{{- print $path }}
+{{-   $enabled := include "commerce-app-v2.volumes.standard.writableVol.enabled" . | include "strToBool" }}
+{{-   if $enabled }}
+{{-     $path := required ".Values.deployment.volumes.writableVol.appMountPath required!" (trimAll " " .Values.deployment.volumes.writableVol.appMountPath) }}
+{{-     $valid := and (hasPrefix "/" $path) (ne $path "/") }}
+{{-     if not $valid }}
+{{-       fail ( cat "Invalid value for .Values.deployment.volumes.writableVol.appMountPath: "  $path ) }}
+{{-     end }}
+{{-     print $path }}
+{{-   else }}
+{{-     print "/not-enabled" }}
+{{-   end }}
 {{- end }}
 
 {{/*
@@ -25,8 +30,13 @@ This should be set to a very modest value.  Just enough for small temporary file
 This storage mechanism is not for java memory dumps.  Sizes large enough for memory dumps or core dumps should only be enabled in dev and test.
 */}}
 {{- define "commerce-app-v2.volumes.standard.writableVol.size" }}
-{{- $storageSize := required ".Values.deployment.volumes.writableVol.storageSize required!" (trimAll " " .Values.deployment.volumes.writableVol.storageSize) }}
-{{- printf $storageSize }}
+{{-   $enabled := include "commerce-app-v2.volumes.standard.writableVol.enabled" . | include "strToBool" }}
+{{-   if $enabled }}
+{{-     $storageSize := required ".Values.deployment.volumes.writableVol.storageSize required!" (trimAll " " .Values.deployment.volumes.writableVol.storageSize) }}
+{{-     print $storageSize }}
+{{-   else }}
+{{-     print "0" }}
+{{-   end }}
 {{- end }}
 
 {{/*
