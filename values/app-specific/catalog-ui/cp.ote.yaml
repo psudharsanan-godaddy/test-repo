@@ -2,3 +2,4 @@ configs:
   standard:
     app:
       hostname: catalog-ui-int.cp.api.ote.godaddy.com
+      env: ote
