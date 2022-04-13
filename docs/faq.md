@@ -35,6 +35,18 @@ Currently, the following resources of an application are not managed by this Hel
 - Client certs (handled by the existing deploy sh scripts)
 - Hosts config (handled by the existing deploy sh scripts)
 
+## Writable Volumes
+
+The writable volume support should be used sparingly, as it creates a common vector for security attacks (a writable and executable location on their application).
+Applications enabling this feature should understand this risk, and use it only when absolutely necessary.
+
+At the time this support was added, nearly 100 of 113 eComm NES applications are running without this risk.  The following are currently the use-cases for enabling this feature:
+
+- Using Gasket (needed by our two NodeJS user interface applications)
+- Using Billsoft's EZTax (only needed by Avalara service)
+- Using Elastic's APM jar.  Please note, it is a question whether all of the 3 to 4 installation methods of the Elastic's APM module require the writable directory, but the method we use now does use a writable directory.
+- Using Tomcat. The department is currently reviewing whether we should use other Java application servers to remove this use-case.
+
 ## How can an application’s auth config be customized?
 
 The auth config base template is located at `config-content/base/standard/auth.yaml.tpl`
