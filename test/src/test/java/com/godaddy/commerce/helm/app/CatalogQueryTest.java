@@ -74,8 +74,7 @@ public class CatalogQueryTest extends BaseTest {
                 STANDARD_SENSITIVE,
                 STANDARD_TLS,
                 STANDARD_CA_CERTS,
-                STANDARD_STORE_KEYS,
-                SPRING_BOOT_APPLICATION);
+                STANDARD_STORE_KEYS);
 
         assertContainsNoneOf(generatedResources,
                 STANDARD_CLASSIC_DB,
