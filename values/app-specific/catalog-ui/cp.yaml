@@ -9,7 +9,7 @@ configs:
       enabled: false
     log:
       enabled: false
-
+      
 deployment:
   resources:
     requests:

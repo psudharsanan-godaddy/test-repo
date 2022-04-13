@@ -1,5 +1,8 @@
 deployment:
-  readOnlyRootFilesystem: false
+  volumes:
+    writableVol:
+      enabled: true
+      appMountPath: /tmp/.npm/_logs
 
 configs:
   standard:
