@@ -17,7 +17,7 @@ configs:
       logging:
         type: CONSOLE_JSON
         logbook:
-          enabled: false
+          enabled: true
         audit:
           enabled: true
 
