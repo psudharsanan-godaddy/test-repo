@@ -1,4 +1,0 @@
-deployment:
-  volumes:
-    writableVol:
-      enabled: true
