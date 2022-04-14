@@ -3,12 +3,16 @@ app:
   size: MEDIUM
 
 deployment:
+  volumes:
+    fsGroup:
+      enabled: true
+    writableVol:
+      enabled: true
   readinessProbe:
     initialDelaySeconds: 40
   livenessProbe:
     enabled: true
     initialDelaySeconds: 55
-  readOnlyRootFilesystem: false
   enableApm: true
   env:
     - name: SERVER_SSL_KEYSTORE
@@ -22,7 +26,3 @@ configs:
       enabled: false
     log:
       enabled: false
-  springBoot:
-    enabled: true
-    application:
-      enabled: true

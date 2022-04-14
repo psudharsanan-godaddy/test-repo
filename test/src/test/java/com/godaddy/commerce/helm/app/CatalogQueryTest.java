@@ -25,6 +25,7 @@ import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
+import static com.godaddy.commerce.helm.AssertType.WRITABLE_DIRECTORY;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -74,8 +75,7 @@ public class CatalogQueryTest extends BaseTest {
                 STANDARD_SENSITIVE,
                 STANDARD_TLS,
                 STANDARD_CA_CERTS,
-                STANDARD_STORE_KEYS,
-                SPRING_BOOT_APPLICATION);
+                STANDARD_STORE_KEYS);
 
         assertContainsNoneOf(generatedResources,
                 STANDARD_CLASSIC_DB,
@@ -84,6 +84,8 @@ public class CatalogQueryTest extends BaseTest {
                 STANDARD_LOG,
                 STANDARD_AUTH,
                 VERTX_OPTIONS,
-                SPRING_BOOT_LOG);
+                SPRING_BOOT_APPLICATION,
+                SPRING_BOOT_LOG,
+                WRITABLE_DIRECTORY);
     }
 }
