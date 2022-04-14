@@ -17,6 +17,3 @@ deployment:
   prometheus:
     port: '8443'
   enableApm: true
-  env:
-    - name: SERVER_SSL_KEYSTORE
-      value: /tmp/tls/tls_certs_keystore.pkcs12
