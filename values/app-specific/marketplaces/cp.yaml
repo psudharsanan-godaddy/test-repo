@@ -1,0 +1,60 @@
+app:
+  frameworkType: vertx
+  size: SMALL
+configs:
+  standard:
+    auth:
+      profiles:
+        adminClientCert:
+          enabled: true
+        ecommOrchClientCert:
+          right: admin
+        ecommOrchOldClientCert:
+          right: admin
+        legacyGenClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert:
+          enabled: false
+          right: all
+        legacyPciClientCert2:
+          enabled: false
+          right: all
+      rights:
+        admin:
+          defaultRoles:
+            enabled: true
+        all:
+          defaultRoles:
+            enabled: true
+        readOnly:
+          defaultRoles:
+            enabled: true
+        utilityOnly:
+          defaultRoles:
+            enabled: true
+      roles:
+        admin:
+          defaultRoutes:
+            enabled: false
+        journal:
+          defaultRoutes:
+            enabled: false
+        read:
+          defaultRoutes:
+            enabled: true
+        super:
+          defaultRoutes:
+            enabled: false
+        utility:
+          defaultRoutes:
+            enabled: true
+        write:
+          defaultRoutes:
+            enabled: false
+    db:
+      name: marketplaces_v2
+deployment:
+  resources:
+    requests:
+      cpu: 20m
