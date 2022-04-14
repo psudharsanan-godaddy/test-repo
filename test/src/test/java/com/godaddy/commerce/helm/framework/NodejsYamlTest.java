@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.godaddy.commerce.helm.BaseTest;
+import com.godaddy.commerce.helm.HelmRunner;
 import com.godaddy.commerce.helm.HelmUtil;
 import com.godaddy.commerce.helm.YamlUtil;
 import com.godaddy.commerce.helm.resource.deployment.Env;
@@ -47,26 +48,18 @@ public class NodejsYamlTest extends BaseTest {
   }
 
   @Test
-  void test_nodejsAndStandard() throws IOException, InterruptedException {
-    //Given
-    ProcessBuilder helmProcessBuilder = HelmUtil.helmProcessBuilder(
-        TEST_APP_NAME,
-        "dp",
-        TEST_APP_VALUES_FOLDER);
-    //When
-    Process helmProcess = helmProcessBuilder.start();
-    String successOutput = HelmUtil.readSuccessOutput(helmProcess);
-    String errorOutput = HelmUtil.readErrorOutput(helmProcess);
-    helmProcess.waitFor();
+  void test_nodejsAndStandard() {
+    // Given When
+    String[] generatedResources = HelmRunner.builder()
+        .app(TEST_APP_NAME)
+        .env("dp")
+        .appValuesFolder(TEST_APP_VALUES_FOLDER)
+        .imageTag("1.1.1")
+        .build()
+        .run()
+        .getGeneratedResources();
 
-    assertTrue(errorOutput.isBlank(), errorOutput);
-    assertFalse(successOutput.isBlank());
-
-    //Then
-    assertNotNull(successOutput);
-    String[] generatedResources = successOutput.split("---");
-    assertNotNull(generatedResources);
-
+    // Then
     assertContainsAllOf(generatedResources,
         STANDARD_APP,
         STANDARD_AUTH,

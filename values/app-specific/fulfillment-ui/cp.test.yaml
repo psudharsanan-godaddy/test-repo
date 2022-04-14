@@ -2,3 +2,6 @@ configs:
   standard:
     app:
       hostname: fulfillment-ui-int.cp.api.test.godaddy.com
+      athena:
+        outputLocation: s3://gd-ecommplatform-test-ent-athena-output-us-west-2/
+        region: us-west-2

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
+import com.godaddy.commerce.helm.HelmRunner;
 import com.godaddy.commerce.helm.HelmUtil;
 import com.godaddy.commerce.helm.YamlUtil;
 import com.godaddy.commerce.helm.framework.StandardYamlTest;
@@ -57,25 +58,17 @@ public class AllAppsTest {
             final String app = path.getFileName().toString();
 
             return dynamicTest(String.format("Auth config schema validation - %s", app), () -> {
-              ProcessBuilder helmProcessBuilder = HelmUtil.helmProcessBuilder(
-                  app,
-                  TARGETING_ENV,
-                  APP_SPECIFIC_VALUES_FILE_FOLDER
-              );
 
-              //When
-              Process helmProcess = helmProcessBuilder.start();
-              String successOutput = HelmUtil.readSuccessOutput(helmProcess);
-              String errorOutput = HelmUtil.readErrorOutput(helmProcess);
-              helmProcess.waitFor();
-
-              assertTrue(errorOutput.isBlank(), errorOutput);
-              assertFalse(successOutput.isBlank());
+              // Given When
+              final String[] generatedResources = HelmRunner.builder()
+                  .app(app)
+                  .env(TARGETING_ENV)
+                  .appValuesFolder(APP_SPECIFIC_VALUES_FILE_FOLDER)
+                  .build()
+                  .run()
+                  .getGeneratedResources();
 
               //Then
-              assertNotNull(successOutput);
-              final String[] generatedResources = successOutput.split("---");
-
               final Map<String, SecretResource> secrets = YamlUtil.readResources(
                   yamlLoader,
                   generatedResources,

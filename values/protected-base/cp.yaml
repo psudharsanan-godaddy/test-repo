@@ -1,6 +1,13 @@
 deployment:
   extraVolumeMounts: {}
   extraVolumes: {}
+  volumes:
+    fsGroup:
+      enabled: false
+    writableVol:
+      enabled: false
+      appMountPath: /tmp/work
+      storageSize: "8Mi"
   readOnlyRootFilesystem: true
   readinessProbe:
     enabled: true
