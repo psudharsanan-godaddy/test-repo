@@ -3,10 +3,7 @@ configs:
     sensitive:
       defaultMode: 0404
 deployment:
-  extraVolumeMounts:
-    - name: avalaratmp
-      mountPath: "/tmp/avalaratmp"
-  extraVolumes:
-    - name: avalaratmp
-      emptyDir: {}
+  volumes:
+    writableVol:
+      enabled: true
 
