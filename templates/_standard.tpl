@@ -2,7 +2,10 @@
 Check if standard write-able volume/mount is enabled
 */}}
 {{- define "commerce-app-v2.volumes.standard.writableVol.enabled" }}
-{{- $r := and  .Values.deployment.enabled .Values.deployment.volumes.writableVol.enabled }}
+{{- $explicitEnable := (and .Values.deployment.enabled .Values.deployment.volumes.writableVol.enabled) }}
+{{- $isSpringBoot := (eq .Values.app.frameworkType "spring-boot") }}
+{{- $isNodeJs := (eq .Values.app.frameworkType "nodejs") }}
+{{- $r := or (or $explicitEnable $isSpringBoot) $isNodeJs }}
 {{- $r }}
 {{- end }}
 
