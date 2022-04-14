@@ -307,7 +307,7 @@ spec:
         #END: standard specific volumes
         {{- include "commerce-app-v2.deployment.framework.volume" . | nindent 8 }}
         {{- with .Values.deployment.extraVolumes }}
-        {{ toYaml . | nindent 8 }}
+        {{ toYaml . | nindent 10 }}
         {{- end }}
 {{- end }}
 {{- end }}
