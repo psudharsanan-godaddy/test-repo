@@ -1,2 +1,5 @@
 deployment:
   readOnlyRootFilesystem: false
+  volumes:
+    writableVol:
+      enabled: true
