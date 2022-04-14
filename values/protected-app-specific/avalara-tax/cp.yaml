@@ -3,4 +3,7 @@ configs:
     sensitive:
       defaultMode: 0404
 deployment:
-  readOnlyRootFilesystem: false
+  volumes:
+    writableVol:
+      enabled: true
+
