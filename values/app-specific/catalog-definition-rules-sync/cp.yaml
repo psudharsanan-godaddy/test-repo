@@ -1,0 +1,35 @@
+app:
+  name: catalog-definition-rules-sync
+  frameworkType: spring-boot
+
+job:
+  enabled: true
+  annotations:
+    "helm.sh/hook": "post-install,post-upgrade"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+
+deployment:
+  enabled: false
+
+
+volumeMounts:
+  - name: client-cert-config
+    mountPath: '/workspace/certs/client'
+    readOnly: true
+  - name: sensitive-config
+    mountPath: '/workspace/certs/sensitive'
+    readOnly: true
+
+configs:
+  standard:
+    auth:
+      enabled: false
+    db:
+      enabled: false
+    log:
+      enabled: false
+
+  springBoot:
+    enabled: true
+    application:
+      enabled: true

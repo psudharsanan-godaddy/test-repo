@@ -1,0 +1,12 @@
+image:
+  repository: '769545345614.dkr.ecr.us-west-2.amazonaws.com/commerce-platform/com.godaddy.commerce.catalog-definition-rules-sync-job'
+
+env:
+  - name: ENV_NAME
+    value: test
+  - name: SSO_URL
+    value: "https://sso.test-godaddy.com"
+
+secret:
+  certName: wildcard.cp.api.int.test-godaddy.com.pkcs12
+  certPass: wildcard.cp.api.int.test-godaddy.com.password
