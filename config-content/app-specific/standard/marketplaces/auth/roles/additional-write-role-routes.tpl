@@ -1,0 +1,4 @@
+- route: POST:/v2/customers/:customerId/marketplaces
+- route: POST:/v2/customers/:customerId/marketplaces/:marketplaceId/activate
+- route: PUT:/v2/customers/:customerId/marketplaces/:marketplaceId
+- route: DELETE:/v2/customers/:customerId/marketplaces/:marketplaceId
