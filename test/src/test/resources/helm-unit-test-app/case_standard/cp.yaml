@@ -30,6 +30,10 @@ configs:
       enabled: true
     classicDb:
       enabled: true
+    bonsaiDb:
+      enabled: true
+    orionDb:
+      enabled: true
     clientCert:
       enabled: true
     pki:

@@ -3,6 +3,8 @@
 APP_NOUN: '{{ .Values.app.name }}'
 AUTH_CONFIG_PATH: '{{ $mountPath }}/auth/auth-config.json'
 CLASSIC_DB_CONFIG_PATH: '{{ $mountPath }}/classic-db/classic_db_config.json'
+BONSAI_DB_CONFIG_PATH: '{{ $mountPath }}/bonsai-db/bonsai_db_config.json'
+ORION_DB_CONFIG_PATH: '{{ $mountPath }}/orion-db/orion_db_config.json'
 CRYPTO_CONFIG_PATH: '{{ $mountPath }}/crypto/crypto_config.json'
 CRYPTO_MODE: 'LOCAL'
 DB_CONFIG_PATH: '{{ $mountPath }}/db/db_config.json'

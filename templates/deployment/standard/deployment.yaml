@@ -12,6 +12,8 @@
 {{- $logConfigEnabled := include "commerce-app-v2.configs.standard.log.enabled" . | include "strToBool" }}
 {{- $prometheusConfigEnabled := include "commerce-app-v2.configs.standard.prometheus.enabled" . | include "strToBool" }}
 {{- $classicDbConfigEnabled := include "commerce-app-v2.configs.standard.classicDb.enabled" . | include "strToBool" }}
+{{- $bonsaiDbConfigEnabled := include "commerce-app-v2.configs.standard.bonsaiDb.enabled" . | include "strToBool" }}
+{{- $orionDbConfigEnabled := include "commerce-app-v2.configs.standard.orionDb.enabled" . | include "strToBool" }}
 {{- $clientCertConfigEnabled := include "commerce-app-v2.configs.standard.clientCert.enabled" . | include "strToBool" }}
 {{- $hostsConfigEnabled := include "commerce-app-v2.configs.standard.hosts.enabled" . | include "strToBool" }}
 {{- $pkiConfigEnabled := include "commerce-app-v2.configs.standard.pki.enabled" . | include "strToBool" }}
@@ -117,6 +119,14 @@ spec:
             {{- if $classicDbConfigEnabled }}
             - name: classic-db-config
               mountPath: "{{ $mountPath }}/classic-db"
+            {{- end }}
+            {{- if $bonsaiDbConfigEnabled }}
+            - name: bonsai-db-config
+              mountPath: "{{ $mountPath }}/bonsai-db"
+            {{- end }}
+            {{- if $orionDbConfigEnabled }}
+            - name: orion-db-config
+              mountPath: "{{ $mountPath }}/orion-db"
             {{- end }}
             - name: "{{ $cacertsSecretName }}"
               mountPath: "{{ $mountPath }}/cacerts"
@@ -272,6 +282,18 @@ spec:
           secret:
             optional: true
             secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-classic-db-configexternal") .) }}
+        {{- end }}
+        {{- if $bonsaiDbConfigEnabled }}
+        - name: bonsai-db-config
+          secret:
+            optional: true
+            secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-bonsai-db-configexternal") .) }}
+        {{- end }}
+        {{- if $orionDbConfigEnabled }}
+        - name: orion-db-config
+          secret:
+            optional: true
+            secretName: {{ include "commerce-app-v2.resourceName" (merge (dict "resourceNameInfix" "-orion-db-configexternal") .) }}
         {{- end }}
         - name: {{ $cacertsSecretName }}
           secret:
