@@ -1,5 +1,5 @@
 HOSTNAME: {{ required ".Values.configs.standard.app.hostname required!" .Values.configs.standard.app.hostname }}
-ALLOWED_AD_GROUPS: ["Dev-eCommerce-APIs"]
+ALLOWED_AD_GROUPS: ["Dev-eCommerce-APIs", "GD-eComm-Fulfillment-UI-ReadOnly"]
 ATHENA_CONFIG:
     MAX_ATTEMPTS: 10
     ATTEMPT_INTERVAL_IN_MS: 1000
