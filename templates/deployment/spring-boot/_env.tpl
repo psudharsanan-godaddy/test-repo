@@ -2,6 +2,8 @@
 {{- $mountPath := required ".Values.configs.mountPath required!" .Values.configs.mountPath }}
 {{- $springConfigEnabled := include "commerce-app-v2.configs.spring-boot.application.enabled" . | include "strToBool" }}
 {{- $loggingConfigEnabled := include "commerce-app-v2.configs.spring-boot.application.logging.enabled" . | include "strToBool" }}
+{{- $writableVolEnabled := include "commerce-app-v2.volumes.standard.writableVol.enabled" . | include "strToBool" }}
+{{- $writableVolMountPath := include "commerce-app-v2.volumes.standard.writableVol.appMountPath" . }}
 # ref: https://confluence.godaddy.com/display/VM/CRITICAL+-+log4j+2.x+RCE#CRITICALlog4j2.xRCE-RemediationSteps
 - name: LOG4J_FORMAT_MSG_NO_LOOKUPS
   value: "true"
@@ -20,5 +22,9 @@
   #Do not change env name this is specific at least for spring-boot 2.5.*
 - name: LOGGING_CONFIG
   value: "{{ $mountPath }}/spring-boot-logging-config/logback-spring.xml"
+{{- end }}
+{{- if $writableVolEnabled }}
+- name: APP_WRITABLE_DIR
+  value: "{{ $writableVolMountPath }}"
 {{- end }}
 {{- end }}

@@ -17,6 +17,7 @@ import static com.godaddy.commerce.helm.AssertType.STANDARD_SENSITIVE;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_STORE_KEYS;
 import static com.godaddy.commerce.helm.AssertType.STANDARD_TLS;
 import static com.godaddy.commerce.helm.AssertType.VERTX_OPTIONS;
+import static com.godaddy.commerce.helm.AssertType.WRITABLE_DIRECTORY;
 
 import com.godaddy.commerce.helm.BaseTest;
 import com.godaddy.commerce.helm.HelmRunner;
@@ -28,9 +29,9 @@ import org.yaml.snakeyaml.Yaml;
 public class VertxYamlTest extends BaseTest {
 
   private static final Yaml yamlLoader = YamlUtil.buildYamlLoader();
-  private static final String TEST_APP_NAME = "case_vertx_standard";
   private static final String TEST_APP_VALUES_FOLDER =
       "/test/src/test/resources/framework-test-apps/";
+  private String TEST_APP_NAME;
 
   @Override
   protected Yaml getYamlLoader() {
@@ -45,6 +46,7 @@ public class VertxYamlTest extends BaseTest {
   @Test
   void test_vertxAndStandard() {
     // Given When
+    TEST_APP_NAME = "case_vertx_standard";
     String[] generatedResources =
         HelmRunner.builder()
             .app(TEST_APP_NAME)
@@ -74,9 +76,41 @@ public class VertxYamlTest extends BaseTest {
         STANDARD_STORE_KEYS,
         VERTX_OPTIONS);
 
-    assertContainsNoneOf(generatedResources,
+    assertContainsNoneOf(
+        generatedResources, SPRING_BOOT_APPLICATION, SPRING_BOOT_LOG, WRITABLE_DIRECTORY);
+    assertContainsAllEnvsOf(generatedResources,
+        Env.of("LOG4J_FORMAT_MSG_NO_LOOKUPS", "true"),
+        Env.of("AWS_REGION", "us-east-1"),
+        Env.of("APP_VERSION", "1.1.1"),
+        Env.of("APP_NAME", TEST_APP_NAME),
+        Env.of("MOUNT_PATH", "/tmp")
+    );
+  }
+
+  @Test
+  void test_vertx_skippedWritableDir() {
+    // Given When
+    TEST_APP_NAME = "case_vertx_writable_dir_skip";
+    String[] generatedResources =
+        HelmRunner.builder()
+            .app(TEST_APP_NAME)
+            .env("dp")
+            .appValuesFolder(TEST_APP_VALUES_FOLDER)
+            .imageTag("1.1.1")
+            .build()
+            .run()
+            .getGeneratedResources();
+
+    // Then
+    assertContainsAllOf(
+        generatedResources,
+        VERTX_OPTIONS);
+
+    assertContainsNoneOf(
+        generatedResources,
         SPRING_BOOT_APPLICATION,
-        SPRING_BOOT_LOG);
+        SPRING_BOOT_LOG,
+        WRITABLE_DIRECTORY);
     assertContainsAllEnvsOf(generatedResources,
         Env.of("LOG4J_FORMAT_MSG_NO_LOOKUPS", "true"),
         Env.of("AWS_REGION", "us-east-1"),

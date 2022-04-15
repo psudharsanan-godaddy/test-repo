@@ -24,8 +24,6 @@
 {{- $pkiConfigEnabled := include "commerce-app-v2.configs.standard.pki.enabled" . | include "strToBool" }}
 {{- $sensitiveConfigEnabled := include "commerce-app-v2.configs.standard.sensitive.enabled" . | include "strToBool" }}
 {{- $tlsConfigEnabled := include "commerce-app-v2.configs.standard.tls.enabled" . | include "strToBool" }}
-{{- $writableVolEnabled := include "commerce-app-v2.volumes.standard.writableVol.enabled" . | include "strToBool" }}
-{{- $writableVolMountPath := include "commerce-app-v2.volumes.standard.writableVol.appMountPath" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -136,10 +134,6 @@ spec:
               mountPath: "{{ $mountPath }}/cacerts"
             - name: "{{ $storeKeysSecretName }}"
               mountPath: "{{ $mountPath }}/storekeys"
-            {{- if $writableVolEnabled }}
-            - name: writable-volume
-              mountPath: "{{ $writableVolMountPath }}"
-            {{- end }}
             #END: standard specific volume mounts
             {{- include "commerce-app-v2.deployment.framework.volumeMount"  . | nindent 12 }}
             {{- with .Values.deployment.extraVolumeMounts }}
@@ -218,10 +212,6 @@ spec:
               value: "{{ $cacertsSecretName }}"
             - name: STOREKEYS
               value: "{{ $storeKeysSecretName }}"
-            {{- if $writableVolEnabled }}
-            - name: APP_WRITABLE_DIR
-              value: "{{ $writableVolMountPath }}"
-            {{- end }}
             #END: standard specific envs
             {{- include "commerce-app-v2.deployment.framework.env" . | nindent 12 }}
             {{- with .Values.deployment.env }}
@@ -299,10 +289,6 @@ spec:
         - name: {{ $storeKeysSecretName }}
           secret:
             secretName: {{ $storeKeysSecretName }}
-        {{- if $writableVolEnabled }}
-        - name: writable-volume
-          emptyDir: {}
-        {{- end }}
 
         #END: standard specific volumes
         {{- include "commerce-app-v2.deployment.framework.volume" . | nindent 8 }}

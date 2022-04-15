@@ -103,6 +103,11 @@ configs:
 
 deployment:
   enabled: true
+  volumes:
+    fsGroup:
+      enabled: false
+    writableVol:
+      enabled: false
   livenessProbe:
     enabled: false
     initialDelaySeconds: 15

@@ -2,6 +2,11 @@ app:
   frameworkType: nodejs
 
 deployment:
+  volumes:
+    fsGroup:
+      enabled: true
+    writableVol:
+      enabled: true
   readOnlyRootFilesystem: false
 
 configs:

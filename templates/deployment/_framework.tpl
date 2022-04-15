@@ -20,6 +20,8 @@
 {{- template "commerce-app-v2.deployment.vertx.volumeMounts" . }}
 {{- else if eq .Values.app.frameworkType "spring-boot" }}
 {{- template "commerce-app-v2.deployment.spring-boot.volumeMounts" . }}
+{{- else if eq .Values.app.frameworkType "nodejs" }}
+{{- template "commerce-app-v2.deployment.nodejs.volumeMounts" . }}
 {{- end }}
 #END: {{ .Values.app.frameworkType }} specific volume mount end
 {{- end }}
@@ -31,6 +33,8 @@
 {{- template "commerce-app-v2.deployment.vertx.volumes" . }}
 {{- else if eq .Values.app.frameworkType "spring-boot" }}
 {{- template "commerce-app-v2.deployment.spring-boot.volumes" . }}
+{{- else if eq .Values.app.frameworkType "nodejs" }}
+{{- template "commerce-app-v2.deployment.nodejs.volumes" . }}
 {{- end }}
 #END: {{ .Values.app.frameworkType }} specific volumes
 {{- end }}
