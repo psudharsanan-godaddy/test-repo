@@ -75,7 +75,6 @@ public class ProductOrchestrationTest extends BaseTest {
                 STANDARD_TLS,
                 STANDARD_CA_CERTS,
                 STANDARD_STORE_KEYS,
-                SPRING_BOOT_APPLICATION,
                 STANDARD_CLASSIC_DB);
 
         assertContainsNoneOf(generatedResources,
@@ -84,6 +83,7 @@ public class ProductOrchestrationTest extends BaseTest {
                 STANDARD_LOG,
                 STANDARD_AUTH,
                 VERTX_OPTIONS,
+                SPRING_BOOT_APPLICATION,
                 SPRING_BOOT_LOG);
     }
 }

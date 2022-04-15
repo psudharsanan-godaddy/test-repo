@@ -8,7 +8,6 @@ deployment:
   livenessProbe:
     enabled: true
     initialDelaySeconds: 55
-  readOnlyRootFilesystem: false
   enableApm: true
   env:
     - name: SERVER_SSL_KEYSTORE
@@ -23,8 +22,4 @@ configs:
     log:
       enabled: false
     classicDb:
-      enabled: true
-  springBoot:
-    enabled: true
-    application:
       enabled: true
