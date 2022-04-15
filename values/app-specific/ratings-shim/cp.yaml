@@ -1,0 +1,27 @@
+app:
+  frameworkType: spring-boot
+  size: MEDIUM
+
+deployment:
+  readinessProbe:
+    path: /v2/ratings/ping
+    initialDelaySeconds: 30
+  livenessProbe:
+    enabled: true
+    path: /v2/ratings/ping
+    initialDelaySeconds: 45
+  readOnlyRootFilesystem: false
+  enableApm: true
+
+configs:
+  standard:
+    auth:
+      enabled: false
+    db:
+      enabled: false
+    log:
+      enabled: false
+  springBoot:
+    enabled: true
+    application:
+      enabled: true
