@@ -3,3 +3,11 @@ deployment:
   volumes:
     writableVol:
       enabled: true
+      appMountPath: /tmp/.npm/_logs
+
+configs:
+  standard:
+    sensitive:
+      defaultMode: 0404
+
+nodeEnv: production

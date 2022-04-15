@@ -1,0 +1,5 @@
+configs:
+  standard:
+    app:
+      hostname: catalog-ui-int.cp.api.dp.godaddy.com
+      env: dev
